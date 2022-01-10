@@ -1,6 +1,10 @@
 {
   "name": "react-surveyor",
   "private": true,
+  "engines": {
+    "node": "^17.1.0",
+    "npm": "^8.1.2"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
