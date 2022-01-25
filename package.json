@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "cypress": "PORT=3001 start-server-and-test start http://localhost:3001 cypress:run",
+    "cypress": "PORT=3001 start-server-and-test dev http://localhost:3001 cypress:run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
