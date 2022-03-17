@@ -12,7 +12,7 @@ describe('ErrorFlash', () => {
     expect(getByText("Password can't be blank"));
   });
 
-  it('with empty errors, it does not render error flash', () => {
+  it('with empty errors, it hides error flash', () => {
     const errors: string[] = [];
 
     const { container } = render(<ErrorFlash errors={errors} />);
