@@ -1,10 +1,12 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import Button from 'components/Button';
 import ErrorFlash from 'components/ErrorFlash';
 import Input from 'components/Input';
+import { login } from 'services/user';
 
 interface FormInput {
   email: string;
@@ -25,9 +27,12 @@ const validateForm = (formInput: FormInput) => {
 };
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
   const [formInput, setformInput] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [formSubmitted, setformSubmitted] = useState(false);
+  const [formLoading, setFormLoading] = useState(false);
 
   useEffect(() => {
     if (!formSubmitted) {
@@ -52,6 +57,15 @@ const Login: NextPage = () => {
     if (errors.length) {
       return setFormErrors(errors);
     }
+
+    setFormLoading(true);
+
+    login(formInput.email, formInput.password)
+      .then(() => router.push('/'))
+      .catch(() => {
+        setFormErrors(['Invalid Credentials']);
+        setFormLoading(false);
+      });
   };
 
   return (
@@ -77,7 +91,7 @@ const Login: NextPage = () => {
           name="password"
           onChange={handleChange}
         />
-        <Button label="Sign in" />
+        <Button label="Sign in" disabled={formLoading} />
       </form>
     </div>
   );
