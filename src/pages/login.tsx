@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import Image from 'next/image';
 
+import Button from 'components/Button';
 import ErrorFlash from 'components/ErrorFlash';
 import Input from 'components/Input';
-import Button from 'components/Button';
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState('');

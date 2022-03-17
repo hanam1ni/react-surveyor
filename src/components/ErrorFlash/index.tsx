@@ -15,17 +15,19 @@ const ErrorFlash = ({ errors }: ComponentProps) => {
         <FontAwesomeIcon icon={solid('exclamation')} />
       </div>
       <div className="ml-5 flex-1 text-left">
-        <h3 className="text-white font-semibold mb-2">Error</h3>
-        <ol>
+        <h3 className="text-white font-semibold mb-2" role="alert">
+          Error
+        </h3>
+        <ul>
           {errors.map((error, index) => (
-            <li key={index} className="flex items-center">
+            <li key={index} className="flex items-center" role="alert">
               <div className="inline text-[6px] mr-2">
                 <FontAwesomeIcon icon={solid('circle')} />
               </div>
               {error}
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </div>
   );
