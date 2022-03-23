@@ -1,17 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
+import styles from './ErrorFlash.module.css';
+
 interface ComponentProps {
   errors: string[];
 }
+
 const ErrorFlash = ({ errors }: ComponentProps) => {
-  return (
-    <div
-      className={`${
-        !errors.length && 'hidden'
-      } p-6 mb-8 flex flex-row bg-neutral-800 rounded-md`}
-    >
-      <div className="relative top-1 w-8 h-8 leading-8 mx-auto text-lg text-black rounded-full bg-white">
+  return errors.length ? (
+    <div className="p-6 mb-8 flex flex-row bg-neutral-800 rounded-md">
+      <div className={styles['warning-icon']}>
         <FontAwesomeIcon icon={solid('exclamation')} />
       </div>
       <div className="ml-5 flex-1 text-left">
@@ -30,7 +29,7 @@ const ErrorFlash = ({ errors }: ComponentProps) => {
         </ul>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default ErrorFlash;

@@ -12,12 +12,13 @@ describe('ErrorFlash', () => {
     expect(getByText("Password can't be blank"));
   });
 
-  it('with empty errors, it hides error flash', () => {
-    const errors: string[] = [];
+  describe('with empty errors', () => {
+    it('it hides error flash', () => {
+      const errors: string[] = [];
 
-    const { container } = render(<ErrorFlash errors={errors} />);
+      const { container } = render(<ErrorFlash errors={errors} />);
 
-    const errorFlash = container.querySelector('.hidden');
-    expect(errorFlash).toBeInTheDocument();
+      expect(container.firstChild).toBeNull();
+    });
   });
 });

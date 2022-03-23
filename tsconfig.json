@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["cypress", "@testing-library/cypress"],
+    "types": ["jest", "cypress", "@testing-library/cypress"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

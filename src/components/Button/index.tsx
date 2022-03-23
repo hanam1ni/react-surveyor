@@ -1,15 +1,15 @@
 import React from 'react';
 
+import styles from './Button.module.css';
+
 interface ComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
+  variant?: 'primary';
 }
 
-const Button = ({ label, ...props }: ComponentProps) => {
+const Button = ({ label, variant = 'primary', ...props }: ComponentProps) => {
   return (
-    <button
-      className="w-full py-4 bg-white text-black font-semibold rounded-lg disabled:opacity-20 disabled:pointer-events-none hover:bg-indigo-800 hover:text-white focus:bg-indigo-900 focus:text-white transition-all duration-150"
-      {...props}
-    >
+    <button className={`${styles['base']} ${styles[variant]}`} {...props}>
       {label}
     </button>
   );

@@ -84,7 +84,7 @@ export default {
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-  modulePathIgnorePatterns: ['<rootDir>/cypress/'],
+  modulePathIgnorePatterns: ['<rootDir>/cypress/', '<rootDir>/.next/'],
 
   // Activates notifications for test results
   // notify: false,

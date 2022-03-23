@@ -1,0 +1,4 @@
+.backdrop {
+  @apply absolute w-full h-full bg-black bg-opacity-60 backdrop-blur-3xl 
+         flex justify-center items-center;
+}
