@@ -1,0 +1,4 @@
+.warning-icon {
+  @apply relative top-1 w-8 h-8 leading-8 mx-auto text-lg 
+       text-black rounded-full bg-white;
+}
