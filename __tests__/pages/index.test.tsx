@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import Home from 'pages/index';
 
+import Home from 'pages/index';
 import { getUserProfile } from 'services/user';
+
 import { build } from '@support/factory';
 
 jest.mock('services/user');
@@ -9,7 +10,8 @@ jest.mock('services/user');
 describe('Home', () => {
   it('renders a heading', async () => {
     const user = build('user');
-    getUserProfile.mockResolvedValue(user);
+    const mockedGetUserProfile = getUserProfile as jest.Mock;
+    mockedGetUserProfile.mockResolvedValue(user);
 
     render(<Home />);
 

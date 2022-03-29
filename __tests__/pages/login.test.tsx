@@ -1,16 +1,18 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { login } from 'services/user';
 
 import Login from 'pages/login';
+import { login } from 'services/user';
+
 import { mockUseRouter } from '@support/useRouter';
 
 jest.mock('services/user');
 
 describe('Login page', () => {
-  describe('if submit the form with valid credential', () => {
+  describe('if submit the form with valid credentials', () => {
     it('redirects user to home page', async () => {
       const { push } = mockUseRouter();
-      login.mockResolvedValue();
+      const mockedLogin = login as jest.Mock;
+      mockedLogin.mockResolvedValue(null);
 
       render(<Login />);
 
@@ -26,10 +28,10 @@ describe('Login page', () => {
     });
   });
 
-  describe('if submit the form with invalid credential', () => {
+  describe('if submit the form with invalid credentials', () => {
     it('renders an error message', async () => {
-      const { push } = mockUseRouter();
-      login.mockRejectedValue({ status: 400 });
+      const mockedLogin = login as jest.Mock;
+      mockedLogin.mockRejectedValue({ status: 400 });
 
       render(<Login />);
 

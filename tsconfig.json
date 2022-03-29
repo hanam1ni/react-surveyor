@@ -6,6 +6,7 @@
       "jest",
       "cypress",
       "@testing-library/cypress",
+      "@testing-library/jest-dom",
       "./cypress/support"
     ],
     "allowJs": true,
@@ -22,8 +23,7 @@
     "baseUrl": "./src",
     "paths": {
       "@styles/*": ["../styles/*"],
-      "@pages/*": ["pages/*"],
-      "@support/*": ["__tests__/support/*"]
+      "@support/*": ["../__tests__/support/*"]
     },
     "isolatedModules": true
   },

@@ -1,4 +1,1 @@
-module.exports = {
-  __esModule: true,
-  useRouter: jest.fn(),
-};
+export const useRouter = jest.fn();

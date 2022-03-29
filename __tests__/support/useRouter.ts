@@ -2,7 +2,9 @@ import { useRouter } from 'next/router';
 
 export const mockUseRouter = () => {
   const push = jest.fn();
-  useRouter.mockImplementation(() => ({ push }));
+  const mockedUseRouter = useRouter as jest.Mock;
+
+  mockedUseRouter.mockImplementation(() => ({ push }));
 
   return { push };
 };

@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useRouter } from 'next/router';
 
 import useSession from './useSession';
 import { getUserProfile } from 'services/user';
@@ -13,7 +12,8 @@ describe('useSession', () => {
   describe('when fetch user profile successful', () => {
     test('returns user response and false loading status', async () => {
       const userResponse = build('user');
-      getUserProfile.mockResolvedValue(userResponse);
+      const mockedGetUserProfile = getUserProfile as jest.Mock;
+      mockedGetUserProfile.mockResolvedValue(userResponse);
 
       const { result, waitForNextUpdate } = renderHook(() => useSession());
 
@@ -37,7 +37,8 @@ describe('useSession', () => {
         },
         status: 401,
       };
-      getUserProfile.mockRejectedValue(errorResponse);
+      const mockedGetUserProfile = getUserProfile as jest.Mock;
+      mockedGetUserProfile.mockRejectedValue(errorResponse);
 
       const { waitFor } = renderHook(() => useSession());
 
