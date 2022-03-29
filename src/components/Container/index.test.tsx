@@ -1,4 +1,4 @@
-import { render, getByText } from '@testing-library/react';
+import { getByText, render } from '@testing-library/react';
 
 import Container from 'components/Container';
 

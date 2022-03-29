@@ -2,7 +2,12 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["jest", "cypress", "@testing-library/cypress"],
+    "types": [
+      "jest",
+      "cypress",
+      "@testing-library/cypress",
+      "./cypress/support"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,7 +22,8 @@
     "baseUrl": "./src",
     "paths": {
       "@styles/*": ["../styles/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*"],
+      "@support/*": ["__tests__/support/*"]
     },
     "isolatedModules": true
   },

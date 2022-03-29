@@ -34,7 +34,6 @@ const Login: NextPage = () => {
   const [formSubmitted, setformSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
 
-
   useEffect(() => {
     if (!formSubmitted) {
       return;

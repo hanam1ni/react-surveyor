@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getUserProfile } from '../services/user';
 
-const useSession = () => {
+import { getUserProfile, UserProfile } from 'services/user';
+
+const useSession = (): [UserProfile | null, boolean] => {
   const router = useRouter();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setloading] = useState(true);
 
   useEffect(() => {

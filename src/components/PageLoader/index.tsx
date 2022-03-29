@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 interface ComponentProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   isLoading: boolean;
 }
 

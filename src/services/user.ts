@@ -1,5 +1,11 @@
-import { get, post } from '../utils/httpClient';
-import { getUserToken, setUserToken } from '../utils/userToken';
+import { get, post } from 'utils/httpClient';
+import { getUserToken, setUserToken } from 'utils/userToken';
+
+export interface UserProfile {
+  email: string;
+  name: string;
+  avatar_url: string;
+}
 
 export const login = async (email: string, password: string) => {
   const requestBody = {
@@ -19,7 +25,7 @@ export const login = async (email: string, password: string) => {
   );
 };
 
-export const getUserProfile = () => {
+export const getUserProfile = async (): Promise<UserProfile> => {
   const { accessToken } = getUserToken();
 
   return get('/me', {
