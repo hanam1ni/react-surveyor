@@ -9,7 +9,7 @@ jest.mock('utils/httpClient');
 jest.mock('utils/userToken');
 
 describe('login', () => {
-  describe('when given valid credentials', () => {
+  describe('given valid credentials', () => {
     it('sets access token and refresh token from response', async () => {
       const userToken = build('userToken');
       const response = { data: { attributes: userToken } };
@@ -25,7 +25,7 @@ describe('login', () => {
     });
   });
 
-  describe('when given invalid credentials', () => {
+  describe('given invalid credentials', () => {
     it('throws an error', async () => {
       const response = { status: 400 };
       const mockedPost = post as jest.Mock;

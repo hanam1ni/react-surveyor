@@ -1,5 +1,5 @@
 describe('Login page', () => {
-  describe('when given valid credentials', () => {
+  describe('given valid credentials', () => {
     it('redirects user to home page', () => {
       cy.visit('/login');
 
