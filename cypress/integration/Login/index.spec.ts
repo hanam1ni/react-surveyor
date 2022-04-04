@@ -1,15 +1,16 @@
 describe('Login page', () => {
   describe('given valid credentials', () => {
     it('redirects user to home page', () => {
-      cy.visit('/login');
+      cy.interceptApi('/me', {
+        statusCode: 401,
+        fixture: 'requests/unauthorizedUserProfile',
+      }).as('getUserProfile');
 
       cy.interceptApi('/oauth/token', {
         fixture: 'requests/oauthToken',
       }).as('login');
 
-      cy.interceptApi('/me', {
-        fixture: 'requests/userProfile',
-      }).as('getUserProfile');
+      cy.visit('/login');
 
       cy.findByLabelText('Email').type('user@mail.com');
       cy.findByLabelText('Password').type('super-secret-password');

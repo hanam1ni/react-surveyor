@@ -3,8 +3,8 @@ import { render } from '@testing-library/react';
 import PageLoader from 'components/PageLoader';
 
 describe('PageLoader', () => {
-  describe('given isLoading true', () => {
-    it('renders loader spinner', () => {
+  describe('given isLoading is true', () => {
+    it('renders the loading spinner', () => {
       const Greeting = () => <div>Welcome John Doe</div>;
 
       const { container } = render(
@@ -18,7 +18,7 @@ describe('PageLoader', () => {
     });
   });
 
-  describe('given isLoading false', () => {
+  describe('given isLoading is false', () => {
     it('renders the given page', () => {
       const Greeting = () => <div>Welcome John Doe</div>;
 

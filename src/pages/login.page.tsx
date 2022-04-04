@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Button from 'components/Button';
 import ErrorFlash from 'components/ErrorFlash';
 import Input from 'components/Input';
+import useSession from 'hooks/useSession';
 import { login } from 'services/user';
 
 interface FormInput {
@@ -28,11 +29,18 @@ const validateForm = (formInput: FormInput) => {
 
 const Login: NextPage = () => {
   const router = useRouter();
+  const { user } = useSession();
 
   const [formInput, setformInput] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [formSubmitted, setformSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   useEffect(() => {
     if (!formSubmitted) {

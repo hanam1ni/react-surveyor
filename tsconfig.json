@@ -23,7 +23,7 @@
     "baseUrl": "./src",
     "paths": {
       "@styles/*": ["../styles/*"],
-      "@support/*": ["../__tests__/support/*"]
+      "@support/*": ["../test/support/*"]
     },
     "isolatedModules": true
   },

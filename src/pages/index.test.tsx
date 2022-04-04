@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 
-import Home from 'pages/index';
+import Home from 'pages/index.page';
 import { getUserProfile } from 'services/user';
 
 import { build } from '@support/factory';

@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "source": { "parameter": "unauthorized" },
+      "detail": "The access token is invalid",
+      "code": "invalid_token"
+    }
+  ]
+}

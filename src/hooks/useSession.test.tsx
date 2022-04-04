@@ -10,7 +10,7 @@ jest.mock('services/user');
 
 describe('useSession', () => {
   describe('when fetch user profile successful', () => {
-    test('returns user response and false loading status', async () => {
+    it('returns the user profile and sets loading status as false', async () => {
       const userResponse = build('user');
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockResolvedValue(userResponse);
@@ -19,14 +19,14 @@ describe('useSession', () => {
 
       await waitForNextUpdate();
 
-      const [user, loading] = result.current;
+      const { user, loading } = result.current;
       expect(user).toBe(userResponse);
       expect(loading).toBe(false);
     });
   });
 
   describe('when failed to fetch user profile ', () => {
-    test('redirects to login page', async () => {
+    it('redirects to login page', async () => {
       const { push } = mockUseRouter();
 
       const errorResponse = {

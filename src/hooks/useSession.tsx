@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { getUserProfile, UserProfile } from 'services/user';
 
-const useSession = (): [UserProfile | null, boolean] => {
+const useSession = (): { user: UserProfile | null; loading: boolean } => {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setloading] = useState(true);
@@ -14,10 +14,12 @@ const useSession = (): [UserProfile | null, boolean] => {
         setUser(user);
         setloading(false);
       })
-      .catch(() => router.push('/login'));
+      .catch(() => {
+        router.push('/login');
+      });
   }, []);
 
-  return [user, loading];
+  return { user, loading };
 };
 
 export default useSession;
