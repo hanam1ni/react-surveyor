@@ -41,7 +41,7 @@ describe('login', () => {
 });
 
 describe('getUserProfile', () => {
-  describe('when the access token is valid', () => {
+  describe('given valid access token', () => {
     it('returns the user profile', async () => {
       const userToken = build('userToken');
       const mockedGetUserToken = getUserToken as jest.Mock;
@@ -58,7 +58,7 @@ describe('getUserProfile', () => {
     });
   });
 
-  describe('when the access token is invalid', () => {
+  describe('given invalid access token', () => {
     it('throws an error', async () => {
       const userToken = build('userToken');
       const mockedGetUserToken = getUserToken as jest.Mock;

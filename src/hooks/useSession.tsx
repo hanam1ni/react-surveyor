@@ -10,8 +10,8 @@ const useSession = (): { user: UserProfile | null; loading: boolean } => {
 
   useEffect(() => {
     getUserProfile()
-      .then((user) => {
-        setUser(user);
+      .then((userProfile) => {
+        setUser(userProfile);
         setloading(false);
       })
       .catch(() => {

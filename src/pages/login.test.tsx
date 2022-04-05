@@ -9,13 +9,13 @@ import { mockUseRouter } from '@support/useRouter';
 jest.mock('services/user');
 
 describe('Login page', () => {
-  describe('user submit the form', () => {
+  describe('when the user submits the form', () => {
     beforeEach(() => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockRejectedValue({ status: 401 });
     });
 
-    describe('with valid credentials', () => {
+    describe('given valid credentials', () => {
       it('redirects user to home page', async () => {
         const { push } = mockUseRouter();
         const mockedLogin = login as jest.Mock;
@@ -35,7 +35,7 @@ describe('Login page', () => {
       });
     });
 
-    describe('with invalid credentials', () => {
+    describe('given invalid credentials', () => {
       it('renders an error message', async () => {
         const mockedLogin = login as jest.Mock;
         mockedLogin.mockRejectedValue({ status: 400 });
@@ -54,7 +54,7 @@ describe('Login page', () => {
       });
     });
 
-    describe('with missing required inputs', () => {
+    describe('when missing required inputs', () => {
       it('renders error messages', () => {
         render(<Login />);
 
@@ -64,7 +64,7 @@ describe('Login page', () => {
         expect(screen.getByText("Password can't be blank"));
       });
 
-      it('hides error messages after fill the required inputs', () => {
+      it('hides error messages after having filled the required inputs', () => {
         render(<Login />);
 
         fireEvent.click(screen.getByText('Sign in'));
@@ -85,7 +85,7 @@ describe('Login page', () => {
     });
   });
 
-  describe('given user already authenticated', () => {
+  describe('when the user has already authenticated', () => {
     it('redirects user to home page', async () => {
       const { push } = mockUseRouter();
 
