@@ -16,13 +16,13 @@ export const login = async (email: string, password: string) => {
     client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
   };
 
-  return post('/oauth/token', requestBody).then(
-    ({
-      data: {
-        attributes: { access_token: accessToken, refresh_token: refreshToken },
-      },
-    }) => setUserToken(accessToken, refreshToken)
-  );
+  const {
+    data: {
+      attributes: { access_token: accessToken, refresh_token: refreshToken },
+    },
+  } = await post('/oauth/token', requestBody);
+
+  setUserToken(accessToken, refreshToken);
 };
 
 export const refreshToken = async () => {
@@ -49,7 +49,11 @@ export const refreshToken = async () => {
 export const getUserProfile = async (): Promise<UserProfile> => {
   const { accessToken } = getUserToken();
 
-  return get('/me', {
+  const {
+    data: { attributes: user },
+  } = await get('/me', {
     headers: { Authorization: `Bearer ${accessToken}` },
-  }).then(({ data: { attributes: user } }) => user);
+  });
+
+  return user;
 };
