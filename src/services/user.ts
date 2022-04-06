@@ -43,6 +43,8 @@ export const refreshToken = async () => {
     },
   } = await post('/oauth/token', requestBody);
 
+  setUserToken(newAccessToken, newRefreshToken);
+
   return { accessToken: newAccessToken, refreshToken: newRefreshToken };
 };
 

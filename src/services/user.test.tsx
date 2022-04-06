@@ -40,6 +40,44 @@ describe('login', () => {
   });
 });
 
+describe('refreshToken', () => {
+  describe('given valid refresh token', () => {
+    beforeEach(() => {
+      const userToken = build('userToken');
+      const mockedGetUserToken = getUserToken as jest.Mock;
+      mockedGetUserToken.mockReturnValue(userToken);
+    });
+
+    it('sets access token and refresh token from response', async () => {
+      const userToken = build('userToken');
+      const response = { data: { attributes: userToken } };
+      const mockedPost = post as jest.Mock;
+      mockedPost.mockResolvedValue(response);
+
+      await userService.refreshToken();
+
+      expect(setUserToken).toHaveBeenCalledWith(
+        userToken.access_token,
+        userToken.refresh_token
+      );
+    });
+  });
+
+  describe('given invalid refresh token', () => {
+    it('throws an error', async () => {
+      const response = { status: 401 };
+      const mockedPost = post as jest.Mock;
+      mockedPost.mockRejectedValue(response);
+
+      try {
+        await userService.refreshToken();
+      } catch (error) {
+        expect(error).toMatchObject(response);
+      }
+    });
+  });
+});
+
 describe('getUserProfile', () => {
   describe('given valid access token', () => {
     it('returns the user profile', async () => {
