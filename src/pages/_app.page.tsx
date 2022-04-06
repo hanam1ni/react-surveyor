@@ -7,14 +7,14 @@ import '@styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div>
+    <>
       <Head>
         <title>React Surveyor</title>
       </Head>
       <Container>
         <Component {...pageProps} />
       </Container>
-    </div>
+    </>
   );
 }
 
