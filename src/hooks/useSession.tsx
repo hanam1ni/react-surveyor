@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react';
 
 import { getUserProfile, UserProfile } from 'services/user';
 
-const useSession = (): { user: UserProfile | null; loading: boolean } => {
+const useSession = ({ redirect = true } = {}): {
+  user: UserProfile | null;
+  loading: boolean;
+} => {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setloading] = useState(true);
@@ -15,7 +18,7 @@ const useSession = (): { user: UserProfile | null; loading: boolean } => {
         setloading(false);
       })
       .catch(() => {
-        router.push('/login');
+        redirect && router.push('/login');
       });
   }, []);
 

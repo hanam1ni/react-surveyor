@@ -1,12 +1,14 @@
 import { render } from '@testing-library/react';
 
-import ErrorFlash from 'components/ErrorFlash';
+import FlashNotice from 'components/FlashNotice';
 
-describe('ErrorFlash', () => {
+describe('FlashNotice', () => {
   it('renders the given error messages', () => {
     const errors = ["Email can't be blank", "Password can't be blank"];
 
-    const { getByText } = render(<ErrorFlash errors={errors} />);
+    const { getByText } = render(
+      <FlashNotice title="Error" messages={errors} type="warning" />
+    );
 
     expect(getByText("Email can't be blank"));
     expect(getByText("Password can't be blank"));
@@ -16,7 +18,9 @@ describe('ErrorFlash', () => {
     it('it hides error flash', () => {
       const errors: string[] = [];
 
-      const { container } = render(<ErrorFlash errors={errors} />);
+      const { container } = render(
+        <FlashNotice title="Error" messages={errors} type="warning" />
+      );
 
       expect(container.firstChild).toBeNull();
     });
