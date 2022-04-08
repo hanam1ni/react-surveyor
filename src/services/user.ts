@@ -51,11 +51,9 @@ export const refreshToken = async () => {
 export const getUserProfile = async (): Promise<UserProfile> => {
   const { accessToken } = getUserToken();
 
-  const {
-    data: { attributes: user },
-  } = await get('/me', {
+  const response = await get('/me', {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  return user;
+  return response.data.attributes;
 };
