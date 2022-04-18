@@ -9,7 +9,7 @@ jest.mock('utils/httpClient');
 jest.mock('utils/userToken');
 
 describe('login', () => {
-  describe('given valid credentials', () => {
+  describe('given a valid credentials', () => {
     it('sets access token and refresh token from response', async () => {
       const userToken = build('userToken');
       const response = { data: { attributes: userToken } };
@@ -25,7 +25,7 @@ describe('login', () => {
     });
   });
 
-  describe('given invalid credentials', () => {
+  describe('given an invalid credentials', () => {
     it('throws an error', async () => {
       const response = { status: 400 };
       const mockedPost = post as jest.Mock;
@@ -40,8 +40,46 @@ describe('login', () => {
   });
 });
 
+describe('refreshToken', () => {
+  describe('given a valid refresh token', () => {
+    beforeEach(() => {
+      const userToken = build('userToken');
+      const mockedGetUserToken = getUserToken as jest.Mock;
+      mockedGetUserToken.mockReturnValue(userToken);
+    });
+
+    it('sets access token and refresh token from response', async () => {
+      const userToken = build('userToken');
+      const response = { data: { attributes: userToken } };
+      const mockedPost = post as jest.Mock;
+      mockedPost.mockResolvedValue(response);
+
+      await userService.refreshToken();
+
+      expect(setUserToken).toHaveBeenCalledWith(
+        userToken.access_token,
+        userToken.refresh_token
+      );
+    });
+  });
+
+  describe('given an invalid refresh token', () => {
+    it('throws an error', async () => {
+      const response = { status: 401 };
+      const mockedPost = post as jest.Mock;
+      mockedPost.mockRejectedValue(response);
+
+      try {
+        await userService.refreshToken();
+      } catch (error) {
+        expect(error).toMatchObject(response);
+      }
+    });
+  });
+});
+
 describe('getUserProfile', () => {
-  describe('given valid access token', () => {
+  describe('given a valid access token', () => {
     it('returns the user profile', async () => {
       const userToken = build('userToken');
       const mockedGetUserToken = getUserToken as jest.Mock;
@@ -58,7 +96,7 @@ describe('getUserProfile', () => {
     });
   });
 
-  describe('given invalid access token', () => {
+  describe('given an invalid access token', () => {
     it('throws an error', async () => {
       const userToken = build('userToken');
       const mockedGetUserToken = getUserToken as jest.Mock;

@@ -10,25 +10,50 @@ export interface UserProfile {
 export const login = async (email: string, password: string) => {
   const requestBody = {
     grant_type: 'password',
-    email: email,
-    password: password,
+    email,
+    password,
     client_id: process.env.NEXT_PUBLIC_AUTH_CLIENT_ID,
     client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
   };
 
-  return post('/oauth/token', requestBody).then(
-    ({
-      data: {
-        attributes: { access_token: accessToken, refresh_token: refreshToken },
+  const {
+    data: {
+      attributes: { access_token: accessToken, refresh_token: refreshToken },
+    },
+  } = await post('/oauth/token', requestBody);
+
+  setUserToken(accessToken, refreshToken);
+};
+
+export const refreshToken = async () => {
+  const { refreshToken } = getUserToken();
+  const requestBody = {
+    grant_type: 'refresh_token',
+    refresh_token: refreshToken,
+    client_id: process.env.NEXT_PUBLIC_AUTH_CLIENT_ID,
+    client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
+  };
+
+  const {
+    data: {
+      attributes: {
+        access_token: newAccessToken,
+        refresh_token: newRefreshToken,
       },
-    }) => setUserToken(accessToken, refreshToken)
-  );
+    },
+  } = await post('/oauth/token', requestBody);
+
+  setUserToken(newAccessToken, newRefreshToken);
+
+  return { accessToken: newAccessToken, refreshToken: newRefreshToken };
 };
 
 export const getUserProfile = async (): Promise<UserProfile> => {
   const { accessToken } = getUserToken();
 
-  return get('/me', {
+  const response = await get('/me', {
     headers: { Authorization: `Bearer ${accessToken}` },
-  }).then(({ data: { attributes: user } }) => user);
+  });
+
+  return response.data.attributes;
 };
