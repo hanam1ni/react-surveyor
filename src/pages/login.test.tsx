@@ -85,7 +85,7 @@ describe('Login page', () => {
     });
   });
 
-  describe('when the user has already authenticated', () => {
+  describe('when the user is already authenticated', () => {
     it('redirects user to home page', async () => {
       const { push } = mockUseRouter();
 

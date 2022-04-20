@@ -17,18 +17,17 @@ describe('FlashNotice', () => {
 
   describe('given success type', () => {
     it('renders success icon', () => {
-      const { container } = render(
+      const { getByAltText } = render(
         <FlashNotice title="Notice" messages={['Success']} type="success" />
       );
 
-      const successIcon = container.querySelector('svg.fa-bell');
-      expect(successIcon).toBeInTheDocument();
+      expect(getByAltText('success icon')).toBeInTheDocument();
     });
   });
 
   describe('given warning type', () => {
     it('renders warning icon', () => {
-      const { container } = render(
+      const { getByAltText } = render(
         <FlashNotice
           title="Error"
           messages={["Email can't be blank"]}
@@ -36,8 +35,7 @@ describe('FlashNotice', () => {
         />
       );
 
-      const warningIcon = container.querySelector('svg.fa-exclamation');
-      expect(warningIcon).toBeInTheDocument();
+      expect(getByAltText('warning icon')).toBeInTheDocument();
     });
   });
 

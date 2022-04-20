@@ -1,24 +1,22 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
+import Image from 'next/image';
 
 import { FlashType } from '.';
-
-import styles from './FlashNotice.module.css';
 
 const FlashNoticeIcon = ({ type }: { type: FlashType }) => {
   switch (type) {
     case 'success':
       return (
-        <div className={styles['success-icon']}>
-          <FontAwesomeIcon icon={solid('bell')} />
-        </div>
+        <Image src="/icon/bell.svg" width={24} height={24} alt="success icon" />
       );
 
     case 'warning':
       return (
-        <div className={styles['warning-icon']}>
-          <FontAwesomeIcon icon={solid('exclamation')} />
-        </div>
+        <Image
+          src="/icon/warning.svg"
+          width={24}
+          height={24}
+          alt="warning icon"
+        />
       );
   }
 };

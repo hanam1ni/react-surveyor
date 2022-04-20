@@ -25,7 +25,7 @@ describe('useSession', () => {
     });
   });
 
-  describe('when failed to fetch user profile ', () => {
+  describe('when failed to fetch user profile', () => {
     it('redirects to login page', async () => {
       const { push } = mockUseRouter();
 
@@ -40,9 +40,36 @@ describe('useSession', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockRejectedValue(errorResponse);
 
-      const { waitFor } = renderHook(() => useSession());
+      const { waitForNextUpdate } = renderHook(() => useSession());
 
-      await waitFor(() => expect(push).toHaveBeenCalledWith('/login'));
+      await waitForNextUpdate();
+
+      expect(push).toHaveBeenCalledWith('/login');
+    });
+  });
+
+  describe('given redirect is false', () => {
+    it('does NOT redirect the user', async () => {
+      const { push } = mockUseRouter();
+
+      const errorResponse = {
+        body: {
+          errors: [
+            { code: 'invalid_token', detail: 'The access token is invalid' },
+          ],
+        },
+        status: 401,
+      };
+      const mockedGetUserProfile = getUserProfile as jest.Mock;
+      mockedGetUserProfile.mockRejectedValue(errorResponse);
+
+      const { waitForNextUpdate } = renderHook(() =>
+        useSession({ redirect: true })
+      );
+
+      await waitForNextUpdate();
+
+      expect(push).not.toHaveBeenCalledWith('/login');
     });
   });
 });

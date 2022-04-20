@@ -12,7 +12,11 @@ interface ComponentProps {
 }
 
 const FlashNotice = ({ title, messages, type = 'success' }: ComponentProps) => {
-  return messages.length ? (
+  if (!messages.length) {
+    return null;
+  }
+
+  return (
     <div className="p-6 mb-8 flex flex-row bg-neutral-800 rounded-md">
       <div>
         <FlashNoticeIcon type={type} />
@@ -35,7 +39,7 @@ const FlashNotice = ({ title, messages, type = 'success' }: ComponentProps) => {
         </ul>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default FlashNotice;

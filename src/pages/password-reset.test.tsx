@@ -15,8 +15,8 @@ describe('Password reset page', () => {
       mockedGetUserProfile.mockRejectedValue({ status: 401 });
     });
 
-    describe('when missing required inputs', () => {
-      it('renders error messages', () => {
+    describe('given NO email', () => {
+      it('renders the error message', () => {
         render(<PasswordReset />);
 
         fireEvent.click(screen.getByText('Send Recovery Email'));
@@ -24,7 +24,7 @@ describe('Password reset page', () => {
         expect(screen.getByText("Email can't be blank"));
       });
 
-      it('hides error messages after having filled the required inputs', () => {
+      it('hides the error message after entering the email', () => {
         render(<PasswordReset />);
 
         fireEvent.click(screen.getByText('Send Recovery Email'));
@@ -40,7 +40,7 @@ describe('Password reset page', () => {
     });
   });
 
-  describe('when the user has already authenticated', () => {
+  describe('when the user is already authenticated', () => {
     it('redirects user to home page', async () => {
       const { push } = mockUseRouter();
 
