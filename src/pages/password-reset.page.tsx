@@ -8,6 +8,7 @@ import Button from 'components/Button';
 import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
+import { resetPassword } from 'services/user';
 
 interface FormInput {
   email: string;
@@ -52,7 +53,7 @@ const PasswordReset: NextPage = () => {
     setformInput({ ...formInput, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: React.SyntheticEvent) => {
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     setFormSubmitted(true);
@@ -65,7 +66,17 @@ const PasswordReset: NextPage = () => {
     }
 
     setFormLoading(true);
-    setFormSuccess(true);
+
+    try {
+      await resetPassword(formInput.email);
+
+      setFormSuccess(true);
+      setFormErrors([]);
+      setFormLoading(false);
+    } catch {
+      setFormErrors(['Something went wrong. Please try again later']);
+      setFormLoading(false);
+    }
   };
 
   return (
