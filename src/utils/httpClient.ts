@@ -1,6 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { refreshToken } from 'services/user';
 
+export interface ErrorResponse {
+  status: number | undefined;
+  body: any | undefined;
+}
+
 const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
 });
@@ -15,10 +20,10 @@ httpClient.interceptors.response.use(
     if (errorCode == 'invalid_token') {
       return handleInvalidAccessToken(error);
     } else {
-      return Promise.reject({
+      throw {
         status: error.response?.status,
         body: error.response?.data,
-      });
+      };
     }
   }
 );

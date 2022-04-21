@@ -55,21 +55,21 @@ describe('Login page', () => {
     });
 
     describe('when missing required inputs', () => {
-      it('renders error messages', () => {
+      it('renders error messages', async () => {
         render(<Login />);
 
         fireEvent.click(screen.getByText('Sign in'));
 
-        expect(screen.getByText("Email can't be blank"));
+        await waitFor(() => expect(screen.getByText("Email can't be blank")));
         expect(screen.getByText("Password can't be blank"));
       });
 
-      it('hides error messages after having filled the required inputs', () => {
+      it('hides error messages after having filled the required inputs', async () => {
         render(<Login />);
 
         fireEvent.click(screen.getByText('Sign in'));
 
-        expect(screen.getByText("Email can't be blank"));
+        await waitFor(() => expect(screen.getByText("Email can't be blank")));
         expect(screen.getByText("Password can't be blank"));
 
         fireEvent.change(screen.getByLabelText('Email'), {
@@ -79,13 +79,15 @@ describe('Login page', () => {
           target: { value: 'super-secret-password' },
         });
 
-        expect(screen.queryByText("Email can't be blank")).toBeNull();
+        await waitFor(() =>
+          expect(screen.queryByText("Email can't be blank")).toBeNull()
+        );
         expect(screen.queryByText("Password can't be blank")).toBeNull();
       });
     });
   });
 
-  describe('when the user has already authenticated', () => {
+  describe('when the user is already authenticated', () => {
     it('redirects user to home page', async () => {
       const { push } = mockUseRouter();
 

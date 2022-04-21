@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import Button from 'components/Button';
-import ErrorFlash from 'components/ErrorFlash';
+import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
 import { login } from 'services/user';
@@ -29,7 +30,7 @@ const validateForm = (formInput: FormInput) => {
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { user } = useSession();
+  const { user } = useSession({ redirect: false });
 
   const [formInput, setformInput] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState<string[]>([]);
@@ -82,7 +83,7 @@ const Login: NextPage = () => {
         <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
       </div>
       <p className="mb-8">Sign in to Nimble</p>
-      <ErrorFlash errors={formErrors} />
+      <FlashNotice title="Error" messages={formErrors} type="warning" />
       <form
         className="text-left text-gray-300 space-y-4"
         onSubmit={handleSubmit}
@@ -93,12 +94,19 @@ const Login: NextPage = () => {
           name="email"
           onChange={handleChange}
         />
-        <Input
-          label="Password"
-          type="password"
-          name="password"
-          onChange={handleChange}
-        />
+        <div className="relative">
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            onChange={handleChange}
+          />
+          <Link href="/password-reset">
+            <a className="absolute bottom-5 right-4 text-sm text-gray-400">
+              Forgot?
+            </a>
+          </Link>
+        </div>
         <Button label="Sign in" disabled={formLoading} />
       </form>
     </div>
