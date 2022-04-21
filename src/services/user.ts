@@ -67,5 +67,5 @@ export const resetPassword = async (email: string) => {
     client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
   };
 
-  await post('/passwords', requestBody);
+  return await post('/passwords', requestBody);
 };
