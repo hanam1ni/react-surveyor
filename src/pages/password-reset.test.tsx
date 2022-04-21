@@ -16,18 +16,22 @@ describe('Password reset page', () => {
     });
 
     describe('given NO email', () => {
-      it('renders the error message', () => {
+      it('renders the error message', async () => {
         render(<PasswordReset />);
 
-        fireEvent.click(screen.getByText('Send Recovery Email'));
+        await waitFor(() =>
+          fireEvent.click(screen.getByText('Send Recovery Email'))
+        );
 
         expect(screen.getByText("Email can't be blank"));
       });
 
-      it('hides the error message after entering the email', () => {
+      it('hides the error message after entering the email', async () => {
         render(<PasswordReset />);
 
-        fireEvent.click(screen.getByText('Send Recovery Email'));
+        await waitFor(() =>
+          fireEvent.click(screen.getByText('Send Recovery Email'))
+        );
 
         expect(screen.getByText("Email can't be blank"));
 

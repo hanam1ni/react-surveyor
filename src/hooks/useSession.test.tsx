@@ -40,10 +40,11 @@ describe('useSession', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockRejectedValue(errorResponse);
 
-      const { waitForNextUpdate } = renderHook(() => useSession());
+      const { waitForNextUpdate, result } = renderHook(() => useSession());
 
       await waitForNextUpdate();
 
+      expect(result.current.error).toMatchObject(errorResponse);
       expect(push).toHaveBeenCalledWith('/login');
     });
   });
@@ -63,12 +64,13 @@ describe('useSession', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockRejectedValue(errorResponse);
 
-      const { waitForNextUpdate } = renderHook(() =>
-        useSession({ redirect: true })
+      const { waitForNextUpdate, result } = renderHook(() =>
+        useSession({ redirect: false })
       );
 
       await waitForNextUpdate();
 
+      expect(result.current.error).toMatchObject(errorResponse);
       expect(push).not.toHaveBeenCalledWith('/login');
     });
   });
