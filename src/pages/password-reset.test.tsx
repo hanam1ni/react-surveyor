@@ -3,7 +3,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import PasswordReset from 'pages/password-reset.page';
 import { getUserProfile, resetPassword } from 'services/user';
 
-
 import { build } from '@support/factory';
 import { mockUseRouter } from '@support/useRouter';
 
@@ -17,7 +16,7 @@ describe('Password reset page', () => {
     });
 
     describe('given the email', () => {
-      describe('successfully requests password reset', () => {
+      describe('when requesting a password reset successfully', () => {
         it('renders the success message', async () => {
           const mockedResetPassword = resetPassword as jest.Mock;
           mockedResetPassword.mockResolvedValue({
