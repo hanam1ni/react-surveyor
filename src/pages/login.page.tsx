@@ -78,37 +78,39 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div className="w-80 text-center text-gray-400">
-      <div className="w-40 h-10 mx-auto mb-4 relative">
-        <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
-      </div>
-      <p className="mb-8">Sign in to Nimble</p>
-      <FlashNotice title="Error" messages={formErrors} type="warning" />
-      <form
-        className="text-left text-gray-300 space-y-4"
-        onSubmit={handleSubmit}
-      >
-        <Input
-          label="Email"
-          type="email"
-          name="email"
-          onChange={handleChange}
-        />
-        <div className="relative">
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-80 text-center text-gray-400">
+        <div className="w-40 h-10 mx-auto mb-4 relative">
+          <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
+        </div>
+        <p className="mb-8">Sign in to Nimble</p>
+        <FlashNotice title="Error" messages={formErrors} type="warning" />
+        <form
+          className="text-left text-gray-300 space-y-4"
+          onSubmit={handleSubmit}
+        >
           <Input
-            label="Password"
-            type="password"
-            name="password"
+            label="Email"
+            type="email"
+            name="email"
             onChange={handleChange}
           />
-          <Link href="/password-reset">
-            <a className="absolute bottom-5 right-4 text-sm text-gray-400">
-              Forgot?
-            </a>
-          </Link>
-        </div>
-        <Button label="Sign in" disabled={formLoading} />
-      </form>
+          <div className="relative">
+            <Input
+              label="Password"
+              type="password"
+              name="password"
+              onChange={handleChange}
+            />
+            <Link href="/password-reset">
+              <a className="absolute bottom-5 right-4 text-sm text-gray-400">
+                Forgot?
+              </a>
+            </Link>
+          </div>
+          <Button label="Sign in" disabled={formLoading} />
+        </form>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ describe('PageLoader', () => {
         </PageLoader>
       );
 
-      const spinner = container.querySelector('.animate-spin svg');
+      const spinner = container.querySelector('svg.animate-spin');
       expect(spinner).toBeInTheDocument();
     });
   });

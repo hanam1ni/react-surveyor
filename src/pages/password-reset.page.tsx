@@ -10,7 +10,6 @@ import Input from 'components/Input';
 import useSession from 'hooks/useSession';
 import { resetPassword } from 'services/user';
 
-
 interface FormInput {
   email: string;
 }
@@ -83,33 +82,38 @@ const PasswordReset: NextPage = () => {
   return (
     <>
       <BackNavigation path="/login" />
-      <div className="w-80 text-center text-gray-400">
-        <div className="w-40 h-10 mx-auto mb-4 relative">
-          <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
+      <div className="h-screen flex justify-center items-center">
+        <div className="w-80 text-center text-gray-400">
+          <div className="w-40 h-10 mx-auto mb-4 relative">
+            <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
+          </div>
+          <p className="mb-8">
+            Enter your email to receive instructions for resetting your
+            password.
+          </p>
+          <FlashNotice title="Error" messages={formErrors} type="warning" />
+          {formSuccess && (
+            <FlashNotice
+              title="Check your email."
+              messages={[
+                "We've email you instructions to reset your password.",
+              ]}
+              type="success"
+            />
+          )}
+          <form
+            className="text-left text-gray-300 space-y-4"
+            onSubmit={handleSubmit}
+          >
+            <Input
+              label="Email"
+              type="email"
+              name="email"
+              onChange={handleChange}
+            />
+            <Button label="Send Recovery Email" disabled={formLoading} />
+          </form>
         </div>
-        <p className="mb-8">
-          Enter your email to receive instructions for resetting your password.
-        </p>
-        <FlashNotice title="Error" messages={formErrors} type="warning" />
-        {formSuccess && (
-          <FlashNotice
-            title="Check your email."
-            messages={["We've email you instructions to reset your password."]}
-            type="success"
-          />
-        )}
-        <form
-          className="text-left text-gray-300 space-y-4"
-          onSubmit={handleSubmit}
-        >
-          <Input
-            label="Email"
-            type="email"
-            name="email"
-            onChange={handleChange}
-          />
-          <Button label="Send Recovery Email" disabled={formLoading} />
-        </form>
       </div>
     </>
   );

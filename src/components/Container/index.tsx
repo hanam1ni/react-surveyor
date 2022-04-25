@@ -8,7 +8,7 @@ interface ComponentProps {
 
 const Container = ({ children }: ComponentProps) => {
   return (
-    <div className="relative w-screen h-screen bg-auth bg-cover">
+    <div className="relative w-screen h-screen bg-auth bg-cover overflow-hidden">
       <div className={styles['backdrop']}>{children}</div>
     </div>
   );

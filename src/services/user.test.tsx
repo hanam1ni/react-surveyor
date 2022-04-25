@@ -19,8 +19,8 @@ describe('login', () => {
       await userService.login('user@mail.com', 'password123');
 
       expect(setUserToken).toHaveBeenCalledWith(
-        userToken.access_token,
-        userToken.refresh_token
+        userToken.accessToken,
+        userToken.refreshToken
       );
     });
   });
@@ -57,8 +57,8 @@ describe('refreshToken', () => {
       await userService.refreshToken();
 
       expect(setUserToken).toHaveBeenCalledWith(
-        userToken.access_token,
-        userToken.refresh_token
+        userToken.accessToken,
+        userToken.refreshToken
       );
     });
   });

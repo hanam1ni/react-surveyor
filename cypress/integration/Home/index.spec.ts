@@ -1,9 +1,11 @@
 describe('Home page', () => {
-  it('displays header', () => {
+  it('displays the current date', () => {
+    cy.clock(new Date(2022, 0, 1).getTime(), ['Date']);
+
     cy.login();
 
     cy.visit('/');
 
-    cy.findByText('Coming soon. Stay tune for more content 😎').should('exist');
+    cy.findByText('Saturday, January 1').should('exist');
   });
 });
