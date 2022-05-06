@@ -67,16 +67,21 @@ const PasswordReset: NextPage = () => {
 
     setFormLoading(true);
 
-    try {
-      await resetPassword(formInput.email);
-
+    const resetPasswordSucceed = () => {
       setFormSuccess(true);
       setFormErrors([]);
       setFormLoading(false);
-    } catch {
+    };
+
+    const resetPasswordRejected = () => {
       setFormErrors(['Something went wrong. Please try again later']);
       setFormLoading(false);
-    }
+    };
+
+    resetPassword(formInput.email).then(
+      resetPasswordSucceed,
+      resetPasswordRejected
+    );
   };
 
   return (
@@ -87,33 +92,32 @@ const PasswordReset: NextPage = () => {
           <div className="w-40 h-10 mx-auto mb-4 relative">
             <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
           </div>
-          <p className="mb-8">
-            Enter your email to receive instructions for resetting your
-            password.
-          </p>
-          <FlashNotice title="Error" messages={formErrors} type="warning" />
-          {formSuccess && (
-            <FlashNotice
-              title="Check your email."
-              messages={[
-                "We've email you instructions to reset your password.",
-              ]}
-              type="success"
-            />
-          )}
-          <form
-            className="text-left text-gray-300 space-y-4"
-            onSubmit={handleSubmit}
-          >
-            <Input
-              label="Email"
-              type="email"
-              name="email"
-              onChange={handleChange}
-            />
-            <Button label="Send Recovery Email" disabled={formLoading} />
-          </form>
         </div>
+        <p className="mb-8">
+          Enter your email to receive instructions for resetting your password.
+        </p>
+        <FlashNotice title="Error" messages={formErrors} type="warning" />
+        {formSuccess && (
+          <FlashNotice
+            title="Check your email."
+            messages={[
+              "We've emailed you instructions to reset your password.",
+            ]}
+            type="success"
+          />
+        )}
+        <form
+          className="text-left text-gray-300 space-y-4"
+          onSubmit={handleSubmit}
+        >
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            onChange={handleChange}
+          />
+          <Button label="Send Recovery Email" disabled={formLoading} />
+        </form>
       </div>
     </>
   );

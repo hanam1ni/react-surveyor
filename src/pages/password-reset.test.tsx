@@ -38,7 +38,7 @@ describe('Password reset page', () => {
           await waitFor(() =>
             expect(
               screen.getByText(
-                "We've email you instructions to reset your password."
+                "We've emailed you instructions to reset your password."
               )
             )
           );
