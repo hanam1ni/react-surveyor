@@ -1,10 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-interface FactoryObject {
-  [key: string]: string;
-}
-
-const MODELS: { [key: string]: () => FactoryObject } = {
+const MODELS: { [key: string]: () => object } = {
   user: () => ({
     avatarUrl: faker.image.avatar(),
     email: faker.internet.email(),
@@ -16,7 +12,7 @@ const MODELS: { [key: string]: () => FactoryObject } = {
   }),
 };
 
-export const build = (name: string, attrs = {}): FactoryObject => ({
+export const build = (name: string, attrs = {}): object => ({
   ...MODELS[name](),
   ...attrs,
 });

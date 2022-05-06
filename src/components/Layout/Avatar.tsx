@@ -17,7 +17,7 @@ const Avatar = ({ user: { avatarUrl, email } }: ComponentProps) => {
     <img
       className="rounded-full"
       src={avatarUrl}
-      alt="user profile"
+      alt="user avatar"
       width={36}
       height={36}
     />
