@@ -58,7 +58,7 @@ export const getUserProfile = async (): Promise<UserProfile> => {
   return response.data.attributes;
 };
 
-export const resetPassword = async (email: string) => {
+export const resetPassword = (email: string) => {
   const requestBody = {
     user: {
       email,
@@ -67,5 +67,5 @@ export const resetPassword = async (email: string) => {
     client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
   };
 
-  return await post('/passwords', requestBody);
+  return post('/passwords', requestBody);
 };

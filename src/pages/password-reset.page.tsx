@@ -10,7 +10,6 @@ import Input from 'components/Input';
 import useSession from 'hooks/useSession';
 import { resetPassword } from 'services/user';
 
-
 interface FormInput {
   email: string;
 }
@@ -68,16 +67,21 @@ const PasswordReset: NextPage = () => {
 
     setFormLoading(true);
 
-    try {
-      await resetPassword(formInput.email);
-
+    const resetPasswordSucceed = () => {
       setFormSuccess(true);
       setFormErrors([]);
       setFormLoading(false);
-    } catch {
+    };
+
+    const resetPasswordRejected = () => {
       setFormErrors(['Something went wrong. Please try again later']);
       setFormLoading(false);
-    }
+    };
+
+    resetPassword(formInput.email).then(
+      resetPasswordSucceed,
+      resetPasswordRejected
+    );
   };
 
   return (
@@ -94,7 +98,9 @@ const PasswordReset: NextPage = () => {
         {formSuccess && (
           <FlashNotice
             title="Check your email."
-            messages={["We've email you instructions to reset your password."]}
+            messages={[
+              "We've emailed you instructions to reset your password.",
+            ]}
             type="success"
           />
         )}

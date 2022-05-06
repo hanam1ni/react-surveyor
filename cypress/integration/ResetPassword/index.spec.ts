@@ -18,7 +18,7 @@ describe('Reset password page', () => {
       cy.wait(['@getUserProfile', '@resetPassword']);
 
       cy.findByText(
-        "We've email you instructions to reset your password."
+        "We've emailed you instructions to reset your password."
       ).should('exist');
     });
   });
