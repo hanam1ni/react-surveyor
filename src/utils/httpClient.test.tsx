@@ -12,11 +12,11 @@ describe('interceptors', () => {
     .mock.calls[0][1];
 
   describe('success response callback', () => {
-    it('extracts the body from data key', () => {
-      const response = { data: { email: 'user@mail.com' } };
+    it('extracts the body from data key and converts key to camel case', () => {
+      const response = { data: { 'user-email': 'user@mail.com' } };
 
       expect(responseSuccessCallback(response)).toMatchObject({
-        email: 'user@mail.com',
+        userEmail: 'user@mail.com',
       });
     });
   });

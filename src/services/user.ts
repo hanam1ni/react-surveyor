@@ -4,7 +4,7 @@ import { getUserToken, setUserToken } from 'utils/userToken';
 export interface UserProfile {
   email: string;
   name: string;
-  avatar_url: string;
+  avatarUrl: string;
 }
 
 export const login = async (email: string, password: string) => {
@@ -18,7 +18,7 @@ export const login = async (email: string, password: string) => {
 
   const {
     data: {
-      attributes: { access_token: accessToken, refresh_token: refreshToken },
+      attributes: { accessToken: accessToken, refreshToken: refreshToken },
     },
   } = await post('/oauth/token', requestBody);
 
@@ -37,8 +37,8 @@ export const refreshToken = async () => {
   const {
     data: {
       attributes: {
-        access_token: newAccessToken,
-        refresh_token: newRefreshToken,
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
       },
     },
   } = await post('/oauth/token', requestBody);

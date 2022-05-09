@@ -1,4 +1,6 @@
 import axios, { AxiosError } from 'axios';
+import camelcaseKeys from 'camelcase-keys';
+
 import { refreshToken } from 'services/user';
 
 export interface ErrorResponse {
@@ -12,7 +14,7 @@ const httpClient = axios.create({
 
 httpClient.interceptors.response.use(
   (response) => {
-    return response.data;
+    return camelcaseKeys(response.data, { deep: true });
   },
   (error: AxiosError) => {
     const [{ code: errorCode }] = error.response?.data.errors;
