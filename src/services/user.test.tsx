@@ -114,3 +114,25 @@ describe('getUserProfile', () => {
     });
   });
 });
+
+describe('resetPassword', () => {
+  it('makes a request with the given email', async () => {
+    const response = {
+      meta: {
+        message:
+          'If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.',
+      },
+    };
+    const mockedPost = post as jest.Mock;
+    mockedPost.mockResolvedValue(response);
+
+    await userService.resetPassword('user@mail.com');
+
+    expect(mockedPost).toHaveBeenCalledWith(
+      '/passwords',
+      expect.objectContaining({
+        user: { email: 'user@mail.com' },
+      })
+    );
+  });
+});

@@ -57,3 +57,15 @@ export const getUserProfile = async (): Promise<UserProfile> => {
 
   return response.data.attributes;
 };
+
+export const resetPassword = (email: string) => {
+  const requestBody = {
+    user: {
+      email,
+    },
+    client_id: process.env.NEXT_PUBLIC_AUTH_CLIENT_ID,
+    client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
+  };
+
+  return post('/passwords', requestBody);
+};

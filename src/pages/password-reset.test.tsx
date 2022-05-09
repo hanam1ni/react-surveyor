@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import PasswordReset from 'pages/password-reset.page';
-import { getUserProfile } from 'services/user';
+import { getUserProfile, resetPassword } from 'services/user';
 
 import { build } from '@support/factory';
 import { mockUseRouter } from '@support/useRouter';
@@ -13,6 +13,59 @@ describe('Password reset page', () => {
     beforeEach(() => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockRejectedValue({ status: 401 });
+    });
+
+    describe('given the email', () => {
+      describe('when requesting a password reset successfully', () => {
+        it('renders the success message', async () => {
+          const mockedResetPassword = resetPassword as jest.Mock;
+          mockedResetPassword.mockResolvedValue({
+            meta: {
+              message:
+                'If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.',
+            },
+          });
+
+          render(<PasswordReset />);
+
+          await waitFor(() =>
+            fireEvent.change(screen.getByLabelText('Email'), {
+              target: { value: 'user@mail.com' },
+            })
+          );
+          fireEvent.click(screen.getByText('Send Recovery Email'));
+
+          await waitFor(() =>
+            expect(
+              screen.getByText(
+                "We've emailed you instructions to reset your password."
+              )
+            )
+          );
+        });
+      });
+
+      describe('failed to request password reset', () => {
+        it('renders the error message', async () => {
+          const mockedResetPassword = resetPassword as jest.Mock;
+          mockedResetPassword.mockRejectedValue({ status: 403 });
+
+          render(<PasswordReset />);
+
+          await waitFor(() =>
+            fireEvent.change(screen.getByLabelText('Email'), {
+              target: { value: 'user@mail.com' },
+            })
+          );
+          fireEvent.click(screen.getByText('Send Recovery Email'));
+
+          await waitFor(() =>
+            expect(
+              screen.getByText('Something went wrong. Please try again later')
+            )
+          );
+        });
+      });
     });
 
     describe('given NO email', () => {
