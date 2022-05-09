@@ -8,12 +8,19 @@ interface ComponentProps {
 }
 
 const PageLoader = ({ children, isLoading }: ComponentProps) => {
-  return isLoading ? (
-    <div className="text-5xl text-neutral-300 animate-spin">
-      <FontAwesomeIcon icon={solid('circle-notch')} />
+  if (!isLoading) {
+    return children;
+  }
+
+  return (
+    <div className="h-full flex justify-center items-center">
+      <div className="text-5xl text-neutral-300">
+        <FontAwesomeIcon
+          className="animate-spin"
+          icon={solid('circle-notch')}
+        />
+      </div>
     </div>
-  ) : (
-    children
   );
 };
 

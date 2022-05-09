@@ -87,9 +87,11 @@ const PasswordReset: NextPage = () => {
   return (
     <>
       <BackNavigation path="/login" />
-      <div className="w-80 text-center text-gray-400">
-        <div className="w-40 h-10 mx-auto mb-4 relative">
-          <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
+      <div className="h-screen flex justify-center items-center">
+        <div className="w-80 text-center text-gray-400">
+          <div className="w-40 h-10 mx-auto mb-4 relative">
+            <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
+          </div>
         </div>
         <p className="mb-8">
           Enter your email to receive instructions for resetting your password.

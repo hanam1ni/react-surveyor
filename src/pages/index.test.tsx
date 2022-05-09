@@ -8,19 +8,16 @@ import { build } from '@support/factory';
 jest.mock('services/user');
 
 describe('Home', () => {
-  it('renders a heading', async () => {
+  it('renders the current date', async () => {
     const user = build('user');
     const mockedGetUserProfile = getUserProfile as jest.Mock;
     mockedGetUserProfile.mockResolvedValue(user);
 
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 0, 1));
+
     render(<Home />);
 
-    const heading = await waitFor(() =>
-      screen.getByRole('heading', {
-        name: /Coming soon. Stay tune for more content 😎/,
-      })
-    );
-
-    expect(heading).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Saturday, January 1')));
   });
 });
