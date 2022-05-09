@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { UserProfile } from 'services/user';
 
 import styles from './Layout.module.css';
@@ -25,3 +26,4 @@ const Avatar = ({ user: { avatarUrl, email } }: ComponentProps) => {
 };
 
 export default Avatar;
+/* eslint-enable @next/next/no-img-element */
