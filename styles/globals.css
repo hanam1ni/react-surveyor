@@ -7,6 +7,12 @@
   src: url('../public/fonts/NeuzeitSLTStd-Book.otf');
 }
 
+@font-face {
+  font-family: 'NeuzeitSLTStd';
+  src: url('../public/fonts/NeuzeitSLTStd-BookHeavy.otf');
+  font-weight: bold;
+}
+
 html,
 body {
   padding: 0;
