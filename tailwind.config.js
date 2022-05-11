@@ -8,6 +8,9 @@ module.exports = {
       backgroundImage: {
         auth: "url('/auth-background.svg')",
       },
+      fontFamily: {
+        neuzeit: ['NeuzeitSLTStd'],
+      },
     },
   },
   plugins: [],
