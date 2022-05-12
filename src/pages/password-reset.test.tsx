@@ -1,9 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
+import Container from 'components/Container';
 import PasswordReset from 'pages/password-reset.page';
 import { getUserProfile, resetPassword } from 'services/user';
 
 import { build } from '@support/factory';
+import { renderPage } from '@support/pageRenderer';
 import { mockUseRouter } from '@support/useRouter';
 
 jest.mock('services/user');
@@ -26,7 +28,7 @@ describe('Password reset page', () => {
             },
           });
 
-          render(<PasswordReset />);
+          renderPage(<PasswordReset />);
 
           await waitFor(() =>
             fireEvent.change(screen.getByLabelText('Email'), {
@@ -50,7 +52,7 @@ describe('Password reset page', () => {
           const mockedResetPassword = resetPassword as jest.Mock;
           mockedResetPassword.mockRejectedValue({ status: 403 });
 
-          render(<PasswordReset />);
+          renderPage(<PasswordReset />);
 
           await waitFor(() =>
             fireEvent.change(screen.getByLabelText('Email'), {
@@ -70,7 +72,7 @@ describe('Password reset page', () => {
 
     describe('given NO email', () => {
       it('renders the error message', async () => {
-        render(<PasswordReset />);
+        renderPage(<PasswordReset />);
 
         await waitFor(() =>
           fireEvent.click(screen.getByText('Send Recovery Email'))
@@ -80,7 +82,7 @@ describe('Password reset page', () => {
       });
 
       it('hides the error message after entering the email', async () => {
-        render(<PasswordReset />);
+        renderPage(<PasswordReset />);
 
         await waitFor(() =>
           fireEvent.click(screen.getByText('Send Recovery Email'))
@@ -105,7 +107,11 @@ describe('Password reset page', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockResolvedValue(user);
 
-      render(<PasswordReset />);
+      render(
+        <Container>
+          <PasswordReset />
+        </Container>
+      );
 
       await waitFor(() => expect(push).toHaveBeenCalledWith('/'));
     });

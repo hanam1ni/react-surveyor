@@ -10,7 +10,6 @@ import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
 import { login } from 'services/user';
-
 interface FormInput {
   email: string;
   password: string;
