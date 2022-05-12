@@ -5,12 +5,12 @@ import Avatar from './Avatar';
 import Sidebar from './Sidebar';
 import { UserProfile } from 'services/user';
 
-interface ComponentProps {
+interface LayoutProps {
   user?: UserProfile | null;
   children: React.ReactNode;
 }
 
-const Layout = ({ user, children }: ComponentProps) => {
+const Layout = ({ user, children }: LayoutProps) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (

@@ -3,11 +3,11 @@ import { UserProfile } from 'services/user';
 
 import styles from './Layout.module.css';
 
-interface ComponentProps {
+interface AvatarProps {
   user: UserProfile;
 }
 
-const Avatar = ({ user: { avatarUrl, email } }: ComponentProps) => {
+const Avatar = ({ user: { avatarUrl, email } }: AvatarProps) => {
   if (!avatarUrl) {
     return (
       <div className={styles.avatarPlaceholder}>{email[0].toUpperCase()}</div>

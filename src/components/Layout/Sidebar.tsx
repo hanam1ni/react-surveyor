@@ -4,13 +4,13 @@ import { UserProfile } from 'services/user';
 
 import styles from './Layout.module.css';
 
-interface ComponentProps {
+interface SidebarProps {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   user: UserProfile;
 }
 
-const Sidebar = ({ show, setShow, user }: ComponentProps) => {
+const Sidebar = ({ show, setShow, user }: SidebarProps) => {
   return (
     <>
       {show && (
@@ -22,7 +22,9 @@ const Sidebar = ({ show, setShow, user }: ComponentProps) => {
       )}
       <aside className={styles.sidebar} aria-hidden={!show}>
         <section className="flex justify-between items-center">
-          <div className="font-extrabold text-2xl text-white">{user.email}</div>
+          <div className="mr-4 font-extrabold text-2xl text-white overflow-hidden text-ellipsis">
+            {user.email}
+          </div>
           <Avatar user={user} />
         </section>
       </aside>
