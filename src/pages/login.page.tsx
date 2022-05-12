@@ -42,7 +42,7 @@ const Login: NextPage = () => {
 
   useEffect(() => {
     setBgUrl('/auth-background.svg');
-  }, []);
+  }, [setBgUrl]);
 
   useEffect(() => {
     if (user) {

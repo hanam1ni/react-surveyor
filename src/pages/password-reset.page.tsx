@@ -39,7 +39,7 @@ const PasswordReset: NextPage = () => {
 
   useEffect(() => {
     setBgUrl('/auth-background.svg');
-  }, []);
+  }, [setBgUrl]);
 
   useEffect(() => {
     if (user) {

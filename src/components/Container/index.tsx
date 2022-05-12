@@ -7,7 +7,7 @@ interface ContainerProps {
 }
 
 interface BackgroundContextType {
-  setBgUrl: Dispatch<SetStateAction<string>>;
+  setBgUrl: Dispatch<SetStateAction<string | null>>;
 }
 
 export const BackgroundContext = React.createContext<BackgroundContextType>(
@@ -15,22 +15,14 @@ export const BackgroundContext = React.createContext<BackgroundContextType>(
 );
 
 const Container = ({ children }: ContainerProps) => {
-  const [bgUrl, setBgUrl] = useState<string>('');
-
-  if (bgUrl == '') {
-    return (
-      <div className={`${styles['container']} bg-black`}>
-        <BackgroundContext.Provider value={{ setBgUrl }}>
-          {children}
-        </BackgroundContext.Provider>
-      </div>
-    );
-  }
+  const [bgUrl, setBgUrl] = useState<string | null>(null);
 
   return (
     <div
-      className={`${styles['container']} bg-cover`}
-      style={{ backgroundImage: `url('${bgUrl}')` }}
+      className={`${styles['container']} ${
+        bgUrl !== null ? 'bg-cover' : 'bg-black'
+      }`}
+      style={bgUrl !== null ? { backgroundImage: `url('${bgUrl}')` } : {}}
     >
       <div className={styles['backdrop']}>
         <BackgroundContext.Provider value={{ setBgUrl }}>
