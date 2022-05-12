@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import Button from 'components/Button';
+import { BackgroundContext } from 'components/Container';
 import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
@@ -36,6 +37,12 @@ const Login: NextPage = () => {
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [formSubmitted, setformSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+
+  const { setBgUrl } = useContext(BackgroundContext);
+
+  useEffect(() => {
+    setBgUrl('/auth-background.svg');
+  }, []);
 
   useEffect(() => {
     if (user) {

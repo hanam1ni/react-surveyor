@@ -27,9 +27,9 @@ const Home: NextPage = () => {
                 width={64}
                 height={64}
                 src="/icon/smiley.svg"
-                alt="placeholder icon"
+                alt="smiley icon"
               />
-              <h2 className="mt-8 text-2xl font-extrabold text-center">
+              <h2 className="mt-8 text-3xl font-extrabold text-center">
                 You&#39;ve completed all the surveys.
                 <br /> Take a moment.
               </h2>
