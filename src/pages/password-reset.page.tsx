@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import BackNavigation from 'components/BackNavigation';
 import Button from 'components/Button';
+import { BackgroundContext } from 'components/Container';
 import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
@@ -33,6 +34,12 @@ const PasswordReset: NextPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
+
+  const { setBgUrl } = useContext(BackgroundContext);
+
+  useEffect(() => {
+    setBgUrl('/auth-background.svg');
+  }, [setBgUrl]);
 
   useEffect(() => {
     if (user) {
@@ -85,15 +92,15 @@ const PasswordReset: NextPage = () => {
   };
 
   return (
-    <>
+    <div className="h-screen flex justify-center items-center text-gray-400">
       <BackNavigation path="/login" />
-      <div className="h-screen flex justify-center items-center">
-        <div className="w-80 text-center text-gray-400">
+      <div className="w-80">
+        <div className="w-80 text-center">
           <div className="w-40 h-10 mx-auto mb-4 relative">
             <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
           </div>
         </div>
-        <p className="mb-8">
+        <p className="mb-8 text-center">
           Enter your email to receive instructions for resetting your password.
         </p>
         <FlashNotice title="Error" messages={formErrors} type="warning" />
@@ -119,7 +126,7 @@ const PasswordReset: NextPage = () => {
           <Button label="Send Recovery Email" disabled={formLoading} />
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

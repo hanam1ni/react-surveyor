@@ -1,9 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 
 import Home from 'pages/index.page';
 import { getUserProfile } from 'services/user';
 
 import { build } from '@support/factory';
+import { renderPage } from '@support/pageRenderer';
 
 jest.mock('services/user');
 
@@ -16,7 +17,7 @@ describe('Home', () => {
     jest.useFakeTimers('modern');
     jest.setSystemTime(new Date(2022, 0, 1));
 
-    render(<Home />);
+    renderPage(<Home />);
 
     await waitFor(() => expect(screen.getByText('Saturday, January 1')));
   });

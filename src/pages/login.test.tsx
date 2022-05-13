@@ -1,9 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import Login from 'pages/login.page';
 import { getUserProfile, login } from 'services/user';
 
 import { build } from '@support/factory';
+import { renderPage } from '@support/pageRenderer';
 import { mockUseRouter } from '@support/useRouter';
 
 jest.mock('services/user');
@@ -21,7 +22,7 @@ describe('Login page', () => {
         const mockedLogin = login as jest.Mock;
         mockedLogin.mockResolvedValue(null);
 
-        render(<Login />);
+        renderPage(<Login />);
 
         fireEvent.change(screen.getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
@@ -40,7 +41,7 @@ describe('Login page', () => {
         const mockedLogin = login as jest.Mock;
         mockedLogin.mockRejectedValue({ status: 400 });
 
-        render(<Login />);
+        renderPage(<Login />);
 
         fireEvent.change(screen.getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
@@ -56,7 +57,7 @@ describe('Login page', () => {
 
     describe('when missing required inputs', () => {
       it('renders error messages', async () => {
-        render(<Login />);
+        renderPage(<Login />);
 
         fireEvent.click(screen.getByText('Sign in'));
 
@@ -65,7 +66,7 @@ describe('Login page', () => {
       });
 
       it('hides error messages after having filled the required inputs', async () => {
-        render(<Login />);
+        renderPage(<Login />);
 
         fireEvent.click(screen.getByText('Sign in'));
 
@@ -95,7 +96,7 @@ describe('Login page', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockResolvedValue(user);
 
-      render(<Login />);
+      renderPage(<Login />);
 
       await waitFor(() => expect(push).toHaveBeenCalledWith('/'));
     });
