@@ -8,9 +8,12 @@ import {
 import Layout from 'components/Layout';
 import Avatar from './Avatar';
 import Sidebar from './Sidebar';
-import { UserProfile } from 'services/user';
+import { logout, UserProfile } from 'services/user';
 
 import { build } from '@support/factory';
+import { mockUseRouter } from '@support/useRouter';
+
+jest.mock('services/user');
 
 describe('Layout', () => {
   it('renders the given element', () => {
@@ -85,6 +88,25 @@ describe('Sidebar', () => {
       fireEvent.click(getByTestId('sidebar-overlay'));
 
       expect(setShow).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('when logging out', () => {
+    it('redirects user to login page', async () => {
+      const user = build('user') as UserProfile;
+      const setShow = jest.fn();
+
+      const { push } = mockUseRouter();
+      const mockedLogout = logout as jest.Mock;
+      mockedLogout.mockResolvedValue(null);
+
+      const { getByText } = render(
+        <Sidebar show={true} setShow={setShow} user={user} />
+      );
+
+      fireEvent.click(getByText('Logout'));
+
+      await waitFor(() => expect(push).toHaveBeenCalledWith('/login'));
     });
   });
 });

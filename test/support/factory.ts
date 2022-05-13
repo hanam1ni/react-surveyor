@@ -12,7 +12,7 @@ const MODELS: { [key: string]: () => object } = {
   }),
 };
 
-export const build = (name: string, attrs = {}): object => ({
+export const build = (name: string, attrs = {}): { [key: string]: any } => ({
   ...MODELS[name](),
   ...attrs,
 });

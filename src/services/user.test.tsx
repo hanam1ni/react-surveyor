@@ -1,7 +1,7 @@
 import * as userService from 'services/user';
 
 import { get, post } from 'utils/httpClient';
-import { getUserToken, setUserToken } from 'utils/userToken';
+import { clearUserToken, getUserToken, setUserToken } from 'utils/userToken';
 
 import { build } from '@support/factory';
 
@@ -37,6 +37,27 @@ describe('login', () => {
         expect(error).toMatchObject(response);
       }
     });
+  });
+});
+
+describe('logout', () => {
+  it('revokes user tokens and clears them from the local storage', async () => {
+    const userToken = build('userToken');
+    const mockedGetUserToken = getUserToken as jest.Mock;
+    mockedGetUserToken.mockReturnValue(userToken);
+
+    const mockedPost = post as jest.Mock;
+    mockedPost.mockResolvedValue({});
+
+    await userService.logout();
+
+    expect(mockedPost).toHaveBeenCalledWith(
+      '/oauth/revoke',
+      expect.objectContaining({
+        token: userToken.accessToken,
+      })
+    );
+    expect(clearUserToken).toHaveBeenCalled();
   });
 });
 
