@@ -7,13 +7,13 @@ describe('PageLoader', () => {
     it('renders the loading spinner', () => {
       const Greeting = () => <div>Welcome John Doe</div>;
 
-      const { container } = render(
+      const { getByTestId } = render(
         <PageLoader isLoading={true}>
           <Greeting />
         </PageLoader>
       );
 
-      const spinner = container.querySelector('.animate-spin svg');
+      const spinner = getByTestId('loading-spinner');
       expect(spinner).toBeInTheDocument();
     });
   });

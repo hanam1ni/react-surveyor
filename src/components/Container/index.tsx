@@ -2,13 +2,13 @@ import React from 'react';
 
 import styles from './Container.module.css';
 
-interface ComponentProps {
+interface ContainerProps {
   children: React.ReactNode;
 }
 
-const Container = ({ children }: ComponentProps) => {
+const Container = ({ children }: ContainerProps) => {
   return (
-    <div className="relative w-screen h-screen bg-auth bg-cover">
+    <div className="relative w-screen h-screen bg-auth bg-cover overflow-hidden">
       <div className={styles['backdrop']}>{children}</div>
     </div>
   );
