@@ -92,7 +92,7 @@ describe('Sidebar', () => {
   });
 
   describe('when logging out', () => {
-    it('redirects user to login page', async () => {
+    it('redirects user to the login page', async () => {
       const user = build('user') as UserProfile;
       const setShow = jest.fn();
 
