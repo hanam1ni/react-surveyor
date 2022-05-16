@@ -1,5 +1,5 @@
 import { get, post } from 'utils/httpClient';
-import { getUserToken, setUserToken } from 'utils/userToken';
+import { clearUserToken, getUserToken, setUserToken } from 'utils/userToken';
 
 export interface UserProfile {
   email: string;
@@ -23,6 +23,20 @@ export const login = async (email: string, password: string) => {
   } = await post('/oauth/token', requestBody);
 
   setUserToken(accessToken, refreshToken);
+};
+
+export const logout = async () => {
+  const { accessToken } = getUserToken();
+
+  const requestBody = {
+    token: accessToken,
+    client_id: process.env.NEXT_PUBLIC_AUTH_CLIENT_ID,
+    client_secret: process.env.NEXT_PUBLIC_AUTH_CLIENT_SECRET,
+  };
+
+  await post('/oauth/revoke', requestBody);
+
+  clearUserToken();
 };
 
 export const refreshToken = async () => {

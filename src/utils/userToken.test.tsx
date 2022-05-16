@@ -1,5 +1,17 @@
 import * as userToken from 'utils/userToken';
 
+describe('clearUserToken', () => {
+  it('clears the access token and refresh token', () => {
+    localStorage.setItem('accessToken', 'user_access_token');
+    localStorage.setItem('refreshToken', 'user_refresh_token');
+
+    userToken.clearUserToken();
+
+    expect(localStorage.getItem('accessToken')).toBeNull();
+    expect(localStorage.getItem('refreshToken')).toBeNull();
+  });
+});
+
 describe('setUserToken', () => {
   it('sets the given access token and refresh token', () => {
     userToken.setUserToken('user_access_token', 'user_refresh_token');
