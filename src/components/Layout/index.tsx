@@ -14,7 +14,7 @@ const Layout = ({ user, children }: LayoutProps) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <>
+    <div className="h-full flex flex-col">
       <header className="flex px-8 pt-8 mb-11 justify-between">
         <Image src="/nimble.svg" alt="Nimble Logo" width={134} height={32} />
         {user && (
@@ -26,8 +26,8 @@ const Layout = ({ user, children }: LayoutProps) => {
       {user && (
         <Sidebar show={showSidebar} setShow={setShowSidebar} user={user} />
       )}
-      {children}
-    </>
+      <main className="flex-1 overflow-auto">{children}</main>
+    </div>
   );
 };
 

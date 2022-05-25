@@ -24,7 +24,7 @@ const Sidebar = ({ show, setShow, user }: SidebarProps) => {
     <>
       {show && (
         <div
-          className="fixed top-0 right-0 h-screen w-screen"
+          className="fixed top-0 right-0 h-screen w-screen z-50"
           data-testid="sidebar-overlay"
           onClick={() => setShow(false)}
         />

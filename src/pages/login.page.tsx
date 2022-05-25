@@ -84,7 +84,7 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center">
+    <div className="h-full flex justify-center items-center">
       <div className="w-80 text-center text-gray-400">
         <div className="w-40 h-10 mx-auto mb-4 relative">
           <Image src="/nimble.svg" alt="Nimble Logo" layout="fill" />
