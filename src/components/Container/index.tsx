@@ -1,4 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useState,
+} from 'react';
 
 import styles from './Container.module.css';
 
@@ -10,7 +15,7 @@ interface BackgroundContextType {
   setBgUrl: Dispatch<SetStateAction<string | null>>;
 }
 
-export const BackgroundContext = React.createContext<BackgroundContextType>(
+export const BackgroundContext = createContext<BackgroundContextType>(
   {} as BackgroundContextType
 );
 
