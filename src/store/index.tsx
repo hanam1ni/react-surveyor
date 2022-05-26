@@ -1,34 +1,28 @@
-import { createContext, ReactNode, useReducer } from 'react';
+import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
+import reducer, { ActionType } from './reducer';
 import { Survey } from 'services/survey';
 
+export interface StoreType {
+  surveys: Survey[];
+}
+
 interface StoreContextType {
-  store: {
-    surveys: Survey[];
-  };
-  dispatchAction: any;
+  store: StoreType;
+  dispatchAction: Dispatch<ActionType>;
+}
+
+interface StoreProviderProps {
+  children: ReactNode;
 }
 
 const initialStore = {
   surveys: [],
 };
 
-const reducer = (store: any, action: { type: string; value: any }) => {
-  switch (action.type) {
-    case 'setSurveys':
-      return { ...store, surveys: action.value };
-    default:
-      throw new Error('invalid action type');
-  }
-};
-
 export const StoreContext = createContext<StoreContextType>(
   {} as StoreContextType
 );
-
-interface StoreProviderProps {
-  children: ReactNode;
-}
 
 export const StoreProvider = ({ children }: StoreProviderProps) => {
   const [store, dispatchAction] = useReducer(reducer, initialStore);
