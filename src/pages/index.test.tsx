@@ -11,19 +11,53 @@ jest.mock('services/user');
 jest.mock('services/survey');
 
 describe('Home', () => {
-  it('renders the current date', async () => {
+  beforeEach(() => {
     const user = build('user');
     const mockedGetUserProfile = getUserProfile as jest.Mock;
     mockedGetUserProfile.mockResolvedValue(user);
 
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 0, 1));
+  });
+
+  it('renders the current date', async () => {
     const mockedlistSurveys = listSurveys as jest.Mock;
     mockedlistSurveys.mockResolvedValue([]);
 
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date(2022, 0, 1));
-
     renderPage(<Home />);
 
-    await waitFor(() => expect(screen.getByText('Saturday, January 1')));
+    await waitFor(() =>
+      expect(screen.getByText('Saturday, January 1')).toBeInTheDocument()
+    );
+  });
+
+  describe('when the surveys list is empty', () => {
+    it('renders a placeholder', async () => {
+      const mockedlistSurveys = listSurveys as jest.Mock;
+      mockedlistSurveys.mockResolvedValue([]);
+
+      renderPage(<Home />);
+
+      await waitFor(() =>
+        expect(
+          screen.getByText(/You've completed all the surveys/)
+        ).toBeInTheDocument()
+      );
+    });
+  });
+
+  describe('when the surveys list is not empty', () => {
+    it('renders the survey item', async () => {
+      const survey = build('survey');
+      const mockedlistSurveys = listSurveys as jest.Mock;
+      mockedlistSurveys.mockResolvedValue([survey]);
+
+      renderPage(<Home />);
+
+      await waitFor(() => {
+        expect(screen.getByText(survey.title)).toBeInTheDocument();
+        expect(screen.getByText(survey.description)).toBeInTheDocument();
+      });
+    });
   });
 });

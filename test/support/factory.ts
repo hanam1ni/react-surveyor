@@ -1,6 +1,12 @@
 import { faker } from '@faker-js/faker';
 
 const MODELS: { [key: string]: () => object } = {
+  survey: () => ({
+    id: faker.random.alphaNumeric(8),
+    title: faker.lorem.word(),
+    description: faker.lorem.sentences(),
+    coverImageUrl: faker.image.imageUrl(),
+  }),
   user: () => ({
     avatarUrl: faker.image.avatar(),
     email: faker.internet.email(),
