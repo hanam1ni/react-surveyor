@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { render, waitFor } from '@testing-library/react';
 
 import { Survey } from 'services/survey';
-import { StoreContext, StoreProvider } from 'store';
+import { ACTIONS, StoreContext, StoreProvider } from 'store';
 
 import { build } from '@support/factory';
 
@@ -37,7 +37,7 @@ describe('StoreProvider', () => {
         const { store, dispatchAction } = useContext(StoreContext);
 
         useEffect(() => {
-          dispatchAction({ type: 'setSurveys', value: [survey] });
+          dispatchAction({ type: ACTIONS.SET_SURVEYS, value: [survey] });
         }, [dispatchAction]);
 
         return <div>{store.surveys[0]?.title}</div>;

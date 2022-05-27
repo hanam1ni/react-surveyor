@@ -1,6 +1,6 @@
 import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
-import reducer, { ActionType } from './reducer';
+import reducer, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey } from 'services/survey';
 
 export interface StoreType {
@@ -9,7 +9,7 @@ export interface StoreType {
 
 interface StoreContextType {
   store: StoreType;
-  dispatchAction: Dispatch<ActionType>;
+  dispatchAction: Dispatch<ActionPayloadType>;
 }
 
 interface StoreProviderProps {
@@ -33,3 +33,5 @@ export const StoreProvider = ({ children }: StoreProviderProps) => {
     </StoreContext.Provider>
   );
 };
+
+export { ACTIONS };

@@ -10,7 +10,7 @@ import Layout from 'components/Layout';
 import PageLoader from 'components/PageLoader';
 import useSession from 'hooks/useSession';
 import { listSurveys } from 'services/survey';
-import { StoreContext } from 'store';
+import { ACTIONS, StoreContext } from 'store';
 
 const Home: NextPage = () => {
   const { user, loading: userLoading } = useSession();
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     listSurveys().then((surveys) => {
-      dispatchAction({ type: 'setSurveys', value: surveys });
+      dispatchAction({ type: ACTIONS.SET_SURVEYS, value: surveys });
       setSurveyFetching(false);
     });
   }, [dispatchAction]);

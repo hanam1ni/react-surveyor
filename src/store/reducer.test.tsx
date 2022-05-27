@@ -1,4 +1,4 @@
-import dispatchAction, { ActionType } from './reducer';
+import dispatchAction, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey } from 'services/survey';
 
 import { build } from '@support/factory';
@@ -11,7 +11,10 @@ describe('Dispatch action', () => {
   describe('given `setSurveys` as an action type', () => {
     it('returns updated store with given surveys', () => {
       const survey = build('survey') as Survey;
-      const action = { type: 'setSurveys', value: [survey] } as ActionType;
+      const action = {
+        type: ACTIONS.SET_SURVEYS,
+        value: [survey],
+      } as ActionPayloadType;
 
       const updatedStore = dispatchAction(initialStore, action);
 
@@ -21,7 +24,7 @@ describe('Dispatch action', () => {
 
   describe('given invalid action type', () => {
     it('throws an error', () => {
-      const action = { type: 'unknownAction', value: null };
+      const action = { type: 'UNKNOWN_ACTION', value: null };
 
       try {
         dispatchAction(initialStore, action);
