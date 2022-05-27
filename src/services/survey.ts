@@ -8,11 +8,12 @@ export interface Survey {
   coverImageUrl: string;
 }
 
-export const listSurveys = async (): Promise<Survey[]> => {
+export const listSurveys = async (options = {}): Promise<Survey[]> => {
   const { accessToken } = getUserToken();
 
   const response = await get('/surveys', {
     headers: { Authorization: `Bearer ${accessToken}` },
+    ...options,
   });
 
   return response.data.map((survey: any) => parseSurvey(survey));
