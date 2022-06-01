@@ -12,6 +12,16 @@ import useSession from 'hooks/useSession';
 import { listSurveys } from 'services/survey';
 import { ACTIONS, StoreContext } from 'store';
 
+const SurveyListPlaceholder = () => (
+  <section className="flex flex-col">
+    <Image width={64} height={64} src="/icon/smiley.svg" alt="smiley icon" />
+    <h2 className="mt-8 text-3xl font-extrabold text-center">
+      You&#39;ve completed all the surveys.
+      <br /> Take a moment.
+    </h2>
+  </section>
+);
+
 const Home: NextPage = () => {
   const { user, loading: userLoading } = useSession();
   const [surveyFetching, setSurveyFetching] = useState(true);
@@ -37,15 +47,15 @@ const Home: NextPage = () => {
     <Layout user={user}>
       <PageLoader isLoading={userLoading || surveyLoading}>
         <div className="w-full max-w-3xl mx-auto text-white">
-          <section>
+          <section className="mb-36">
             <div className="text-xs font-extrabold uppercase">
               {format(currentDate, 'cccc, LLLL d')}
             </div>
             <div className="text-4xl font-extrabold">Today</div>
           </section>
-          <section className="mt-36 flex items-center">
-            {store.surveys.length !== 0 ? (
-              store.surveys.map((survey) => (
+          {store.surveys.length !== 0 ? (
+            <section className="flex items-center">
+              {store.surveys.map((survey) => (
                 <div className="mx-4" key={survey.id}>
                   <img
                     src={survey.coverImageUrl}
@@ -56,22 +66,11 @@ const Home: NextPage = () => {
                   <h2>{survey.title}</h2>
                   <div>{survey.description}</div>
                 </div>
-              ))
-            ) : (
-              <>
-                <Image
-                  width={64}
-                  height={64}
-                  src="/icon/smiley.svg"
-                  alt="smiley icon"
-                />
-                <h2 className="mt-8 text-3xl font-extrabold text-center">
-                  You&#39;ve completed all the surveys.
-                  <br /> Take a moment.
-                </h2>
-              </>
-            )}
-          </section>
+              ))}
+            </section>
+          ) : (
+            <SurveyListPlaceholder />
+          )}
         </div>
       </PageLoader>
     </Layout>
