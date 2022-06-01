@@ -3,5 +3,5 @@
 }
 
 .backdrop {
-  @apply absolute w-full h-full bg-black bg-opacity-60 backdrop-blur-3xl;
+  @apply absolute top-0 z-10 w-full h-full bg-black bg-opacity-60 backdrop-blur-3xl;
 }

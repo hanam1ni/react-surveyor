@@ -24,11 +24,10 @@ const Container = ({ children }: ContainerProps) => {
       }`}
       style={bgUrl !== null ? { backgroundImage: `url('${bgUrl}')` } : {}}
     >
-      <div className={styles['backdrop']}>
-        <BackgroundContext.Provider value={{ setBgUrl }}>
-          {children}
-        </BackgroundContext.Provider>
-      </div>
+      <BackgroundContext.Provider value={{ setBgUrl }}>
+        <div className="h-screen relative z-20">{children}</div>
+      </BackgroundContext.Provider>
+      <div className={styles['backdrop']} />
     </div>
   );
 };

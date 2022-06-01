@@ -92,7 +92,7 @@ const PasswordReset: NextPage = () => {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center text-gray-400">
+    <div className="h-full flex justify-center items-center text-gray-400">
       <BackNavigation path="/login" />
       <div className="w-80">
         <div className="w-80 text-center">
