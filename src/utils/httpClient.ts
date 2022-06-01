@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+import qs from 'qs';
 
 import { refreshToken } from 'services/user';
 
@@ -10,6 +11,7 @@ export interface ErrorResponse {
 
 const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
+  paramsSerializer: (params) => qs.stringify(params),
 });
 
 httpClient.interceptors.response.use(
