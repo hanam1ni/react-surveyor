@@ -7,10 +7,10 @@ import { format } from 'date-fns';
 
 import { BackgroundContext } from 'components/Container';
 import Layout from 'components/Layout';
+import SurveyListSkeleton from 'components/SurveyListSkeleton';
 import useSession from 'hooks/useSession';
 import { listSurveys } from 'services/survey';
 import { ACTIONS, StoreContext } from 'store';
-import SurveyListSkeleton from 'components/SurveyListSkeleton';
 
 const SurveyListPlaceholder = () => (
   <section className="flex flex-col">
