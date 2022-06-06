@@ -2,25 +2,33 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import useSession from './useSession';
 import { getUserProfile } from 'services/user';
+import { ACTIONS, StoreProvider } from 'store';
+import reducer from 'store/reducer';
 
 import { build } from '@support/factory';
 import { mockUseRouter } from '@support/useRouter';
 
 jest.mock('services/user');
+jest.mock('store/reducer');
 
 describe('useSession', () => {
   describe('when fetch user profile successful', () => {
-    it('returns the user profile and sets loading status as false', async () => {
+    it('sets the user profile in the store and loading status as false', async () => {
       const userResponse = build('user');
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockResolvedValue(userResponse);
 
-      const { result, waitForNextUpdate } = renderHook(() => useSession());
+      const { result, waitForNextUpdate } = renderHook(() => useSession(), {
+        wrapper: StoreProvider,
+      });
 
       await waitForNextUpdate();
 
-      const { user, loading } = result.current;
-      expect(user).toBe(userResponse);
+      expect(reducer).toHaveBeenCalledWith(expect.any(Object), {
+        type: ACTIONS.SET_USER_PROFILE,
+        value: userResponse,
+      });
+      const { loading } = result.current;
       expect(loading).toBe(false);
     });
   });

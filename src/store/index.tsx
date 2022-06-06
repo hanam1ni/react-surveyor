@@ -2,9 +2,11 @@ import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 import reducer, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey } from 'services/survey';
+import { UserProfile } from 'services/user';
 
 export interface StoreType {
   surveys: Survey[];
+  userProfile: UserProfile | null;
 }
 
 interface StoreContextType {
@@ -16,8 +18,9 @@ interface StoreProviderProps {
   children: ReactNode;
 }
 
-const initialStore = {
+export const initialStore = {
   surveys: [],
+  userProfile: null,
 };
 
 export const StoreContext = createContext<StoreContextType>(
