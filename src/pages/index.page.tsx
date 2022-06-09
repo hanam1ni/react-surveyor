@@ -13,6 +13,8 @@ import useSession from 'hooks/useSession';
 import { listSurveys } from 'services/survey';
 import { ACTIONS, StoreContext } from 'store';
 
+const CURRENT_DATE_FORMAT = 'cccc, LLLL d';
+
 const SurveyListPlaceholder = () => (
   <section className="flex flex-col">
     <Image width={64} height={64} src="/icon/smiley.svg" alt="smiley icon" />
@@ -52,7 +54,7 @@ const Home: NextPage = () => {
             <>
               <section className="mb-36">
                 <div className="text-xs font-extrabold uppercase">
-                  {format(currentDate, 'cccc, LLLL d')}
+                  {format(currentDate, CURRENT_DATE_FORMAT)}
                 </div>
                 <div className="text-4xl font-extrabold">Today</div>
               </section>
