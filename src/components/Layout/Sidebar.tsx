@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import Avatar from './Avatar';
 import { logout, UserProfile } from 'services/user';
+import { ACTIONS, StoreContext } from 'store';
 
 import styles from './Layout.module.css';
 
@@ -14,9 +15,11 @@ interface SidebarProps {
 
 const Sidebar = ({ show, setShow, user }: SidebarProps) => {
   const router = useRouter();
+  const { dispatchAction } = useContext(StoreContext);
 
   const onLogout = async () => {
     await logout();
+    dispatchAction({ type: ACTIONS.CLEAR_STORE });
     router.push('/login');
   };
 

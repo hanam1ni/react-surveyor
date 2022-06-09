@@ -10,6 +10,8 @@ import FlashNotice from 'components/FlashNotice';
 import Input from 'components/Input';
 import useSession from 'hooks/useSession';
 import { login } from 'services/user';
+import { StoreContext } from 'store';
+
 interface FormInput {
   email: string;
   password: string;
@@ -30,7 +32,7 @@ const validateForm = (formInput: FormInput) => {
 
 const Login: NextPage = () => {
   const router = useRouter();
-  const { user } = useSession({ redirect: false });
+  useSession({ redirect: false });
 
   const [formInput, setformInput] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState<string[]>([]);
@@ -38,16 +40,19 @@ const Login: NextPage = () => {
   const [formLoading, setFormLoading] = useState(false);
 
   const { setBgUrl } = useContext(BackgroundContext);
+  const {
+    store: { userProfile },
+  } = useContext(StoreContext);
 
   useEffect(() => {
     setBgUrl('/auth-background.svg');
   }, [setBgUrl]);
 
   useEffect(() => {
-    if (user) {
+    if (userProfile) {
       router.push('/');
     }
-  }, [user, router]);
+  }, [userProfile, router]);
 
   useEffect(() => {
     if (!formSubmitted) {

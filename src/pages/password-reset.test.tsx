@@ -1,6 +1,5 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
-import Container from 'components/Container';
 import PasswordReset from 'pages/password-reset.page';
 import { getUserProfile, resetPassword } from 'services/user';
 
@@ -107,11 +106,7 @@ describe('Password reset page', () => {
       const mockedGetUserProfile = getUserProfile as jest.Mock;
       mockedGetUserProfile.mockResolvedValue(user);
 
-      render(
-        <Container>
-          <PasswordReset />
-        </Container>
-      );
+      renderPage(<PasswordReset />);
 
       await waitFor(() => expect(push).toHaveBeenCalledWith('/'));
     });

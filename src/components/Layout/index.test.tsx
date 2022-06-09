@@ -9,11 +9,14 @@ import Layout from 'components/Layout';
 import Avatar from './Avatar';
 import Sidebar from './Sidebar';
 import { logout, UserProfile } from 'services/user';
+import { ACTIONS, StoreProvider } from 'store';
+import reducer from 'store/reducer';
 
 import { build } from '@support/factory';
 import { mockUseRouter } from '@support/useRouter';
 
 jest.mock('services/user');
+jest.mock('store/reducer');
 
 describe('Layout', () => {
   it('renders the given element', () => {
@@ -101,12 +104,17 @@ describe('Sidebar', () => {
       mockedLogout.mockResolvedValue(null);
 
       const { getByText } = render(
-        <Sidebar show={true} setShow={setShow} user={user} />
+        <StoreProvider>
+          <Sidebar show={true} setShow={setShow} user={user} />
+        </StoreProvider>
       );
 
       fireEvent.click(getByText('Logout'));
 
       await waitFor(() => expect(push).toHaveBeenCalledWith('/login'));
+      expect(reducer).toHaveBeenCalledWith(expect.any(Object), {
+        type: ACTIONS.CLEAR_STORE,
+      });
     });
   });
 });

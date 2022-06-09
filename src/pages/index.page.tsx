@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 
 import { BackgroundContext } from 'components/Container';
 import Layout from 'components/Layout';
+import PageLoader from 'components/PageLoader';
 import SurveyListSkeleton from 'components/SurveyListSkeleton';
 import useSession from 'hooks/useSession';
 import { listSurveys } from 'services/survey';
@@ -25,7 +26,7 @@ const SurveyListPlaceholder = () => (
 );
 
 const Home: NextPage = () => {
-  const { user } = useSession();
+  useSession();
   const [surveyFetching, setSurveyFetching] = useState(true);
   const { setBgUrl } = useContext(BackgroundContext);
   const { store, dispatchAction } = useContext(StoreContext);
@@ -46,38 +47,40 @@ const Home: NextPage = () => {
   const surveyLoading = store.surveys.length === 0 && surveyFetching;
 
   return (
-    <Layout user={user}>
-      <div className="w-full max-w-3xl mx-auto text-white">
-        <SurveyListSkeleton isLoading={surveyLoading}>
-          <>
-            <section className="mb-36">
-              <div className="text-xs font-extrabold uppercase">
-                {format(currentDate, CURRENT_DATE_FORMAT)}
-              </div>
-              <div className="text-4xl font-extrabold">Today</div>
-            </section>
-            {store.surveys.length !== 0 ? (
-              <section className="flex items-center">
-                {store.surveys.map((survey) => (
-                  <div className="mx-4" key={survey.id}>
-                    <img
-                      src={survey.coverImageUrl}
-                      width={280}
-                      height={70}
-                      alt={`${survey.id} survey image`}
-                    />
-                    <h2>{survey.title}</h2>
-                    <div>{survey.description}</div>
-                  </div>
-                ))}
+    <PageLoader isLoading={!store.userProfile}>
+      <Layout user={store.userProfile}>
+        <div className="w-full max-w-3xl mx-auto text-white">
+          <SurveyListSkeleton isLoading={surveyLoading}>
+            <>
+              <section className="mb-36">
+                <div className="text-xs font-extrabold uppercase">
+                  {format(currentDate, CURRENT_DATE_FORMAT)}
+                </div>
+                <div className="text-4xl font-extrabold">Today</div>
               </section>
-            ) : (
-              <SurveyListPlaceholder />
-            )}
-          </>
-        </SurveyListSkeleton>
-      </div>
-    </Layout>
+              {store.surveys.length !== 0 ? (
+                <section className="flex items-center">
+                  {store.surveys.map((survey) => (
+                    <div className="mx-4" key={survey.id}>
+                      <img
+                        src={survey.coverImageUrl}
+                        width={280}
+                        height={70}
+                        alt={`${survey.id} survey image`}
+                      />
+                      <h2>{survey.title}</h2>
+                      <div>{survey.description}</div>
+                    </div>
+                  ))}
+                </section>
+              ) : (
+                <SurveyListPlaceholder />
+              )}
+            </>
+          </SurveyListSkeleton>
+        </div>
+      </Layout>
+    </PageLoader>
   );
 };
 

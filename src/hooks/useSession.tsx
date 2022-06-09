@@ -1,24 +1,24 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { getUserProfile, UserProfile } from 'services/user';
+import { getUserProfile } from 'services/user';
+import { ACTIONS, StoreContext } from 'store';
 import { ErrorResponse } from 'utils/httpClient';
 
 const useSession = ({ redirect = true } = {}): {
-  user: UserProfile | null;
   loading: boolean;
   error: ErrorResponse | null;
 } => {
   const router = useRouter();
-  const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<ErrorResponse | null>(null);
+  const { dispatchAction } = useContext(StoreContext);
 
   useEffect(() => {
     getUserProfile()
       .then((userProfile) => {
         setLoading(false);
-        setUser(userProfile);
+        dispatchAction({ type: ACTIONS.SET_USER_PROFILE, value: userProfile });
       })
       .catch((errorResponse) => {
         setError(errorResponse);
@@ -26,7 +26,7 @@ const useSession = ({ redirect = true } = {}): {
       });
   }, []);
 
-  return { user, loading, error };
+  return { loading, error };
 };
 
 export default useSession;
