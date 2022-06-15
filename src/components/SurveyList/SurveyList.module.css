@@ -1,0 +1,8 @@
+.swiperPagination {
+  /* Override default Swiper style */
+  bottom: 40px !important;
+}
+
+.swiperPaginationBullet {
+  background: #fff;
+}

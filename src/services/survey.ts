@@ -1,14 +1,20 @@
-import { get } from 'utils/httpClient';
+import { get, PageMeta } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
 export interface Survey {
   id: string;
   title: string;
   description: string;
+  coverImageThumbnailUrl: string;
   coverImageUrl: string;
 }
 
-export const listSurveys = async (options = {}): Promise<Survey[]> => {
+interface SurveyReponse {
+  surveys: Survey[];
+  meta: PageMeta;
+}
+
+export const listSurveys = async (options = {}): Promise<SurveyReponse> => {
   const { accessToken } = getUserToken();
 
   const response = await get('/surveys', {
@@ -16,12 +22,16 @@ export const listSurveys = async (options = {}): Promise<Survey[]> => {
     ...options,
   });
 
-  return response.data.map((survey: any) => parseSurvey(survey));
+  return {
+    surveys: response.data.map((survey: any) => parseSurvey(survey)),
+    meta: response.meta,
+  };
 };
 
 const parseSurvey = (surveyResponse: any): Survey => ({
   id: surveyResponse.id,
   title: surveyResponse.attributes.title,
   description: surveyResponse.attributes.description,
-  coverImageUrl: surveyResponse.attributes.coverImageUrl,
+  coverImageThumbnailUrl: surveyResponse.attributes.coverImageUrl,
+  coverImageUrl: `${surveyResponse.attributes.coverImageUrl}l`,
 });
