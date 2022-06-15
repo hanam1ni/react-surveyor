@@ -1,0 +1,77 @@
+{
+  "data": [
+    {
+      "id": "e81ca9000387e953ef2d",
+      "type": "survey",
+      "attributes": {
+        "title": "Tree Tops Australia",
+        "description": "Love to hear from you",
+        "thank_email_above_threshold": "\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eDear {name},\u003cbr /\u003e\u003cbr /\u003eThank you for visiting\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eTree Top Adventure Park Central Coast\u003c/span\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003e! We love to hear from our guests and appreciate your honest opinion and give us your impression about Flying Hanuman, in particular what you liked and what we could do better. Many travelers appreciate the comments of other guests. Therefore, we give you in this survey opportunity to give your opinion on our TripAdvisor page. By \u003ca href=\"https://www.tripadvisor.com.au/Attraction_Review-g2223243-d2082184-Reviews-TreeTops-Wyong_Creek_New_South_Wales.html\"\u003eclicking here\u003c/a\u003e, you will be directed to our page.\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you for your time. We look forward to your next visit to Tree Top Adventure Park Central Coast\u003cbr /\u003e\u003cbr /\u003eYours sincerely,\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eTree Top Adventure Park Central Coast\u0026nbsp;\u003c/span\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eManagement Team\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e",
+        "thank_email_below_threshold": "\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eDear {name},\u003cbr /\u003e\u003cbr /\u003eThank you for visiting\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eTree Top Adventure Park Central Coast\u003c/span\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003e! We love to hear from our guests and appreciate your honest opinion and give us your impression about Flying Hanuman, in particular what you liked and what we could do better.\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you for your time. We look forward to your next visit to\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eTree Top Adventure Park Central Coast!\u003c/span\u003e\u003cbr /\u003e\u003cbr /\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eYours sincerely,\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eTree Top Adventure Park Central Coast\u003c/span\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003e\u0026nbsp;Management Team\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e",
+        "is_active": true,
+        "cover_image_url": "https://dhdbhh0jsld0o.cloudfront.net/m/c96c480fc8b69d50e75a_",
+        "created_at": "2017-01-09T06:14:29.646Z",
+        "active_at": "2016-12-06T05:16:00.000Z",
+        "inactive_at": null,
+        "survey_type": "Travel"
+      },
+      "relationships": {
+        "questions": {
+          "data": [
+            { "id": "57fa0a14eb964c14ff17", "type": "question" },
+            { "id": "90a839f876d444a40a98", "type": "question" },
+            { "id": "bc65d699183db3ad95a6", "type": "question" },
+            { "id": "8be433827d36cf3bfc33", "type": "question" },
+            { "id": "ec73d23a0eb2d4bec8e7", "type": "question" },
+            { "id": "480afb24d13f98d26155", "type": "question" },
+            { "id": "4c1a21e58087eb4f68dc", "type": "question" },
+            { "id": "67942e9c2f32f502d5c1", "type": "question" },
+            { "id": "427517866176fbd84c8e", "type": "question" },
+            { "id": "cce09151744645b3c2f0", "type": "question" },
+            { "id": "1e950ac6010c39cbb9ac", "type": "question" },
+            { "id": "fe27896b0800fd4b5f71", "type": "question" },
+            { "id": "1bd60162c3f79826aa76", "type": "question" },
+            { "id": "221f5c364c03206b2e61", "type": "question" },
+            { "id": "6b2282e1303b29686d89", "type": "question" },
+            { "id": "d3a717a4a08378f52177", "type": "question" },
+            { "id": "2be447f9c6446027467f", "type": "question" }
+          ]
+        }
+      }
+    },
+    {
+      "id": "9be7bb2754329f78a6e3",
+      "type": "survey",
+      "attributes": {
+        "title": "Westside Lounge",
+        "description": "We'd love to hear from you!",
+        "thank_email_above_threshold": "\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eDear {name},\u003c/span\u003e\u003c/span\u003e\u003cbr /\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you for visiting Westside Lounge at\u0026nbsp;Dubai\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003e International Hotel\u0026nbsp;\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eand for taking the time to complete our brief survey. We are constantly striving to improve and your feedback allows us to make the experience even better for you on your next visit. Each survey is read individually by senior staff and discussed with the team in daily meetings.\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eWe would appreciate it if you could please spend a few moments to review us on TripAdvisor. By \u003ca href=\"https://www.tripadvisor.com/Restaurant_Review-g295424-d11765915-Reviews-West_Side_Lounge-Dubai_Emirate_of_Dubai.html\"\u003eclicking here \u003c/a\u003eyou will be redirected to our TripAdvisor page.\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you again and we look forward to welcoming you back soon.\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eKind regards,\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThe Team at Westside Lounge\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003e,\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003e\u0026nbsp;Dubai International Hotel\u0026nbsp;\u003c/span\u003e\u003c/div\u003e",
+        "thank_email_below_threshold": "\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eDear {name},\u003c/span\u003e\u003c/span\u003e\u003cbr /\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you for visiting\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eWestside Lounge\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003e\u0026nbsp;\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eat\u0026nbsp;Dubai International Hotel and for taking the time to complete our brief survey. We are constantly striving to improve and your feedback allows us to make the experience even better for you on your next visit. Each survey is read individually by senior staff and discussed with the team in daily meetings.\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThank you again and we look forward to welcoming you back soon.\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eKind regards,\u003c/span\u003e\u003c/span\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan style=\"font-size:14px\"\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif\"\u003eThe Team at\u0026nbsp;\u003c/span\u003e\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eWestside Lounge\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003e,\u0026nbsp;\u003c/span\u003e\u003cspan style=\"font-family:arial,helvetica,sans-serif; font-size:14px\"\u003eDubai International Hotel\u0026nbsp;\u003c/span\u003e\u003c/div\u003e",
+        "is_active": true,
+        "cover_image_url": "https://dhdbhh0jsld0o.cloudfront.net/m/fc5d33357ececa60c624_",
+        "created_at": "2017-01-09T03:20:37.529Z",
+        "active_at": "2016-11-15T09:48:00.000Z",
+        "inactive_at": null,
+        "survey_type": "Restaurant"
+      },
+      "relationships": {
+        "questions": {
+          "data": [
+            { "id": "5cde06d40c97400b9497", "type": "question" },
+            { "id": "6dbd9ed11f0505ec6752", "type": "question" },
+            { "id": "e23fe94bd302032795e9", "type": "question" },
+            { "id": "c49459beb5ba2f7ab3d6", "type": "question" },
+            { "id": "4530e32fa6c7bbce458f", "type": "question" },
+            { "id": "68137dc62074418de9ea", "type": "question" },
+            { "id": "5236d7b15d3db6750584", "type": "question" },
+            { "id": "18211752cc7ffb125ca9", "type": "question" },
+            { "id": "1df96df69406fe8315c2", "type": "question" },
+            { "id": "7109be14bdb67081b263", "type": "question" },
+            { "id": "e807c0557248cb9760d8", "type": "question" }
+          ]
+        }
+      }
+    }
+  ],
+  "meta": { "page": 2, "pages": 2, "page_size": 5, "records": 7 }
+}

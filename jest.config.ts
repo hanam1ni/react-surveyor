@@ -81,6 +81,8 @@ export default {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': '<rootDir>/config/__mocks__/stylesMock.ts',
+    'swiper/css(.*)$': '<rootDir>/config/__mocks__/stylesMock.ts',
+    'swiper/react': '<rootDir>/node_modules/swiper/react/swiper-react.js',
     '^@support/(.*)$': '<rootDir>/test/support/$1',
   },
 
@@ -170,7 +172,7 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  transformIgnorePatterns: ['node_modules/(?!swiper|ssr-window|dom7).*/'],
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

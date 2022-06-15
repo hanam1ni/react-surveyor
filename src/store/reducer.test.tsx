@@ -2,7 +2,7 @@ import { initialStore } from '.';
 import dispatchAction, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey } from 'services/survey';
 
-import { build } from '@support/factory';
+import { build, buildBatchInfo } from '@support/factory';
 
 describe('Dispatch action', () => {
   describe('given CLEAR_STORE as an action type', () => {
@@ -13,7 +13,18 @@ describe('Dispatch action', () => {
       } as ActionPayloadType;
 
       const updatedStore = dispatchAction(
-        { ...initialStore, surveys: [survey] },
+        {
+          ...initialStore,
+          surveys: {
+            data: [survey],
+            batchInfo: {
+              batch: 2,
+              totalBatches: 2,
+              batchSize: 10,
+              totalRecords: 20,
+            },
+          },
+        },
         action
       );
 
@@ -26,12 +37,28 @@ describe('Dispatch action', () => {
       const survey = build('survey') as Survey;
       const action = {
         type: ACTIONS.SET_SURVEYS,
-        value: [survey],
+        value: {
+          data: [survey],
+          batchInfo: {
+            batch: 2,
+            totalBatches: 2,
+            batchSize: 10,
+            totalRecords: 20,
+          },
+        },
       } as ActionPayloadType;
 
       const updatedStore = dispatchAction(initialStore, action);
 
-      expect(updatedStore.surveys[0]).toMatchObject(survey);
+      expect(updatedStore.surveys).toMatchObject({
+        data: [survey],
+        batchInfo: {
+          batch: 2,
+          totalBatches: 2,
+          batchSize: 10,
+          totalRecords: 20,
+        },
+      });
     });
   });
 
