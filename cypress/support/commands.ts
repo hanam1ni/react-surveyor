@@ -1,7 +1,8 @@
 import '@testing-library/cypress/add-commands';
+import '@4tw/cypress-drag-drop';
 
 Cypress.Commands.add('login', () => {
-  cy.intercept(`${Cypress.env('NEXT_PUBLIC_BASE_API_URL')}/me`, {
+  cy.intercept(`${Cypress.env('NEXT_PUBLIC_BASE_API_URL')}me`, {
     fixture: 'requests/userProfile',
   }).as('getUserProfile');
 });
