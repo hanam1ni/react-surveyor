@@ -3,7 +3,7 @@ import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 import reducer, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey } from 'services/survey';
 import { UserProfile } from 'services/user';
-import { BatchInfo } from 'utils/httpClient';
+import { BatchInfo } from 'utils/pagination';
 
 export interface StoreType {
   surveys: {

@@ -9,13 +9,6 @@ export interface ErrorResponse {
   body: any | undefined;
 }
 
-export interface BatchInfo {
-  batch: number;
-  totalBatches: number;
-  batchSize: number;
-  totalRecords: number;
-}
-
 const httpClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
   paramsSerializer: (params) => qs.stringify(params),
@@ -68,10 +61,3 @@ export const post = async (
   body = {},
   options = {}
 ): Promise<{ [key: string]: any }> => httpClient.post(url, body, options);
-
-export const parseBatchInfo = (meta: any): BatchInfo => ({
-  batch: meta.page,
-  totalBatches: meta.pages,
-  batchSize: meta.page_size,
-  totalRecords: meta.records,
-});

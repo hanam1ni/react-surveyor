@@ -1,4 +1,5 @@
-import { BatchInfo, get, parseBatchInfo } from 'utils/httpClient';
+import { get } from 'utils/httpClient';
+import { BatchInfo, parseBatchInfo } from 'utils/pagination';
 import { getUserToken } from 'utils/userToken';
 
 export interface Survey {
