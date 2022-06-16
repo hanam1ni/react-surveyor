@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     store: {
       surveys: {
         data: surveys,
-        pageInfo: { currentPage, totalPages },
+        batchInfo: { batch, totalBatches },
       },
       userProfile,
     },
@@ -47,12 +47,12 @@ const Home: NextPage = () => {
   }, [setBgUrl]);
 
   useEffect(() => {
-    listSurveys().then(({ surveys, meta }) => {
+    listSurveys().then(({ surveys, batchInfo }) => {
       dispatchAction({
         type: ACTIONS.SET_SURVEYS,
         value: {
           data: surveys,
-          pageInfo: { currentPage: 1, totalPages: meta.pages },
+          batchInfo: batchInfo,
         },
       });
 
@@ -64,24 +64,25 @@ const Home: NextPage = () => {
   const surveyLoading = surveys.length === 0 && surveyFetching;
   const currentDate = new Date();
 
+  const fetchSurveys = async (batch = 1) => {
+    const response = await listSurveys({
+      params: { page: { number: batch + 1 } },
+    });
+
+    dispatchAction({
+      type: ACTIONS.SET_SURVEYS,
+      value: {
+        data: surveys.concat(response.surveys),
+        batchInfo: response.batchInfo,
+      },
+    });
+  };
+
   const onSlideChange = async (swiper: Swiper) => {
     setBgUrl(surveys[swiper.activeIndex].coverImageUrl);
 
-    if (swiper.isEnd && currentPage < totalPages) {
-      const response = await listSurveys({
-        params: { page: { number: currentPage + 1 } },
-      });
-
-      dispatchAction({
-        type: ACTIONS.SET_SURVEYS,
-        value: {
-          data: surveys.concat(response.surveys),
-          pageInfo: {
-            currentPage: response.meta.page,
-            totalPages: response.meta.pages,
-          },
-        },
-      });
+    if (swiper.isEnd && batch < totalBatches) {
+      await fetchSurveys(batch + 1);
     }
   };
 

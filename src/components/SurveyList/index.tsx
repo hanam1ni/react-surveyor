@@ -39,7 +39,7 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={`swiper-pagination ${styles.swiperPagination}`}></div>
+      <div className={`swiper-pagination ${styles.swiperPagination}`} />
     </div>
   );
 };

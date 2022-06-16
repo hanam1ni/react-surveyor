@@ -1,4 +1,4 @@
-import { get, PageMeta } from 'utils/httpClient';
+import { BatchInfo, get, parseBatchInfo } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
 export interface Survey {
@@ -9,12 +9,12 @@ export interface Survey {
   coverImageUrl: string;
 }
 
-interface SurveyReponse {
+interface SurveyResponse {
   surveys: Survey[];
-  meta: PageMeta;
+  batchInfo: BatchInfo;
 }
 
-export const listSurveys = async (options = {}): Promise<SurveyReponse> => {
+export const listSurveys = async (options = {}): Promise<SurveyResponse> => {
   const { accessToken } = getUserToken();
 
   const response = await get('/surveys', {
@@ -24,7 +24,7 @@ export const listSurveys = async (options = {}): Promise<SurveyReponse> => {
 
   return {
     surveys: response.data.map((survey: any) => parseSurvey(survey)),
-    meta: response.meta,
+    batchInfo: parseBatchInfo(response.meta),
   };
 };
 
