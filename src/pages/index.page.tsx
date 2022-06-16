@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     store: {
       surveys: {
         data: surveys,
-        meta: { currentPage, totalPages },
+        pageInfo: { currentPage, totalPages },
       },
       userProfile,
     },
@@ -52,7 +52,7 @@ const Home: NextPage = () => {
         type: ACTIONS.SET_SURVEYS,
         value: {
           data: surveys,
-          meta: { currentPage: 1, totalPages: meta.pages },
+          pageInfo: { currentPage: 1, totalPages: meta.pages },
         },
       });
 
@@ -66,6 +66,7 @@ const Home: NextPage = () => {
 
   const onSlideChange = async (swiper: Swiper) => {
     setBgUrl(surveys[swiper.activeIndex].coverImageUrl);
+
     if (swiper.isEnd && currentPage < totalPages) {
       const response = await listSurveys({
         params: { page: { number: currentPage + 1 } },
@@ -75,7 +76,7 @@ const Home: NextPage = () => {
         type: ACTIONS.SET_SURVEYS,
         value: {
           data: surveys.concat(response.surveys),
-          meta: {
+          pageInfo: {
             currentPage: response.meta.page,
             totalPages: response.meta.pages,
           },

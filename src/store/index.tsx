@@ -7,7 +7,7 @@ import { UserProfile } from 'services/user';
 export interface StoreType {
   surveys: {
     data: Survey[];
-    meta: { currentPage: number; totalPages: number };
+    pageInfo: { currentPage: number; totalPages: number };
   };
   userProfile: UserProfile | null;
 }
@@ -22,7 +22,7 @@ interface StoreProviderProps {
 }
 
 export const initialStore = {
-  surveys: { data: [], meta: { currentPage: 1, totalPages: 1 } },
+  surveys: { data: [], pageInfo: { currentPage: 1, totalPages: 1 } },
   userProfile: null,
 };
 
