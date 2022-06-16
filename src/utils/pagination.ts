@@ -8,6 +8,6 @@ export interface BatchInfo {
 export const parseBatchInfo = (meta: any): BatchInfo => ({
   batch: meta.page,
   totalBatches: meta.pages,
-  batchSize: meta.page_size,
+  batchSize: meta.pageSize,
   totalRecords: meta.records,
 });

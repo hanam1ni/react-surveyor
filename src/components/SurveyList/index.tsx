@@ -15,7 +15,7 @@ interface SurveyListProps {
 
 const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
   return (
-    <div data-testid="survey-list">
+    <div data-testid="survey-list" className={`${styles.surveyList}`}>
       <Swiper
         spaceBetween={50}
         slidesPerView={1}

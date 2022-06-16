@@ -1,8 +1,7 @@
-.swiperPagination {
-  /* Override default Swiper style */
-  bottom: 40px !important;
+.surveyList .swiperPagination {
+  bottom: 40px;
 }
 
-.swiperPaginationBullet {
+.surveyList .swiperPaginationBullet {
   background: #fff;
 }

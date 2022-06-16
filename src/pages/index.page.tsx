@@ -66,7 +66,7 @@ const Home: NextPage = () => {
 
   const fetchSurveys = async (batch = 1) => {
     const response = await listSurveys({
-      params: { page: { number: batch + 1 } },
+      params: { page: { number: batch } },
     });
 
     dispatchAction({

@@ -5,7 +5,7 @@ describe('parseBatchInfo', () => {
     const meta = {
       page: 1,
       pages: 2,
-      page_size: 5,
+      pageSize: 5,
       records: 6,
     };
 
