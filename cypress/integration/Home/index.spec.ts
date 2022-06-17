@@ -90,7 +90,7 @@ describe('Home page', () => {
         cy.wait(['@listSurveysPage1']);
 
         // Scroll the survey list to the end of first page
-        scrollSurveyItem(5);
+        scrollSurveyItem(4);
 
         // Last survey item of the first page
         cy.findByText('Health Land Spa').should('be.visible');
@@ -103,6 +103,30 @@ describe('Home page', () => {
         // First survey item of the second page
         cy.findByText('Tree Tops Australia').should('be.visible');
         cy.findByText('Love to hear from you').should('be.visible');
+      });
+    });
+
+    describe('click on survey item link', () => {
+      it('redirects user to survey detail page', () => {
+        const SURVEY_ID = 'd5de6a8f8f5f1cfe51bc';
+
+        cy.interceptApi('surveys', {
+          statusCode: 200,
+          fixture: 'requests/surveyListPage1',
+        }).as('listSurveys');
+
+        cy.visit('/');
+
+        cy.wait(['@listSurveys']);
+
+        cy.get(`[data-testid="survey-item-link-${SURVEY_ID}"]`).click({
+          force: true,
+        });
+
+        cy.url().should(
+          'eq',
+          Cypress.config().baseUrl + `/surveys/${SURVEY_ID}`
+        );
       });
     });
   });

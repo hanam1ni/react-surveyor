@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import { Mousewheel, Pagination, Swiper as SwiperInterface } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import SurveyItem from './SurveyItem';
 import { Survey } from 'services/survey';
 
 import 'swiper/css';
@@ -29,13 +29,7 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
       >
         {surveys.map((survey) => (
           <SwiperSlide key={survey.id}>
-            <img
-              src={survey.coverImageUrl}
-              className="w-full h-auto max-h-[360px] rounded-lg"
-              alt={`${survey.id} survey image`}
-            />
-            <h2>{survey.title}</h2>
-            <div>{survey.description}</div>
+            <SurveyItem survey={survey} />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -45,4 +39,3 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
 };
 
 export default SurveyList;
-/* eslint-enable @next/next/no-img-element */

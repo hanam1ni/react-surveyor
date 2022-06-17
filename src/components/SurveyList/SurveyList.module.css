@@ -5,3 +5,8 @@
 .surveyList .swiperPaginationBullet {
   background: #fff;
 }
+
+.surveyItemLink {
+  @apply w-14 h-14 flex justify-center items-center bg-white rounded-full 
+  cursor-pointer hover:bg-gray-400 transition-all duration-200;
+}

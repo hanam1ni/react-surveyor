@@ -6,6 +6,7 @@ import { UserProfile } from 'services/user';
 import { BatchInfo } from 'utils/pagination';
 
 export interface StoreType {
+  currentSurvey: any;
   surveys: {
     data: Survey[];
     batchInfo: BatchInfo;
@@ -23,6 +24,7 @@ interface StoreProviderProps {
 }
 
 export const initialStore = {
+  currentSurvey: null,
   surveys: {
     data: [],
     batchInfo: { batch: 1, totalBatches: 1, batchSize: 5, totalRecords: 0 },
