@@ -13,7 +13,7 @@ describe('StoreProvider', () => {
 
       return (
         <div>
-          {store.surveys?.length === 0
+          {store.surveys?.data.length === 0
             ? 'Empty Survey List'
             : 'Failed to access store'}
         </div>
@@ -37,10 +37,16 @@ describe('StoreProvider', () => {
         const { store, dispatchAction } = useContext(StoreContext);
 
         useEffect(() => {
-          dispatchAction({ type: ACTIONS.SET_SURVEYS, value: [survey] });
+          dispatchAction({
+            type: ACTIONS.SET_SURVEYS,
+            value: {
+              data: [survey],
+              pageInfo: { currentPage: 1, totalPages: 2 },
+            },
+          });
         }, [dispatchAction]);
 
-        return <div>{store.surveys[0]?.title}</div>;
+        return <div>{store.surveys.data[0]?.title}</div>;
       };
 
       const { getByText } = render(

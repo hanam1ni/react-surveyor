@@ -3,7 +3,7 @@ import * as surveyService from 'services/survey';
 import { get } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
-import { build } from '@support/factory';
+import { build, buildBatchInfo } from '@support/factory';
 
 jest.mock('utils/httpClient');
 jest.mock('utils/userToken');
@@ -27,18 +27,27 @@ describe('listSurveys', () => {
           },
         },
       ],
+      meta: {
+        batch: 1,
+        totalBatches: 1,
+        batchSize: 5,
+        totalRecords: 1,
+      },
     };
     const mockedGet = get as jest.Mock;
     mockedGet.mockResolvedValue(response);
 
-    const parsedSurveys = await surveyService.listSurveys();
+    const { surveys: parsedSurveys } = await surveyService.listSurveys();
 
-    expect(parsedSurveys[0].id).toMatch(response.data[0].id);
-    expect(parsedSurveys[0].title).toMatch(response.data[0].attributes.title);
-    expect(parsedSurveys[0].description).toMatch(
+    expect(parsedSurveys[0].id).toEqual(response.data[0].id);
+    expect(parsedSurveys[0].title).toEqual(response.data[0].attributes.title);
+    expect(parsedSurveys[0].description).toEqual(
       response.data[0].attributes.description
     );
-    expect(parsedSurveys[0].coverImageUrl).toMatch(
+    expect(parsedSurveys[0].coverImageUrl).toEqual(
+      `${response.data[0].attributes.coverImageUrl}l`
+    );
+    expect(parsedSurveys[0].coverImageThumbnailUrl).toEqual(
       response.data[0].attributes.coverImageUrl
     );
   });
