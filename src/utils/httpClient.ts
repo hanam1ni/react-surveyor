@@ -51,8 +51,13 @@ const handleInvalidAccessToken = async (error: AxiosError) => {
   }
 };
 
-export const get = async (url: string, options = {}) =>
-  httpClient.get(url, options);
+export const get = async (
+  url: string,
+  options = {}
+): Promise<{ [key: string]: any }> => httpClient.get(url, options);
 
-export const post = async (url: string, body = {}, options = {}) =>
-  httpClient.post(url, body, options);
+export const post = async (
+  url: string,
+  body = {},
+  options = {}
+): Promise<{ [key: string]: any }> => httpClient.post(url, body, options);

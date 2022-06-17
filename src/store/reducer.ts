@@ -12,7 +12,7 @@ export type ActionPayloadType =
   | { type: ACTIONS.CLEAR_STORE }
   | {
       type: ACTIONS.SET_SURVEYS;
-      value: Survey[];
+      value: StoreType['surveys'];
     }
   | {
       type: ACTIONS.SET_USER_PROFILE;

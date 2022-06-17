@@ -4,7 +4,7 @@ import Home from 'pages/index.page';
 import { listSurveys } from 'services/survey';
 import { getUserProfile } from 'services/user';
 
-import { build } from '@support/factory';
+import { build, buildBatchInfo } from '@support/factory';
 import { renderPage } from '@support/pageRenderer';
 
 jest.mock('services/user');
@@ -22,7 +22,10 @@ describe('Home', () => {
 
   it('renders the current date', async () => {
     const mockedlistSurveys = listSurveys as jest.Mock;
-    mockedlistSurveys.mockResolvedValue([]);
+    mockedlistSurveys.mockResolvedValue({
+      surveys: [],
+      batchInfo: buildBatchInfo([]),
+    });
 
     renderPage(<Home />);
 
@@ -34,7 +37,10 @@ describe('Home', () => {
   describe('when the surveys list is empty', () => {
     it('renders a placeholder', async () => {
       const mockedlistSurveys = listSurveys as jest.Mock;
-      mockedlistSurveys.mockResolvedValue([]);
+      mockedlistSurveys.mockResolvedValue({
+        surveys: [],
+        batchInfo: buildBatchInfo([]),
+      });
 
       renderPage(<Home />);
 
@@ -50,7 +56,10 @@ describe('Home', () => {
     it('renders the survey item', async () => {
       const survey = build('survey');
       const mockedlistSurveys = listSurveys as jest.Mock;
-      mockedlistSurveys.mockResolvedValue([survey]);
+      mockedlistSurveys.mockResolvedValue({
+        surveys: [survey],
+        batchInfo: buildBatchInfo([survey]),
+      });
 
       renderPage(<Home />);
 

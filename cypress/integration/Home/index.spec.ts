@@ -1,11 +1,18 @@
 describe('Home page', () => {
+  const scrollSurveyItem = (times = 1) => {
+    for (let time = 1; time <= times; time++) {
+      cy.get('[data-testid="survey-list"]').move({ deltaX: -500, deltaY: 100 });
+      cy.wait(150);
+    }
+  };
+
   beforeEach(() => {
     cy.clock(new Date(2022, 0, 1).getTime(), ['Date']);
     cy.login();
   });
 
   it('displays the current date', () => {
-    cy.interceptApi('/surveys', {
+    cy.interceptApi('surveys', {
       statusCode: 200,
       fixture: 'requests/emptySurveyList',
     }).as('listSurveys');
@@ -19,7 +26,7 @@ describe('Home page', () => {
 
   describe('when the surveys list is empty', () => {
     it('renders a placeholder', () => {
-      cy.interceptApi('/surveys', {
+      cy.interceptApi('surveys', {
         statusCode: 200,
         fixture: 'requests/emptySurveyList',
       }).as('listSurveys');
@@ -33,27 +40,70 @@ describe('Home page', () => {
   });
 
   describe('when the surveys list is not empty', () => {
-    it('renders the survey item', () => {
-      cy.interceptApi('/surveys', {
-        statusCode: 200,
-        fixture: 'requests/surveyList',
-      }).as('listSurveys');
+    describe('scroll through survey list', () => {
+      it('renders the survey item', () => {
+        cy.interceptApi('surveys', {
+          statusCode: 200,
+          fixture: 'requests/surveyListPage1',
+        }).as('listSurveys');
 
-      cy.visit('/');
+        cy.visit('/');
 
-      cy.wait(['@listSurveys']);
+        cy.wait(['@listSurveys']);
 
-      // Survey #1
-      cy.findByText('Scarlett Bangkok').should('exist');
-      cy.findByText("We'd love ot hear from you!").should('exist');
+        // Survey item #1
+        cy.findByText('Scarlett Bangkok').should('be.visible');
+        cy.findByText('Scarlett Bangkok Description').should('be.visible');
+        // Survey item #2
+        cy.findByText('ibis Bangkok Riverside').should('not.be.visible');
+        cy.findByText('ibis Bangkok Riverside Description').should(
+          'not.be.visible'
+        );
 
-      // Survey #2
-      cy.findByText('ibis Bangkok Riverside').should('exist');
-      cy.findByText('ibis Riverside Description').should('exist');
+        scrollSurveyItem();
 
-      // Survey #3
-      cy.findByText('21 on Rajah').should('exist');
-      cy.findByText('Rajah description').should('exist');
+        // Survey item #1
+        cy.findByText('Scarlett Bangkok').should('not.be.visible');
+        cy.findByText('Scarlett Bangkok Description').should('not.be.visible');
+        // Survey item #2
+        cy.findByText('ibis Bangkok Riverside').should('be.visible');
+        cy.findByText('ibis Bangkok Riverside Description').should(
+          'be.visible'
+        );
+      });
+    });
+
+    describe('scroll to the last item of survey list', () => {
+      it('fetches survey next page and renders the survey item', () => {
+        cy.interceptApi('surveys', {
+          statusCode: 200,
+          fixture: 'requests/surveyListPage1',
+        }).as('listSurveysPage1');
+
+        cy.interceptApi('surveys?page%5Bnumber%5D=2', {
+          statusCode: 200,
+          fixture: 'requests/surveyListPage2',
+        }).as('listSurveyPage2');
+
+        cy.visit('/');
+
+        cy.wait(['@listSurveysPage1']);
+
+        // Scroll the survey list to the end of first page
+        scrollSurveyItem(5);
+
+        // Last survey item of the first page
+        cy.findByText('Health Land Spa').should('be.visible');
+
+        // Fetch the next page
+        cy.wait(['@listSurveyPage2']);
+
+        scrollSurveyItem(1);
+
+        // First survey item of the second page
+        cy.findByText('Tree Tops Australia').should('be.visible');
+        cy.findByText('Love to hear from you').should('be.visible');
+      });
     });
   });
 });

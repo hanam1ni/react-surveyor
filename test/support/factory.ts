@@ -22,3 +22,10 @@ export const build = (name: string, attrs = {}): { [key: string]: any } => ({
   ...MODELS[name](),
   ...attrs,
 });
+
+export const buildBatchInfo = (list: object[], batch = 1): object => ({
+  batch,
+  totalBatches: Math.ceil(list.length / 5),
+  batchSize: 5,
+  totalRecords: list.length,
+});
