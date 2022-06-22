@@ -1,5 +1,3 @@
-import { BatchInfo } from 'utils/pagination';
-
 interface Survey {
   id: string;
   title: string;
@@ -9,6 +7,8 @@ interface Survey {
 }
 
 interface SurveyDetail extends Survey {
+  intro: SurveyQuestion;
+  outro: SurveyQuestion;
   questions: SurveyQuestion[];
 }
 
@@ -16,11 +16,13 @@ interface SurveyQuestion {
   id: string;
   displayOrder: number;
   coverImageUrl: string;
-  displayType: string;
+  displayType: QuestionType;
   text: string;
   pick: string;
   answers: SurveyAnswer[] | null;
 }
+
+type QuestionType = 'intro';
 
 interface SurveyAnswer {
   id: string;

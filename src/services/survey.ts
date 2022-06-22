@@ -1,5 +1,5 @@
 import { deserialize } from 'deserialize-json-api';
-import { sortBy } from 'lodash';
+import { partition, sortBy } from 'lodash';
 
 import { get } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
@@ -55,12 +55,26 @@ const parseSurvey = (surveyResponse: any): Survey => ({
 });
 
 const parseSurveyDetail = (surveyDetailResponse: any): SurveyDetail => {
-  const parsedQuestions = (<object[]>surveyDetailResponse.questions).map(
-    (question) => parseSurveyQuestion(question)
+  let surveyIntro, surveyOutro, questions;
+
+  [[surveyIntro], questions] = partition(
+    surveyDetailResponse.questions,
+    (question) => question.displayType == 'intro'
+  );
+
+  [[surveyOutro], questions] = partition(
+    questions,
+    (question) => question.displayType == 'outro'
+  );
+
+  const parsedQuestions = questions.map((question) =>
+    parseSurveyQuestion(question)
   );
 
   return {
     ...parseSurvey(surveyDetailResponse),
+    intro: parseSurveyQuestion(surveyIntro),
+    outro: parseSurveyQuestion(surveyOutro),
     questions: sortRecords(parsedQuestions),
   };
 };

@@ -1,12 +1,12 @@
 import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 import reducer, { ACTIONS, ActionPayloadType } from './reducer';
-import { Survey } from 'services/surveyInterfaces';
+import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 import { UserProfile } from 'services/user';
 import { BatchInfo } from 'utils/pagination';
 
 export interface StoreType {
-  currentSurvey: any;
+  currentSurvey: SurveyDetail | null;
   surveys: {
     data: Survey[];
     batchInfo: BatchInfo;
