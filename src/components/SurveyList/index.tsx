@@ -15,7 +15,7 @@ interface SurveyListProps {
 
 const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
   return (
-    <div data-testid="survey-list" className={`${styles.surveyList}`}>
+    <div data-testid="survey-list" className={`h-full ${styles.surveyList}`}>
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
@@ -33,7 +33,9 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={`swiper-pagination ${styles.swiperPagination}`} />
+      <div className={`${styles.swiperPaginationWrapper}`}>
+        <div className="swiper-pagination" />
+      </div>
     </div>
   );
 };
