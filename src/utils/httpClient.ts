@@ -19,9 +19,9 @@ httpClient.interceptors.response.use(
     return camelcaseKeys(response.data, { deep: true });
   },
   (error: AxiosError) => {
-    const [{ code: errorCode }] = error.response?.data.errors;
+    const { errors = [] } = error.response?.data;
 
-    if (errorCode == 'invalid_token') {
+    if (errors.find(({ code }: { code: string }) => code == 'invalid_token')) {
       return handleInvalidAccessToken(error);
     } else {
       throw {
@@ -42,7 +42,7 @@ const handleInvalidAccessToken = async (error: AxiosError) => {
       originalRequestConfig.headers.Authorization = `Bearer ${accessToken}`;
     }
 
-    return axios(originalRequestConfig);
+    return httpClient(originalRequestConfig);
   } catch {
     return Promise.reject({
       status: error.response?.status,

@@ -8,3 +8,5 @@ declare module '@fortawesome/fontawesome-svg-core/import.macro' {
   function solid(iconName: IconName): IconDefinition;
   function thin(iconName: IconName): IconDefinition;
 }
+
+declare module 'deserialize-json-api';

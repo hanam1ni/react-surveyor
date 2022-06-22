@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { render, waitFor } from '@testing-library/react';
 
-import { Survey } from 'services/survey';
+import { Survey } from 'services/surveyInterfaces';
 import { ACTIONS, StoreContext, StoreProvider } from 'store';
 
 import { build } from '@support/factory';

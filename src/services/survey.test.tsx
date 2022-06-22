@@ -3,7 +3,7 @@ import * as surveyService from 'services/survey';
 import { get } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
-import { build, buildBatchInfo } from '@support/factory';
+import { build } from '@support/factory';
 
 jest.mock('utils/httpClient');
 jest.mock('utils/userToken');

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import SurveyItem from './SurveyItem';
-import { Survey } from 'services/survey';
+import { Survey } from 'services/surveyInterfaces';
 
 import { build } from '@support/factory';
 

@@ -1,8 +1,8 @@
 import { initialStore } from '.';
 import dispatchAction, { ACTIONS, ActionPayloadType } from './reducer';
-import { Survey } from 'services/survey';
+import { Survey } from 'services/surveyInterfaces';
 
-import { build, buildBatchInfo } from '@support/factory';
+import { build } from '@support/factory';
 
 describe('Dispatch action', () => {
   describe('given CLEAR_STORE as an action type', () => {
