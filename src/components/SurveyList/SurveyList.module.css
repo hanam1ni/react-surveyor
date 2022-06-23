@@ -1,7 +1,16 @@
-.surveyList .swiperPagination {
-  bottom: 40px;
+.surveyList {
+  @apply relative h-full;
+}
+
+.surveyList .swiperPaginationWrapper {
+  @apply absolute bottom-3 w-full h-8;
 }
 
 .surveyList .swiperPaginationBullet {
   background: #fff;
+}
+
+.surveyItemLink {
+  @apply w-14 h-14 flex justify-center items-center bg-white rounded-full 
+  cursor-pointer hover:bg-gray-400 transition-all duration-200;
 }
