@@ -1,5 +1,9 @@
+.surveyList {
+  @apply relative h-full;
+}
+
 .surveyList .swiperPaginationWrapper {
-  @apply relative h-14 top-[20%];
+  @apply absolute bottom-3 w-full h-8;
 }
 
 .surveyList .swiperPaginationBullet {
