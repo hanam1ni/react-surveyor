@@ -5,6 +5,7 @@ import { get } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
 import { getUserToken } from 'utils/userToken';
 import {
+  QuestionType,
   Survey,
   SurveyDetail,
   SurveyQuestion,
@@ -55,33 +56,26 @@ const parseSurvey = (surveyResponse: any): Survey => ({
 });
 
 const parseSurveyDetail = (surveyDetailResponse: any): SurveyDetail => {
-  let surveyIntro, surveyOutro, questions;
+  let surveyIntro, surveyOutro;
 
-  [[surveyIntro], questions] = partition(
-    surveyDetailResponse.questions,
-    (question) => question.displayType == 'intro'
-  );
-
-  [[surveyOutro], questions] = partition(
-    questions,
-    (question) => question.displayType == 'outro'
-  );
-
-  const parsedQuestions = questions.map((question) =>
+  let questions = surveyDetailResponse.questions.map((question: any) =>
     parseSurveyQuestion(question)
   );
+
+  [[surveyIntro], questions] = extractQuestionType(questions, 'intro');
+  [[surveyOutro], questions] = extractQuestionType(questions, 'outro');
 
   return {
     ...parseSurvey(surveyDetailResponse),
     intro: parseSurveyQuestion(surveyIntro),
     outro: parseSurveyQuestion(surveyOutro),
-    questions: sortRecords(parsedQuestions),
+    questions: sortRecords(questions),
   };
 };
 
 const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
-  const parsedAnswer = (<object[] | undefined>questionResponse.answers)?.map(
-    (answer) => parseSurveyAnswer(answer)
+  const parsedAnswer = (<object[]>questionResponse.answers)?.map((answer) =>
+    parseSurveyAnswer(answer)
   );
 
   return {
@@ -91,7 +85,7 @@ const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
     displayType: questionResponse.displayType,
     text: questionResponse.text,
     pick: questionResponse.pick,
-    answers: parsedAnswer ? sortRecords(parsedAnswer) : null,
+    answers: sortRecords(parsedAnswer),
   };
 };
 
@@ -100,6 +94,14 @@ const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({
   displayOrder: answerResponse.displayOrder,
   text: answerResponse.text,
 });
+
+const extractQuestionType = (
+  questions: SurveyQuestion[],
+  displayType: QuestionType
+): [
+  extractedQuestions: SurveyQuestion[],
+  remainingQuestions: SurveyQuestion[]
+] => partition(questions, (question) => question.displayType == displayType);
 
 const sortRecords = (records: object) =>
   sortBy(records, [({ displayOrder }) => displayOrder]);

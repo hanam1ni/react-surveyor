@@ -1,6 +1,6 @@
 import { initialStore } from '.';
 import dispatchAction, { ACTIONS, ActionPayloadType } from './reducer';
-import { Survey } from 'services/surveyInterfaces';
+import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 
 import { build } from '@support/factory';
 
@@ -29,6 +29,21 @@ describe('Dispatch action', () => {
       );
 
       expect(updatedStore).toMatchObject(initialStore);
+    });
+  });
+
+  describe('given SET_CURRENT_SURVEY as an action type', () => {
+    it('returns updated store with given survey detail', () => {
+      const surveyDetail = build('surveyDetail') as SurveyDetail;
+
+      const action = {
+        type: ACTIONS.SET_CURRENT_SURVEY,
+        value: surveyDetail,
+      } as ActionPayloadType;
+
+      const updatedStore = dispatchAction(initialStore, action);
+
+      expect(updatedStore.currentSurvey).toMatchObject(surveyDetail);
     });
   });
 

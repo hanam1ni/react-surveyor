@@ -19,10 +19,10 @@ interface SurveyQuestion {
   displayType: QuestionType;
   text: string;
   pick: string;
-  answers: SurveyAnswer[] | null;
+  answers: SurveyAnswer[];
 }
 
-type QuestionType = 'intro';
+type QuestionType = 'intro' | 'outro';
 
 interface SurveyAnswer {
   id: string;
@@ -30,4 +30,10 @@ interface SurveyAnswer {
   text: string;
 }
 
-export type { Survey, SurveyDetail, SurveyQuestion, SurveyAnswer };
+export type {
+  QuestionType,
+  Survey,
+  SurveyDetail,
+  SurveyQuestion,
+  SurveyAnswer,
+};
