@@ -12,18 +12,19 @@ interface SurveyItemProps {
 
 const SurveyItem = ({ survey }: SurveyItemProps) => {
   return (
-    <>
-      <img
-        src={survey.coverImageUrl}
-        className="w-full h-auto max-h-[360px] mb-8 rounded-lg"
-        alt={`${survey.id} survey image`}
-      />
-      <div className="flex justify-between">
-        <div>
-          <h2 className="text-2xl mb-2">{survey.title}</h2>
-          <div className="text-gray-400">{survey.description}</div>
-        </div>
-        <Link href={`/surveys/${survey.id}`} passHref>
+    <Link href={`/surveys/${survey.id}`} passHref>
+      <div className="cursor-pointer">
+        <img
+          src={survey.coverImageUrl}
+          className="w-full h-auto max-h-[360px] mb-8 rounded-lg"
+          alt={survey.title}
+        />
+        <div className="flex justify-between">
+          <div>
+            <h1 className="text-2xl mb-2">{survey.title}</h1>
+            <div className="text-gray-400">{survey.description}</div>
+          </div>
+
           <div
             className={styles.surveyItemLink}
             data-testid={`survey-item-link-${survey.id}`}
@@ -35,9 +36,9 @@ const SurveyItem = ({ survey }: SurveyItemProps) => {
               alt="right chevron icon"
             />
           </div>
-        </Link>
+        </div>
       </div>
-    </>
+    </Link>
   );
 };
 

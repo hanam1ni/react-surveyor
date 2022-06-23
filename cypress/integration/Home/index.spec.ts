@@ -106,7 +106,7 @@ describe('Home page', () => {
       });
     });
 
-    describe('click on survey item link', () => {
+    describe('click on the survey item link', () => {
       it('redirects user to survey detail page', () => {
         const SURVEY_ID = 'd5de6a8f8f5f1cfe51bc';
 
