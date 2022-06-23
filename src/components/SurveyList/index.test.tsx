@@ -11,7 +11,7 @@ describe('SurveyItem', () => {
 
     const { getByAltText, getByText } = render(<SurveyItem survey={survey} />);
 
-    expect(getByAltText(`${survey.id} survey image`)).toBeInTheDocument();
+    expect(getByAltText(survey.title)).toBeInTheDocument();
     expect(getByText(survey.title)).toBeInTheDocument();
     expect(getByText(survey.description)).toBeInTheDocument();
   });
