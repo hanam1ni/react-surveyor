@@ -19,6 +19,7 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
       <Swiper
         spaceBetween={50}
         slidesPerView={1}
+        threshold={40}
         mousewheel={{ thresholdDelta: 30 }}
         modules={[Mousewheel, Pagination]}
         pagination={{
