@@ -49,11 +49,11 @@ const SurveyDetail: NextPage = () => {
           <img
             src={currentSurvey?.intro.coverImageUrl}
             className="w-full h-auto max-h-[360px] mb-8 rounded-lg"
-            alt={`${currentSurvey?.id} survey image`}
+            alt={`${currentSurvey?.intro.text}`}
           />
-          <h2 className="text-4xl font-semibold mb-2 text-white">
+          <h1 className="text-4xl font-semibold mb-2 text-white">
             {currentSurvey?.title}
-          </h2>
+          </h1>
           <div className="mb-8 text-gray-400">{currentSurvey?.intro.text}</div>
           <Button label="Start Survey" />
         </div>
