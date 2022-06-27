@@ -1,5 +1,4 @@
 import { deserialize } from 'deserialize-json-api';
-import { partition, sortBy } from 'lodash';
 
 import { get } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
@@ -56,14 +55,19 @@ const parseSurvey = (surveyResponse: any): Survey => ({
 });
 
 const parseSurveyDetail = (surveyDetailResponse: any): SurveyDetail => {
-  let surveyIntro, surveyOutro;
-
-  let questions = surveyDetailResponse.questions.map((question: any) =>
-    parseSurveyQuestion(question)
+  const parsedQuestions = (<object[]>surveyDetailResponse.questions).map(
+    (question) => parseSurveyQuestion(question)
   );
 
-  [[surveyIntro], questions] = extractQuestionType(questions, 'intro');
-  [[surveyOutro], questions] = extractQuestionType(questions, 'outro');
+  const [surveyIntro] = parsedQuestions.filter(
+    ({ displayType }) => displayType === 'intro'
+  );
+  const [surveyOutro] = parsedQuestions.filter(
+    ({ displayType }) => displayType === 'outro'
+  );
+  const questions = parsedQuestions.filter(
+    ({ displayType }) => displayType !== 'intro' && displayType !== 'outro'
+  );
 
   return {
     ...parseSurvey(surveyDetailResponse),
@@ -74,9 +78,10 @@ const parseSurveyDetail = (surveyDetailResponse: any): SurveyDetail => {
 };
 
 const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
-  const parsedAnswer = (<object[]>questionResponse.answers)?.map((answer) =>
-    parseSurveyAnswer(answer)
-  );
+  const parsedAnswer =
+    (<object[]>questionResponse.answers)?.map((answer) =>
+      parseSurveyAnswer(answer)
+    ) || [];
 
   return {
     id: questionResponse.id,
@@ -95,13 +100,8 @@ const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({
   text: answerResponse.text,
 });
 
-const extractQuestionType = (
-  questions: SurveyQuestion[],
-  displayType: QuestionType
-): [
-  extractedQuestions: SurveyQuestion[],
-  remainingQuestions: SurveyQuestion[]
-] => partition(questions, (question) => question.displayType == displayType);
-
-const sortRecords = (records: object) =>
-  sortBy(records, [({ displayOrder }) => displayOrder]);
+const sortRecords = (records: any[]) =>
+  records.sort(
+    (firstRecord, secondRecord) =>
+      firstRecord.displayOrder - secondRecord.displayOrder
+  );
