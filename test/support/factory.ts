@@ -7,6 +7,26 @@ const MODELS: { [key: string]: () => object } = {
     description: faker.lorem.sentences(),
     coverImageUrl: faker.image.imageUrl(),
   }),
+  surveyDetail: () => ({
+    ...build('survey'),
+    intro: build('surveyQuestion', { displayType: 'intro', answers: null }),
+    outro: build('surveyQuestion', { displayType: 'outro', answers: null }),
+    questions: [build('surveyQuestion')],
+  }),
+  surveyQuestion: () => ({
+    id: faker.random.alphaNumeric(8),
+    displayOrder: 1,
+    coverImageUrl: faker.image.imageUrl(),
+    displayType: 'textarea',
+    text: faker.lorem.sentences(),
+    pick: 'none',
+    answers: [build('surveyAnswer')],
+  }),
+  surveyAnswer: () => ({
+    id: faker.random.alphaNumeric(8),
+    displayOrder: 1,
+    text: faker.lorem.sentences(),
+  }),
   user: () => ({
     avatarUrl: faker.image.avatar(),
     email: faker.internet.email(),

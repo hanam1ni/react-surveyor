@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Survey } from 'services/survey';
+import { Survey } from 'services/surveyInterfaces';
 
 import styles from './SurveyList.module.css';
 

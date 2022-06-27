@@ -1,7 +1,11 @@
 describe('Home page', () => {
   const scrollSurveyItem = (times = 1) => {
     for (let time = 1; time <= times; time++) {
-      cy.get('[data-testid="survey-list"]').move({ deltaX: -500, deltaY: 100 });
+      cy.get('[data-testid="survey-list"]')
+        .trigger('pointerdown')
+        .trigger('pointermove', 'right')
+        .trigger('pointermove', 'left')
+        .trigger('pointerup');
       cy.wait(150);
     }
   };

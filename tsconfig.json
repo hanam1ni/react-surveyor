@@ -7,8 +7,7 @@
       "cypress",
       "@testing-library/cypress",
       "@testing-library/jest-dom",
-      "./cypress/support",
-      "@4tw/cypress-drag-drop"
+      "./cypress/support"
     ],
     "allowJs": true,
     "skipLibCheck": true,

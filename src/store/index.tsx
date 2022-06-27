@@ -1,11 +1,12 @@
 import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 import reducer, { ACTIONS, ActionPayloadType } from './reducer';
-import { Survey } from 'services/survey';
+import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 import { UserProfile } from 'services/user';
 import { BatchInfo } from 'utils/pagination';
 
 export interface StoreType {
+  currentSurvey: SurveyDetail | null;
   surveys: {
     data: Survey[];
     batchInfo: BatchInfo;
@@ -23,6 +24,7 @@ interface StoreProviderProps {
 }
 
 export const initialStore = {
+  currentSurvey: null,
   surveys: {
     data: [],
     batchInfo: { batch: 1, totalBatches: 1, batchSize: 5, totalRecords: 0 },

@@ -3,7 +3,8 @@ import * as surveyService from 'services/survey';
 import { get } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
-import { build, buildBatchInfo } from '@support/factory';
+import { build } from '@support/factory';
+import surveyDetailResponse from '@support/fixtures/surveyDetail.json';
 
 jest.mock('utils/httpClient');
 jest.mock('utils/userToken');
@@ -50,5 +51,27 @@ describe('listSurveys', () => {
     expect(parsedSurveys[0].coverImageThumbnailUrl).toEqual(
       response.data[0].attributes.coverImageUrl
     );
+  });
+});
+
+describe('getSurveyDetail', () => {
+  beforeEach(() => {
+    const userToken = build('userToken');
+    const mockedGetUserToken = getUserToken as jest.Mock;
+    mockedGetUserToken.mockReturnValue(userToken);
+  });
+
+  it('parses the response to valid survey detail', async () => {
+    const surveyId = 'd5de6a8f8f5f1cfe51bc';
+    const response = surveyDetailResponse;
+    const mockedGet = get as jest.Mock;
+    mockedGet.mockResolvedValue(response);
+
+    const parsedSurveyDetail = await surveyService.getSurveyDetail(surveyId);
+
+    expect(parsedSurveyDetail.id).toEqual(surveyId);
+    expect(parsedSurveyDetail.intro.displayType).toEqual('intro');
+    expect(parsedSurveyDetail.outro.displayType).toEqual('outro');
+    expect(parsedSurveyDetail.questions.length).toEqual(10);
   });
 });

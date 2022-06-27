@@ -2,7 +2,7 @@ import { Mousewheel, Pagination, Swiper as SwiperInterface } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import SurveyItem from './SurveyItem';
-import { Survey } from 'services/survey';
+import { Survey } from 'services/surveyInterfaces';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
