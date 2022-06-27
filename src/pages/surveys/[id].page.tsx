@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
@@ -55,7 +57,9 @@ const SurveyDetail: NextPage = () => {
             {currentSurvey?.title}
           </h1>
           <div className="mb-8 text-gray-400">{currentSurvey?.intro.text}</div>
-          <Button label="Start Survey" />
+          <Link href="/questions/1" passHref>
+            <Button label="Start Survey" />
+          </Link>
         </div>
       </div>
     </PageLoader>
