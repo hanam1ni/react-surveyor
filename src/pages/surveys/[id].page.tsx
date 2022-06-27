@@ -31,7 +31,6 @@ const SurveyDetail: NextPage = () => {
             type: ACTIONS.SET_CURRENT_SURVEY,
             value: surveyDetail,
           });
-
           setBgUrl(surveyDetail.coverImageUrl);
           setIsLoading(false);
         })
