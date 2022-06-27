@@ -4,7 +4,6 @@ import { get } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
 import { getUserToken } from 'utils/userToken';
 import {
-  QuestionType,
   Survey,
   SurveyDetail,
   SurveyQuestion,
@@ -71,8 +70,8 @@ const parseSurveyDetail = (surveyDetailResponse: any): SurveyDetail => {
 
   return {
     ...parseSurvey(surveyDetailResponse),
-    intro: parseSurveyQuestion(surveyIntro),
-    outro: parseSurveyQuestion(surveyOutro),
+    intro: surveyIntro,
+    outro: surveyOutro,
     questions: sortRecords(questions),
   };
 };
