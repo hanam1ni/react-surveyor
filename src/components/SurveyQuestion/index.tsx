@@ -1,7 +1,10 @@
+import RatingQuestion from './RatingQuestion';
 import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
 
 interface SurveyQuestionProps {
   question: SurveyQuestionInterface;
+  currentAnswers: any;
+  setAnswers: any;
 }
 
 const UnsupportedTypeNotice = () => (
@@ -15,8 +18,20 @@ const UnsupportedTypeNotice = () => (
   </div>
 );
 
-const SurveyQuestion = ({ question }: SurveyQuestionProps) => {
+const SurveyQuestion = ({
+  question,
+  currentAnswers,
+  setAnswers,
+}: SurveyQuestionProps) => {
   switch (question.displayType) {
+    case 'rating':
+      return (
+        <RatingQuestion
+          question={question}
+          currentAnswers={currentAnswers}
+          setAnswers={setAnswers}
+        />
+      );
     default:
       return <UnsupportedTypeNotice />;
   }

@@ -11,6 +11,7 @@ export interface StoreType {
     data: Survey[];
     batchInfo: BatchInfo;
   };
+  surveyResponse: any[];
   userProfile: UserProfile | null;
 }
 
@@ -29,6 +30,7 @@ export const initialStore = {
     data: [],
     batchInfo: { batch: 1, totalBatches: 1, batchSize: 5, totalRecords: 0 },
   },
+  surveyResponse: [],
   userProfile: null,
 };
 
