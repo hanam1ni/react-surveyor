@@ -1,0 +1,7 @@
+.ratingQuestion .activeAnswer {
+  @apply opacity-100;
+}
+
+.ratingQuestion .inactiveAnswer {
+  @apply opacity-50;
+}

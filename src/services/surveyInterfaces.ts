@@ -17,12 +17,14 @@ interface SurveyQuestion {
   displayOrder: number;
   coverImageUrl: string;
   displayType: QuestionType;
+  ratingType?: RatingType;
   text: string;
   pick: string;
   answers: SurveyAnswer[];
 }
 
-type QuestionType = 'intro' | 'outro';
+type QuestionType = 'intro' | 'outro' | 'rating';
+type RatingType = 'star' | 'heart' | 'smiley';
 
 interface SurveyAnswer {
   id: string;
@@ -30,10 +32,17 @@ interface SurveyAnswer {
   text: string;
 }
 
+interface SurveyResponse {
+  questionId: string;
+  answers: { id: string; answer?: string }[];
+}
+
 export type {
   QuestionType,
+  RatingType,
   Survey,
   SurveyDetail,
   SurveyQuestion,
   SurveyAnswer,
+  SurveyResponse,
 };
