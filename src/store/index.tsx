@@ -21,9 +21,10 @@ interface StoreContextType {
 
 interface StoreProviderProps {
   children: ReactNode;
+  initialStore?: StoreType;
 }
 
-export const initialStore = {
+export const defaultInitialStore = {
   currentSurvey: null,
   surveys: {
     data: [],
@@ -36,8 +37,14 @@ export const StoreContext = createContext<StoreContextType>(
   {} as StoreContextType
 );
 
-export const StoreProvider = ({ children }: StoreProviderProps) => {
-  const [store, dispatchAction] = useReducer(reducer, initialStore);
+export const StoreProvider = ({
+  children,
+  initialStore,
+}: StoreProviderProps) => {
+  const [store, dispatchAction] = useReducer(
+    reducer,
+    initialStore || defaultInitialStore
+  );
 
   return (
     <StoreContext.Provider value={{ store, dispatchAction }}>

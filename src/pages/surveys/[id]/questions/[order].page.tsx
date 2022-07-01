@@ -58,6 +58,7 @@ const Question: NextPage = () => {
             <button
               className={styles.nextQuestionLink}
               disabled={answers === null}
+              data-testid="next-question-button"
             >
               <Image
                 width={20}

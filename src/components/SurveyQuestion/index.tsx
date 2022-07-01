@@ -1,7 +1,11 @@
+import { SetStateAction } from 'react';
+
 import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
 
 interface SurveyQuestionProps {
   question: SurveyQuestionInterface;
+  currentAnswers?: any;
+  setAnswers?: SetStateAction<any>;
 }
 
 const UnsupportedTypeNotice = () => (

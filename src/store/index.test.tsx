@@ -41,7 +41,12 @@ describe('StoreProvider', () => {
             type: ACTIONS.SET_SURVEYS,
             value: {
               data: [survey],
-              pageInfo: { currentPage: 1, totalPages: 2 },
+              batchInfo: {
+                batch: 1,
+                totalBatches: 1,
+                batchSize: 5,
+                totalRecords: 0,
+              },
             },
           });
         }, [dispatchAction]);

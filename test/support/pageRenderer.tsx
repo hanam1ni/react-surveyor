@@ -1,12 +1,17 @@
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import React from 'react';
 
 import Container from 'components/Container';
-import { StoreProvider } from 'store';
+import { defaultInitialStore, StoreProvider } from 'store';
 
-export const renderPage = (page: React.ReactElement) =>
+type RenderPageInterface = (
+  page: React.ReactElement,
+  option?: { initialStore?: object }
+) => RenderResult;
+
+export const renderPage: RenderPageInterface = (page, { initialStore } = {}) =>
   render(
-    <StoreProvider>
+    <StoreProvider initialStore={{ ...defaultInitialStore, ...initialStore }}>
       <Container>{page}</Container>
     </StoreProvider>
   );

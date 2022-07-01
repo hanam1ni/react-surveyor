@@ -1,5 +1,5 @@
 import { UserProfile } from 'services/user';
-import { initialStore, StoreType } from 'store';
+import { defaultInitialStore, StoreType } from 'store';
 
 export enum ACTIONS {
   CLEAR_STORE,
@@ -26,7 +26,7 @@ export type ActionPayloadType =
 export default (store: StoreType, action: ActionPayloadType) => {
   switch (action.type) {
     case ACTIONS.CLEAR_STORE:
-      return initialStore;
+      return defaultInitialStore;
     case ACTIONS.SET_CURRENT_SURVEY:
       return { ...store, currentSurvey: action.value };
     case ACTIONS.SET_SURVEYS:
