@@ -9,7 +9,7 @@ import {
   SurveyDetail,
   SurveyQuestion,
   SurveyAnswer,
-  QuestionType,
+  DisplayType,
 } from './surveyInterfaces';
 
 interface SurveyResponse {
@@ -96,14 +96,14 @@ const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
 };
 
 const parseDisplayType = (displayType: string) => {
-  if (['star', 'heart', 'smiley'].includes(displayType)) {
+  if (Object.values(RatingType).includes(displayType as any)) {
     return {
-      displayType: 'rating' as QuestionType,
+      displayType: 'rating' as DisplayType,
       ratingType: displayType as RatingType,
     };
   }
 
-  return { displayType: displayType as QuestionType };
+  return { displayType: displayType as DisplayType };
 };
 
 const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({

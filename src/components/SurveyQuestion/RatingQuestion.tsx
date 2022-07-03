@@ -18,7 +18,7 @@ const answerIcon = (ratingType?: string) => {
   }
 };
 
-const stateClass = (
+const answerClass = (
   answerIndex: number,
   selectedIndex: number,
   hoverIndex: number
@@ -41,17 +41,16 @@ const RatingQuestion = ({
     }
 
     const [currentAnswer] = currentResponses.answers;
-    const surveyAnswer = question.answers.find(
-      ({ id }) => id === currentAnswer.id
-    );
+    const { displayOrder = -1 } =
+      question.answers.find(({ id }) => id === currentAnswer.id) || {};
 
-    return surveyAnswer?.displayOrder || -1;
+    return displayOrder;
   };
 
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [selectedIndex, setSelectedIndex] = useState(setDefaultSelectedIndex());
 
-  const onAnswerClick = (answerId: string, index: number) => {
+  const onAnswerSelect = (answerId: string, index: number) => {
     setSelectedIndex(index);
     setResponses({ questionId: question.id, answers: [{ id: answerId }] });
   };
@@ -66,12 +65,12 @@ const RatingQuestion = ({
           return (
             <div
               key={index}
-              className={`inline-block px-1 cursor-pointer ${stateClass(
+              className={`inline-block px-1 cursor-pointer ${answerClass(
                 index,
                 selectedIndex,
                 hoverIndex
               )}`}
-              onClick={() => onAnswerClick(answer.id, index)}
+              onClick={() => onAnswerSelect(answer.id, index)}
               onMouseEnter={() => setHoverIndex(index)}
               onMouseLeave={() => setHoverIndex(-1)}
             >
@@ -79,7 +78,7 @@ const RatingQuestion = ({
                 width={34}
                 height={34}
                 src={answerIcon(question.ratingType)}
-                alt="smiley icon"
+                alt={`${question.ratingType} icon`}
               />
             </div>
           );

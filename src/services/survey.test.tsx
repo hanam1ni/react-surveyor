@@ -74,4 +74,20 @@ describe('getSurveyDetail', () => {
     expect(parsedSurveyDetail.outro.displayType).toEqual('outro');
     expect(parsedSurveyDetail.questions.length).toEqual(10);
   });
+
+  describe('given survey with rating display type', () => {
+    it('parses the response to valid survey question', async () => {
+      const surveyId = 'd5de6a8f8f5f1cfe51bc';
+      const response = surveyDetailResponse;
+      const mockedGet = get as jest.Mock;
+      mockedGet.mockResolvedValue(response);
+
+      const parsedSurveyDetail = await surveyService.getSurveyDetail(surveyId);
+      const ratingQuestion = parsedSurveyDetail.questions.find(
+        ({ displayType }) => displayType === 'rating'
+      );
+
+      expect(ratingQuestion?.ratingType).toEqual('star');
+    });
+  });
 });

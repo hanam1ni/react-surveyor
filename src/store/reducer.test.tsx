@@ -5,6 +5,69 @@ import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 import { build } from '@support/factory';
 
 describe('Dispatch action', () => {
+  describe('given ADD_SURVEY_RESPONSE as an action type', () => {
+    describe('given survey response does not exist in the store', () => {
+      it('adds survey response to the store', () => {
+        const questionId = 'QUESTION1';
+        const answers = [{ id: 'ANSWER1', answer: 'My Answer' }];
+
+        const action = {
+          type: ACTIONS.ADD_SURVEY_RESPONSE,
+          value: { questionId, answers },
+        } as ActionPayloadType;
+
+        const updatedStore = dispatchAction(defaultInitialStore, action);
+
+        expect(updatedStore.surveyResponses).toContainEqual({
+          questionId,
+          answers,
+        });
+      });
+    });
+
+    describe('given survey response exists in the store', () => {
+      it('replaces existing survey response with the given one', () => {
+        const questionId1 = 'QUESTION1';
+        const questionId2 = 'QUESTION2';
+        const answerId1 = 'ANSWER1';
+        const answerId2 = 'ANSWER2';
+
+        const initialStore = {
+          ...defaultInitialStore,
+          surveyResponses: [
+            {
+              questionId: questionId1,
+              answers: [{ id: answerId1, answer: 'My First Answer' }],
+            },
+            {
+              questionId: questionId2,
+              answers: [{ id: answerId2, answer: 'My Second Answer' }],
+            },
+          ],
+        };
+
+        const action = {
+          type: ACTIONS.ADD_SURVEY_RESPONSE,
+          value: {
+            questionId: questionId2,
+            answers: [{ id: answerId2, answer: 'My Updated Second Answer' }],
+          },
+        } as ActionPayloadType;
+
+        const updatedStore = dispatchAction(initialStore, action);
+
+        expect(updatedStore.surveyResponses).toContainEqual({
+          questionId: questionId1,
+          answers: [{ id: answerId1, answer: 'My First Answer' }],
+        });
+        expect(updatedStore.surveyResponses).toContainEqual({
+          questionId: questionId2,
+          answers: [{ id: answerId2, answer: 'My Updated Second Answer' }],
+        });
+      });
+    });
+  });
+
   describe('given CLEAR_STORE as an action type', () => {
     it('sets store to the initial store', () => {
       const survey = build('survey') as Survey;

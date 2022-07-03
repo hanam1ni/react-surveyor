@@ -53,10 +53,10 @@ const Question: NextPage = () => {
 
   const lastQuestionOrder = currentSurvey?.questions.length || 0;
 
-  const onSubmitAnswer = () => {
+  const onSubmitResponses = () => {
     if (responses !== null) {
       dispatchAction({
-        type: ACTIONS.SET_SURVEY_RESPONSE,
+        type: ACTIONS.ADD_SURVEY_RESPONSE,
         value: responses,
       });
 
@@ -79,7 +79,7 @@ const Question: NextPage = () => {
           {currentQuestionOrder < lastQuestionOrder ? (
             <button
               className={styles.nextQuestionLink}
-              onClick={onSubmitAnswer}
+              onClick={onSubmitResponses}
               disabled={responses === null}
               data-testid="next-question-button"
             >
