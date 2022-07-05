@@ -95,15 +95,15 @@ const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
   };
 };
 
-const parseDisplayType = (displayType: string) => {
-  if (Object.values(RatingType).includes(displayType as any)) {
+const parseDisplayType = (rawDisplayType: string) => {
+  if (Object.values(RatingType).includes(rawDisplayType as any)) {
     return {
       displayType: 'rating' as DisplayType,
-      ratingType: displayType as RatingType,
+      ratingType: rawDisplayType as RatingType,
     };
   }
 
-  return { displayType: displayType as DisplayType };
+  return { displayType: rawDisplayType as DisplayType };
 };
 
 const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({

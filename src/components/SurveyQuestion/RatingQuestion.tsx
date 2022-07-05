@@ -3,7 +3,28 @@ import { useState } from 'react';
 
 import { SurveyQuestionProps } from './';
 
-import styles from './SurveyQuestion.module.css';
+interface RatingItemProps {
+  index: number;
+  ratingType?: string;
+  answerClass: string;
+  onClick: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}
+
+const answerClass = (
+  answerIndex: number,
+  selectedIndex: number,
+  hoverIndex: number
+) => {
+  const isActiveAnswer = answerIndex <= Math.max(selectedIndex, hoverIndex);
+
+  if (isActiveAnswer) {
+    return 'opacity-100';
+  }
+
+  return 'opacity-50';
+};
 
 const answerIcon = (ratingType?: string) => {
   switch (ratingType) {
@@ -18,22 +39,34 @@ const answerIcon = (ratingType?: string) => {
   }
 };
 
-const answerClass = (
-  answerIndex: number,
-  selectedIndex: number,
-  hoverIndex: number
-) => {
-  if (answerIndex <= Math.max(selectedIndex, hoverIndex)) {
-    return styles.activeAnswer;
-  }
-
-  return styles.inactiveAnswer;
-};
+const RaingItem = ({
+  index,
+  ratingType = 'star',
+  answerClass,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+}: RatingItemProps) => (
+  <div
+    key={index}
+    className={`inline-block px-1 cursor-pointer ${answerClass}`}
+    onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
+    <Image
+      width={34}
+      height={34}
+      src={answerIcon(ratingType)}
+      alt={`${ratingType} icon`}
+    />
+  </div>
+);
 
 const RatingQuestion = ({
   question,
   currentResponses,
-  setResponses,
+  setResponse,
 }: SurveyQuestionProps) => {
   const setDefaultSelectedIndex = () => {
     if (currentResponses === null) {
@@ -52,37 +85,26 @@ const RatingQuestion = ({
 
   const onAnswerSelect = (answerId: string, index: number) => {
     setSelectedIndex(index);
-    setResponses({ questionId: question.id, answers: [{ id: answerId }] });
+    setResponse({ questionId: question.id, answers: [{ id: answerId }] });
   };
 
   return (
-    <div className={`flex flex-col ${styles.ratingQuestion}`}>
+    <div className="flex flex-col">
       <h1 className="mb-11 text-4xl font-extrabold text-white">
         {question.text}
       </h1>
       <div className="self-center">
-        {question.answers.map((answer, index) => {
-          return (
-            <div
-              key={index}
-              className={`inline-block px-1 cursor-pointer ${answerClass(
-                index,
-                selectedIndex,
-                hoverIndex
-              )}`}
-              onClick={() => onAnswerSelect(answer.id, index)}
-              onMouseEnter={() => setHoverIndex(index)}
-              onMouseLeave={() => setHoverIndex(-1)}
-            >
-              <Image
-                width={34}
-                height={34}
-                src={answerIcon(question.ratingType)}
-                alt={`${question.ratingType} icon`}
-              />
-            </div>
-          );
-        })}
+        {question.answers.map((answer, index) => (
+          <RaingItem
+            key={index}
+            index={index}
+            ratingType={question.ratingType}
+            answerClass={answerClass(index, selectedIndex, hoverIndex)}
+            onClick={() => onAnswerSelect(answer.id, index)}
+            onMouseEnter={() => setHoverIndex(index)}
+            onMouseLeave={() => setHoverIndex(-1)}
+          />
+        ))}
       </div>
     </div>
   );

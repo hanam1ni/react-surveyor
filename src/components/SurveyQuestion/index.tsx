@@ -9,7 +9,7 @@ import {
 export interface SurveyQuestionProps {
   question: SurveyQuestionInterface;
   currentResponses: SurveyResponse | null;
-  setResponses: Dispatch<SetStateAction<SurveyResponse | null>>;
+  setResponse: Dispatch<SetStateAction<SurveyResponse | null>>;
 }
 
 const UnsupportedTypeNotice = () => (
@@ -26,7 +26,7 @@ const UnsupportedTypeNotice = () => (
 const SurveyQuestion = ({
   question,
   currentResponses,
-  setResponses,
+  setResponse,
 }: SurveyQuestionProps) => {
   switch (question.displayType) {
     case 'rating':
@@ -34,7 +34,7 @@ const SurveyQuestion = ({
         <RatingQuestion
           question={question}
           currentResponses={currentResponses}
-          setResponses={setResponses}
+          setResponse={setResponse}
         />
       );
     default:

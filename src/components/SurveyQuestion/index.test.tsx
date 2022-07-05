@@ -19,7 +19,7 @@ describe('SurveyQuestion', () => {
         <SurveyQuestion
           question={question}
           currentResponses={null}
-          setResponses={jest.fn()}
+          setResponse={jest.fn()}
         />
       );
 
@@ -36,19 +36,19 @@ describe('SurveyQuestion', () => {
           ratingType: 'star',
           answers: [answer, ...otherAnswers],
         }) as SurveyQuestionInterface;
-        const setResponses = jest.fn();
+        const setResponse = jest.fn();
 
         const { getAllByAltText } = render(
           <SurveyQuestion
             question={question}
             currentResponses={null}
-            setResponses={setResponses}
+            setResponse={setResponse}
           />
         );
 
         fireEvent.click(getAllByAltText('star icon')[0]);
 
-        expect(setResponses).toHaveBeenCalledWith({
+        expect(setResponse).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
@@ -66,7 +66,7 @@ describe('SurveyQuestion', () => {
         <SurveyQuestion
           question={question}
           currentResponses={null}
-          setResponses={jest.fn()}
+          setResponse={jest.fn()}
         />
       );
 

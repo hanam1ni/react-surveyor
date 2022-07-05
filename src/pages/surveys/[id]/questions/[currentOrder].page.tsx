@@ -35,7 +35,7 @@ const Question: NextPage = () => {
   ) as SurveyQuestionInterface;
 
   const [isLoading, setIsLoading] = useState(true);
-  const [responses, setResponses] = useState<SurveyResponse | null>(null);
+  const [response, setResponse] = useState<SurveyResponse | null>(null);
 
   useEffect(() => {
     if (currentQuestion !== undefined) {
@@ -43,7 +43,7 @@ const Question: NextPage = () => {
         ({ questionId }) => questionId === currentQuestion.id
       );
 
-      response && setResponses(response);
+      response && setResponse(response);
 
       setIsLoading(false);
     } else {
@@ -54,13 +54,13 @@ const Question: NextPage = () => {
   const lastQuestionOrder = currentSurvey?.questions.length || 0;
 
   const onSubmitResponses = () => {
-    if (responses !== null) {
+    if (response !== null) {
       dispatchAction({
         type: ACTIONS.ADD_SURVEY_RESPONSE,
-        value: responses,
+        value: response,
       });
 
-      router.push(`/surveys/${surveyId}/questions/${questionOrder + 1}`);
+      router.push(`/surveys/${surveyId}/questions/${currentQuestionOrder + 1}`);
     }
   };
 
@@ -71,8 +71,8 @@ const Question: NextPage = () => {
           <div className="mb-4 text-gray-400">{`${currentQuestionOrder}/${lastQuestionOrder}`}</div>
           <SurveyQuestion
             question={currentQuestion}
-            currentResponses={responses}
-            setResponses={setResponses}
+            currentResponses={response}
+            setResponse={setResponse}
           />
         </div>
         <div className="absolute bottom-8 right-8">
@@ -80,7 +80,7 @@ const Question: NextPage = () => {
             <button
               className={styles.nextQuestionLink}
               onClick={onSubmitResponses}
-              disabled={responses === null}
+              disabled={response === null}
               data-testid="next-question-button"
             >
               <Image
