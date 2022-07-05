@@ -10,12 +10,12 @@ import useSession from 'hooks/useSession';
 import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
 import { StoreContext } from 'store';
 
-import styles from './[order].module.css';
+import styles from './[currentOrder].module.css';
 
 const Question: NextPage = () => {
   useSession();
   const router = useRouter();
-  const currentQuestionOrder = parseInt(router.query.questionOrder as string);
+  const currentQuestionOrder = parseInt(router.query.currentOrder as string);
   const surveyId = router.query.id as string;
 
   const {
@@ -54,7 +54,7 @@ const Question: NextPage = () => {
           />
         </div>
         <div className="absolute bottom-8 right-8">
-          {currentQuestionOrder < totalQuestion ? (
+          {currentQuestionOrder < lastQuestionOrder ? (
             <button
               className={styles.nextQuestionLink}
               disabled={answers === null}

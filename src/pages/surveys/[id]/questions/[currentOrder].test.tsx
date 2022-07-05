@@ -24,7 +24,7 @@ describe('Survey Question', () => {
       questions: [question1, question2, question3],
     });
 
-    mockUseRouter({ query: { order: '2', id: surveyDetail.id } });
+    mockUseRouter({ query: { currentOrder: '2', id: surveyDetail.id } });
 
     const { getByText } = renderPage(<SurveyQuestion />, {
       initialStore: { currentSurvey: surveyDetail },
@@ -41,7 +41,7 @@ describe('Survey Question', () => {
         questions: [question1, question2],
       });
 
-      mockUseRouter({ query: { order: '1', id: surveyDetail.id } });
+      mockUseRouter({ query: { currentOrder: '1', id: surveyDetail.id } });
 
       const { getByTestId } = renderPage(<SurveyQuestion />, {
         initialStore: { currentSurvey: surveyDetail },
@@ -61,7 +61,7 @@ describe('Survey Question', () => {
         questions: [question1, question2],
       });
 
-      mockUseRouter({ query: { order: '2', id: surveyDetail.id } });
+      mockUseRouter({ query: { currentOrder: '2', id: surveyDetail.id } });
 
       const { getByText } = renderPage(<SurveyQuestion />, {
         initialStore: { currentSurvey: surveyDetail },
@@ -75,7 +75,7 @@ describe('Survey Question', () => {
     it('redirects user to survey intro', async () => {
       const surveyDetail = build('surveyDetail');
       const { push } = mockUseRouter({
-        query: { order: '100', id: surveyDetail.id },
+        query: { currentOrder: '100', id: surveyDetail.id },
       });
 
       renderPage(<SurveyQuestion />, {
