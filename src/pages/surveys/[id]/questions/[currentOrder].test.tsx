@@ -1,6 +1,6 @@
-import { screen, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
-import SurveyQuestion from './[order].page';
+import SurveyQuestion from './[currentOrder].page';
 import { getUserProfile } from 'services/user';
 
 import { build } from '@support/factory';
@@ -26,11 +26,11 @@ describe('Survey Question', () => {
 
     mockUseRouter({ query: { order: '2', id: surveyDetail.id } });
 
-    renderPage(<SurveyQuestion />, {
+    const { getByText } = renderPage(<SurveyQuestion />, {
       initialStore: { currentSurvey: surveyDetail },
     });
 
-    await waitFor(() => expect(screen.getByText('2/3')).toBeInTheDocument());
+    await waitFor(() => expect(getByText('2/3')).toBeInTheDocument());
   });
 
   describe('given question order is not the last one', () => {
@@ -43,12 +43,12 @@ describe('Survey Question', () => {
 
       mockUseRouter({ query: { order: '1', id: surveyDetail.id } });
 
-      renderPage(<SurveyQuestion />, {
+      const { getByTestId } = renderPage(<SurveyQuestion />, {
         initialStore: { currentSurvey: surveyDetail },
       });
 
       await waitFor(() =>
-        expect(screen.getByTestId('next-question-button')).toBeInTheDocument()
+        expect(getByTestId('next-question-button')).toBeInTheDocument()
       );
     });
   });
@@ -63,13 +63,11 @@ describe('Survey Question', () => {
 
       mockUseRouter({ query: { order: '2', id: surveyDetail.id } });
 
-      renderPage(<SurveyQuestion />, {
+      const { getByText } = renderPage(<SurveyQuestion />, {
         initialStore: { currentSurvey: surveyDetail },
       });
 
-      await waitFor(() =>
-        expect(screen.getByText('Submit')).toBeInTheDocument()
-      );
+      await waitFor(() => expect(getByText('Submit')).toBeInTheDocument());
     });
   });
 

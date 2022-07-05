@@ -15,7 +15,7 @@ import styles from './[order].module.css';
 const Question: NextPage = () => {
   useSession();
   const router = useRouter();
-  const questionOrder = parseInt(router.query.order as string);
+  const currentQuestionOrder = parseInt(router.query.questionOrder as string);
   const surveyId = router.query.id as string;
 
   const {
@@ -29,7 +29,7 @@ const Question: NextPage = () => {
 
   useEffect(() => {
     const question = currentSurvey?.questions.find(
-      ({ displayOrder }) => displayOrder === questionOrder
+      ({ displayOrder }) => displayOrder === currentQuestionOrder
     );
 
     if (question !== undefined) {
@@ -38,15 +38,15 @@ const Question: NextPage = () => {
     } else {
       router.push(`/surveys/${surveyId}`);
     }
-  }, [questionOrder]);
+  }, [currentQuestionOrder]);
 
-  const totalQuestion = currentSurvey?.questions.length || 0;
+  const lastQuestionOrder = currentSurvey?.questions.length || 0;
 
   return (
     <PageLoader isLoading={isLoading}>
       <>
         <div className="h-full w-full max-w-3xl mx-auto flex flex-col justify-center">
-          <div className="mb-4 text-gray-400">{`${questionOrder}/${totalQuestion}`}</div>
+          <div className="mb-4 text-gray-400">{`${currentQuestionOrder}/${lastQuestionOrder}`}</div>
           <SurveyQuestion
             question={currentQuestion}
             currentAnswers={answers}
@@ -54,7 +54,7 @@ const Question: NextPage = () => {
           />
         </div>
         <div className="absolute bottom-8 right-8">
-          {questionOrder < totalQuestion ? (
+          {currentQuestionOrder < totalQuestion ? (
             <button
               className={styles.nextQuestionLink}
               disabled={answers === null}

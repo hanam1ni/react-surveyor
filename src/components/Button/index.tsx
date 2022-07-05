@@ -15,7 +15,7 @@ const Button = ({
 }: ComponentProps) => {
   return (
     <button
-      className={`${styles['base']} ${styles[variant]} ${className} `}
+      className={`${styles['base']} ${styles[variant]} ${className}`}
       {...props}
     >
       {label}

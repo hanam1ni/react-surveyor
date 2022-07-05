@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import SurveyDetail from './[id].page';
 import { getSurveyDetail } from 'services/survey';
@@ -25,13 +25,13 @@ describe('Survey Detail', () => {
     const mockedGetSurveyDetail = getSurveyDetail as jest.Mock;
     mockedGetSurveyDetail.mockResolvedValue(surveyDetail);
 
-    renderPage(<SurveyDetail />);
+    const { getByAltText, getByText } = renderPage(<SurveyDetail />);
 
     await waitFor(() =>
-      expect(screen.getByText(surveyDetail.title)).toBeInTheDocument()
+      expect(getByText(surveyDetail.title)).toBeInTheDocument()
     );
 
-    expect(screen.getByText(surveyDetail.intro.text)).toBeInTheDocument();
-    expect(screen.getByAltText(surveyDetail.intro.text)).toBeInTheDocument();
+    expect(getByText(surveyDetail.intro.text)).toBeInTheDocument();
+    expect(getByAltText(surveyDetail.intro.text)).toBeInTheDocument();
   });
 });

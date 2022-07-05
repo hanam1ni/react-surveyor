@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 import Home from 'pages/index.page';
 import { listSurveys } from 'services/survey';
@@ -27,10 +27,10 @@ describe('Home', () => {
       batchInfo: buildBatchInfo([]),
     });
 
-    renderPage(<Home />);
+    const { getByText } = renderPage(<Home />);
 
     await waitFor(() =>
-      expect(screen.getByText('Saturday, January 1')).toBeInTheDocument()
+      expect(getByText('Saturday, January 1')).toBeInTheDocument()
     );
   });
 
@@ -42,11 +42,11 @@ describe('Home', () => {
         batchInfo: buildBatchInfo([]),
       });
 
-      renderPage(<Home />);
+      const { getByText } = renderPage(<Home />);
 
       await waitFor(() =>
         expect(
-          screen.getByText(/You've completed all the surveys/)
+          getByText(/You've completed all the surveys/)
         ).toBeInTheDocument()
       );
     });
@@ -61,11 +61,11 @@ describe('Home', () => {
         batchInfo: buildBatchInfo([survey]),
       });
 
-      renderPage(<Home />);
+      const { getByText } = renderPage(<Home />);
 
       await waitFor(() => {
-        expect(screen.getByText(survey.title)).toBeInTheDocument();
-        expect(screen.getByText(survey.description)).toBeInTheDocument();
+        expect(getByText(survey.title)).toBeInTheDocument();
+        expect(getByText(survey.description)).toBeInTheDocument();
       });
     });
   });
