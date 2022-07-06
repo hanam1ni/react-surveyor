@@ -1,4 +1,4 @@
-import { initialStore } from '.';
+import { defaultInitialStore } from '.';
 import dispatchAction, { ACTIONS, ActionPayloadType } from './reducer';
 import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 
@@ -14,7 +14,7 @@ describe('Dispatch action', () => {
 
       const updatedStore = dispatchAction(
         {
-          ...initialStore,
+          ...defaultInitialStore,
           surveys: {
             data: [survey],
             batchInfo: {
@@ -28,7 +28,7 @@ describe('Dispatch action', () => {
         action
       );
 
-      expect(updatedStore).toMatchObject(initialStore);
+      expect(updatedStore).toMatchObject(defaultInitialStore);
     });
   });
 
@@ -41,7 +41,7 @@ describe('Dispatch action', () => {
         value: surveyDetail,
       } as ActionPayloadType;
 
-      const updatedStore = dispatchAction(initialStore, action);
+      const updatedStore = dispatchAction(defaultInitialStore, action);
 
       expect(updatedStore.currentSurvey).toMatchObject(surveyDetail);
     });
@@ -63,7 +63,7 @@ describe('Dispatch action', () => {
         },
       } as ActionPayloadType;
 
-      const updatedStore = dispatchAction(initialStore, action);
+      const updatedStore = dispatchAction(defaultInitialStore, action);
 
       expect(updatedStore.surveys).toMatchObject({
         data: [survey],
@@ -85,7 +85,7 @@ describe('Dispatch action', () => {
         value: userResponse,
       } as ActionPayloadType;
 
-      const updatedStore = dispatchAction(initialStore, action);
+      const updatedStore = dispatchAction(defaultInitialStore, action);
 
       expect(updatedStore.userProfile).toMatchObject(userResponse);
     });
@@ -96,7 +96,7 @@ describe('Dispatch action', () => {
       const action = { type: 'UNKNOWN_ACTION', value: null };
 
       try {
-        dispatchAction(initialStore, action);
+        dispatchAction(defaultInitialStore, action);
       } catch (error: any) {
         expect(error.message).toMatch('invalid action type');
       }

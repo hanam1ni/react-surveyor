@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 import Login from 'pages/login.page';
 import { getUserProfile, login } from 'services/user';
@@ -22,15 +22,15 @@ describe('Login page', () => {
         const mockedLogin = login as jest.Mock;
         mockedLogin.mockResolvedValue(null);
 
-        renderPage(<Login />);
+        const { getByLabelText, getByText } = renderPage(<Login />);
 
-        fireEvent.change(screen.getByLabelText('Email'), {
+        fireEvent.change(getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
         });
-        fireEvent.change(screen.getByLabelText('Password'), {
+        fireEvent.change(getByLabelText('Password'), {
           target: { value: 'super-secret-password' },
         });
-        fireEvent.click(screen.getByText('Sign in'));
+        fireEvent.click(getByText('Sign in'));
 
         await waitFor(() => expect(push).toHaveBeenCalledWith('/'));
       });
@@ -41,49 +41,51 @@ describe('Login page', () => {
         const mockedLogin = login as jest.Mock;
         mockedLogin.mockRejectedValue({ status: 400 });
 
-        renderPage(<Login />);
+        const { getByLabelText, getByText } = renderPage(<Login />);
 
-        fireEvent.change(screen.getByLabelText('Email'), {
+        fireEvent.change(getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
         });
-        fireEvent.change(screen.getByLabelText('Password'), {
+        fireEvent.change(getByLabelText('Password'), {
           target: { value: 'invalidPassword' },
         });
-        fireEvent.click(screen.getByText('Sign in'));
+        fireEvent.click(getByText('Sign in'));
 
-        await waitFor(() => expect(screen.getByText('Invalid Credentials')));
+        await waitFor(() => expect(getByText('Invalid Credentials')));
       });
     });
 
     describe('when missing required inputs', () => {
       it('renders error messages', async () => {
-        renderPage(<Login />);
+        const { getByText } = renderPage(<Login />);
 
-        fireEvent.click(screen.getByText('Sign in'));
+        fireEvent.click(getByText('Sign in'));
 
-        await waitFor(() => expect(screen.getByText("Email can't be blank")));
-        expect(screen.getByText("Password can't be blank"));
+        await waitFor(() => expect(getByText("Email can't be blank")));
+        expect(getByText("Password can't be blank"));
       });
 
       it('hides error messages after having filled the required inputs', async () => {
-        renderPage(<Login />);
+        const { getByLabelText, getByText, queryByText } = renderPage(
+          <Login />
+        );
 
-        fireEvent.click(screen.getByText('Sign in'));
+        fireEvent.click(getByText('Sign in'));
 
-        await waitFor(() => expect(screen.getByText("Email can't be blank")));
-        expect(screen.getByText("Password can't be blank"));
+        await waitFor(() => expect(getByText("Email can't be blank")));
+        expect(getByText("Password can't be blank"));
 
-        fireEvent.change(screen.getByLabelText('Email'), {
+        fireEvent.change(getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
         });
-        fireEvent.change(screen.getByLabelText('Password'), {
+        fireEvent.change(getByLabelText('Password'), {
           target: { value: 'super-secret-password' },
         });
 
         await waitFor(() =>
-          expect(screen.queryByText("Email can't be blank")).toBeNull()
+          expect(queryByText("Email can't be blank")).toBeNull()
         );
-        expect(screen.queryByText("Password can't be blank")).toBeNull();
+        expect(queryByText("Password can't be blank")).toBeNull();
       });
     });
   });

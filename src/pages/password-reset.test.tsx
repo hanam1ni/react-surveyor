@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 import PasswordReset from 'pages/password-reset.page';
 import { getUserProfile, resetPassword } from 'services/user';
@@ -27,18 +27,18 @@ describe('Password reset page', () => {
             },
           });
 
-          renderPage(<PasswordReset />);
+          const { getByLabelText, getByText } = renderPage(<PasswordReset />);
 
           await waitFor(() =>
-            fireEvent.change(screen.getByLabelText('Email'), {
+            fireEvent.change(getByLabelText('Email'), {
               target: { value: 'user@mail.com' },
             })
           );
-          fireEvent.click(screen.getByText('Send Recovery Email'));
+          fireEvent.click(getByText('Send Recovery Email'));
 
           await waitFor(() =>
             expect(
-              screen.getByText(
+              getByText(
                 "We've emailed you instructions to reset your password."
               )
             )
@@ -51,19 +51,17 @@ describe('Password reset page', () => {
           const mockedResetPassword = resetPassword as jest.Mock;
           mockedResetPassword.mockRejectedValue({ status: 403 });
 
-          renderPage(<PasswordReset />);
+          const { getByLabelText, getByText } = renderPage(<PasswordReset />);
 
           await waitFor(() =>
-            fireEvent.change(screen.getByLabelText('Email'), {
+            fireEvent.change(getByLabelText('Email'), {
               target: { value: 'user@mail.com' },
             })
           );
-          fireEvent.click(screen.getByText('Send Recovery Email'));
+          fireEvent.click(getByText('Send Recovery Email'));
 
           await waitFor(() =>
-            expect(
-              screen.getByText('Something went wrong. Please try again later')
-            )
+            expect(getByText('Something went wrong. Please try again later'))
           );
         });
       });
@@ -71,29 +69,27 @@ describe('Password reset page', () => {
 
     describe('given NO email', () => {
       it('renders the error message', async () => {
-        renderPage(<PasswordReset />);
+        const { getByText } = renderPage(<PasswordReset />);
 
-        await waitFor(() =>
-          fireEvent.click(screen.getByText('Send Recovery Email'))
-        );
+        await waitFor(() => fireEvent.click(getByText('Send Recovery Email')));
 
-        expect(screen.getByText("Email can't be blank"));
+        expect(getByText("Email can't be blank"));
       });
 
       it('hides the error message after entering the email', async () => {
-        renderPage(<PasswordReset />);
-
-        await waitFor(() =>
-          fireEvent.click(screen.getByText('Send Recovery Email'))
+        const { getByLabelText, getByText, queryByText } = renderPage(
+          <PasswordReset />
         );
 
-        expect(screen.getByText("Email can't be blank"));
+        await waitFor(() => fireEvent.click(getByText('Send Recovery Email')));
 
-        fireEvent.change(screen.getByLabelText('Email'), {
+        expect(getByText("Email can't be blank"));
+
+        fireEvent.change(getByLabelText('Email'), {
           target: { value: 'user@mail.com' },
         });
 
-        expect(screen.queryByText("Email can't be blank")).toBeNull();
+        expect(queryByText("Email can't be blank")).toBeNull();
       });
     });
   });

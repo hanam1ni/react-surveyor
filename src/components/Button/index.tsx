@@ -7,9 +7,17 @@ interface ComponentProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary';
 }
 
-const Button = ({ label, variant = 'primary', ...props }: ComponentProps) => {
+const Button = ({
+  label,
+  variant = 'primary',
+  className,
+  ...props
+}: ComponentProps) => {
   return (
-    <button className={`${styles['base']} ${styles[variant]}`} {...props}>
+    <button
+      className={`${styles['base']} ${styles[variant]} ${className}`}
+      {...props}
+    >
       {label}
     </button>
   );
