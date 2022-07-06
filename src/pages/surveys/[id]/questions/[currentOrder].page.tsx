@@ -40,7 +40,7 @@ const Question: NextPage = () => {
   useEffect(() => {
     if (currentQuestion !== undefined) {
       const response = surveyResponses.find(
-        ({ questionId }) => questionId === currentQuestion.id
+        ({ questionId }) => questionId === currentQuestionOrder.id
       );
 
       response && setResponse(response);
@@ -53,7 +53,7 @@ const Question: NextPage = () => {
 
   const lastQuestionOrder = currentSurvey?.questions.length || 0;
 
-  const onSubmitResponses = () => {
+  const onSubmitResponse = () => {
     if (response !== null) {
       dispatchAction({
         type: ACTIONS.ADD_SURVEY_RESPONSE,
@@ -71,7 +71,7 @@ const Question: NextPage = () => {
           <div className="mb-4 text-gray-400">{`${currentQuestionOrder}/${lastQuestionOrder}`}</div>
           <SurveyQuestion
             question={currentQuestion}
-            currentResponses={response}
+            currentResponse={response}
             setResponse={setResponse}
           />
         </div>
@@ -79,7 +79,7 @@ const Question: NextPage = () => {
           {currentQuestionOrder < lastQuestionOrder ? (
             <button
               className={styles.nextQuestionLink}
-              onClick={onSubmitResponses}
+              onClick={onSubmitResponse}
               disabled={response === null}
               data-testid="next-question-button"
             >
