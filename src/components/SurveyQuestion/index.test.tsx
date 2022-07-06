@@ -18,7 +18,7 @@ describe('SurveyQuestion', () => {
       const { getAllByAltText, getByText } = render(
         <SurveyQuestion
           question={question}
-          currentResponses={null}
+          currentResponse={null}
           setResponse={jest.fn()}
         />
       );
@@ -41,7 +41,7 @@ describe('SurveyQuestion', () => {
         const { getAllByAltText } = render(
           <SurveyQuestion
             question={question}
-            currentResponses={null}
+            currentResponse={null}
             setResponse={setResponse}
           />
         );
@@ -65,7 +65,7 @@ describe('SurveyQuestion', () => {
       const { getByText } = render(
         <SurveyQuestion
           question={question}
-          currentResponses={null}
+          currentResponse={null}
           setResponse={jest.fn()}
         />
       );

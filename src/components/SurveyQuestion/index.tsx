@@ -8,7 +8,7 @@ import {
 
 export interface SurveyQuestionProps {
   question: SurveyQuestionInterface;
-  currentResponses: SurveyResponse | null;
+  currentResponse: SurveyResponse | null;
   setResponse: Dispatch<SetStateAction<SurveyResponse | null>>;
 }
 
@@ -25,7 +25,7 @@ const UnsupportedTypeNotice = () => (
 
 const SurveyQuestion = ({
   question,
-  currentResponses,
+  currentResponse,
   setResponse,
 }: SurveyQuestionProps) => {
   switch (question.displayType) {
@@ -33,7 +33,7 @@ const SurveyQuestion = ({
       return (
         <RatingQuestion
           question={question}
-          currentResponses={currentResponses}
+          currentResponse={currentResponse}
           setResponse={setResponse}
         />
       );

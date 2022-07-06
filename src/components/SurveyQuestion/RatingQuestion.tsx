@@ -1,16 +1,7 @@
-import Image from 'next/image';
 import { useState } from 'react';
 
 import { SurveyQuestionProps } from './';
-
-interface RatingItemProps {
-  index: number;
-  ratingType?: string;
-  answerClass: string;
-  onClick: () => void;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}
+import RatingItem from './RatingItem';
 
 const answerClass = (
   answerIndex: number,
@@ -26,54 +17,17 @@ const answerClass = (
   return 'opacity-50';
 };
 
-const answerIcon = (ratingType?: string) => {
-  switch (ratingType) {
-    case 'smiley':
-      return '/icon/smiley.svg';
-    case 'star':
-      return '/icon/star.svg';
-    case 'heart':
-      return '/icon/heart.svg';
-    default:
-      return '/icon/star.svg';
-  }
-};
-
-const RaingItem = ({
-  index,
-  ratingType = 'star',
-  answerClass,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
-}: RatingItemProps) => (
-  <div
-    key={index}
-    className={`inline-block px-1 cursor-pointer ${answerClass}`}
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-  >
-    <Image
-      width={34}
-      height={34}
-      src={answerIcon(ratingType)}
-      alt={`${ratingType} icon`}
-    />
-  </div>
-);
-
 const RatingQuestion = ({
   question,
-  currentResponses,
+  currentResponse,
   setResponse,
 }: SurveyQuestionProps) => {
   const setDefaultSelectedIndex = () => {
-    if (currentResponses === null) {
+    if (currentResponse === null) {
       return -1;
     }
 
-    const [currentAnswer] = currentResponses.answers;
+    const [currentAnswer] = currentResponse.answers;
     const { displayOrder = -1 } =
       question.answers.find(({ id }) => id === currentAnswer.id) || {};
 
@@ -95,9 +49,8 @@ const RatingQuestion = ({
       </h1>
       <div className="self-center">
         {question.answers.map((answer, index) => (
-          <RaingItem
+          <RatingItem
             key={index}
-            index={index}
             ratingType={question.ratingType}
             answerClass={answerClass(index, selectedIndex, hoverIndex)}
             onClick={() => onAnswerSelect(answer.id, index)}

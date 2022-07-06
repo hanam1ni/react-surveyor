@@ -40,7 +40,7 @@ const Question: NextPage = () => {
   useEffect(() => {
     if (currentQuestion !== undefined) {
       const response = surveyResponses.find(
-        ({ questionId }) => questionId === currentQuestionOrder.id
+        ({ questionId }) => questionId === currentQuestion.id
       );
 
       response && setResponse(response);
