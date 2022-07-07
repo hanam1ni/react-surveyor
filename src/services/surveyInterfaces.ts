@@ -27,6 +27,7 @@ enum DisplayType {
   INTRO = 'intro',
   OUTRO = 'outro',
   CHOICE = 'choice',
+  NPS = 'nps',
   RATING = 'rating',
 }
 
