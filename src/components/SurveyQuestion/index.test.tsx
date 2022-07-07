@@ -1,6 +1,5 @@
 import { render, waitFor } from '@testing-library/react';
 
-
 import SurveyQuestion from '.';
 import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
 
