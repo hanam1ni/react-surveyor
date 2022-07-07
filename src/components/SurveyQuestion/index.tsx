@@ -1,11 +1,15 @@
-import { SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
+import RatingQuestion from './RatingQuestion';
+import {
+  SurveyQuestion as SurveyQuestionInterface,
+  SurveyResponse,
+} from 'services/surveyInterfaces';
 
-interface SurveyQuestionProps {
+export interface SurveyQuestionProps {
   question: SurveyQuestionInterface;
-  currentAnswers?: any;
-  setAnswers?: SetStateAction<any>;
+  currentResponse: SurveyResponse | null;
+  setResponse: Dispatch<SetStateAction<SurveyResponse | null>>;
 }
 
 const UnsupportedTypeNotice = () => (
@@ -19,8 +23,20 @@ const UnsupportedTypeNotice = () => (
   </div>
 );
 
-const SurveyQuestion = ({ question }: SurveyQuestionProps) => {
+const SurveyQuestion = ({
+  question,
+  currentResponse,
+  setResponse,
+}: SurveyQuestionProps) => {
   switch (question.displayType) {
+    case 'rating':
+      return (
+        <RatingQuestion
+          question={question}
+          currentResponse={currentResponse}
+          setResponse={setResponse}
+        />
+      );
     default:
       return <UnsupportedTypeNotice />;
   }

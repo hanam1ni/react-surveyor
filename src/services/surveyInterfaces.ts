@@ -16,13 +16,24 @@ interface SurveyQuestion {
   id: string;
   displayOrder: number;
   coverImageUrl: string;
-  displayType: QuestionType;
+  displayType: DisplayType;
+  ratingType?: RatingType;
   text: string;
   pick: string;
   answers: SurveyAnswer[];
 }
 
-type QuestionType = 'intro' | 'outro';
+enum DisplayType {
+  INTRO = 'intro',
+  OUTRO = 'outro',
+  RATING = 'rating',
+}
+
+enum RatingType {
+  STAR = 'star',
+  HEART = 'heart',
+  SMILEY = 'smiley',
+}
 
 interface SurveyAnswer {
   id: string;
@@ -30,10 +41,17 @@ interface SurveyAnswer {
   text: string;
 }
 
+interface SurveyResponse {
+  questionId: string;
+  answers: { id: string; answer?: string }[];
+}
+
+export { DisplayType, RatingType };
+
 export type {
-  QuestionType,
   Survey,
   SurveyDetail,
   SurveyQuestion,
   SurveyAnswer,
+  SurveyResponse,
 };
