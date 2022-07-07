@@ -64,9 +64,12 @@ describe('Home page', () => {
           'not.be.visible'
         );
 
+        // Fix random error on CI
+        // TODO: Investigate random failing issue and remove this.
         cy.get('[data-testid="survey-list"]')
           .trigger('pointerdown')
           .trigger('pointermove', 'right');
+
         scrollSurveyItem();
 
         // Survey item #1
