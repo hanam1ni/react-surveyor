@@ -20,15 +20,11 @@ const SurveyAnswer = (props: SurveyAnswerProps) => {
     case 'rating':
       return <RatingAnswer {...props} />;
     default:
-<<<<<<< HEAD
       return (
         <h2 className="text-2xl mb-2 text-white">
           Somethings went wrong. Please contact support.
         </h2>
       );
-=======
-      return <h2>Somethings went wrong. Please contact support.</h2>;
->>>>>>> 25782ab ([#13] Component restructure)
   }
 };
 
