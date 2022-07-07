@@ -26,6 +26,7 @@ interface SurveyQuestion {
 enum DisplayType {
   INTRO = 'intro',
   OUTRO = 'outro',
+  CHOICE = 'choice',
   RATING = 'rating',
 }
 

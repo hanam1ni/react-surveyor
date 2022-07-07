@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import ChoiceAnswer from './ChoiceAnswer';
 import RatingAnswer from './RatingAnswer';
 import {
   SurveyQuestion as SurveyQuestionInterface,
@@ -14,6 +15,8 @@ export interface SurveyAnswerProps {
 
 const SurveyAnswer = (props: SurveyAnswerProps) => {
   switch (props.question.displayType) {
+    case 'choice':
+      return <ChoiceAnswer {...props} />;
     case 'rating':
       return <RatingAnswer {...props} />;
     default:
