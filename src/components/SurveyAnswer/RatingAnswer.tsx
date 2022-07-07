@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SurveyAnswerProps } from '.';
 import RatingItem from './RatingItem';
 
-const answerClass = (
+const answerStateClass = (
   answerIndex: number,
   selectedIndex: number,
   hoverIndex: number
@@ -48,7 +48,7 @@ const RatingAnswer = ({
         <RatingItem
           key={index}
           ratingType={question.ratingType}
-          answerClass={answerClass(index, selectedIndex, hoverIndex)}
+          answerStateClass={answerStateClass(index, selectedIndex, hoverIndex)}
           onClick={() => onAnswerSelect(answer.id, index)}
           onMouseEnter={() => setHoverIndex(index)}
           onMouseLeave={() => setHoverIndex(-1)}
