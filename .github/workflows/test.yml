@@ -27,3 +27,10 @@ jobs:
 
       - name: Run integration tests
         run: npm run cypress
+
+      - name: Upload failing UI testing screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
