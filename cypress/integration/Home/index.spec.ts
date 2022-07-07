@@ -64,6 +64,9 @@ describe('Home page', () => {
           'not.be.visible'
         );
 
+        cy.get('[data-testid="survey-list"]')
+          .trigger('pointerdown')
+          .trigger('pointermove', 'right');
         scrollSurveyItem();
 
         // Survey item #1
