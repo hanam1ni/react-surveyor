@@ -1,13 +1,9 @@
 describe('Home page', () => {
-  const scrollSurveyItem = (times = 1) => {
-    for (let time = 1; time <= times; time++) {
-      cy.get('[data-testid="survey-list"]')
-        .trigger('pointerdown')
-        .trigger('pointermove', 'right')
-        .trigger('pointermove', 'left')
-        .trigger('pointerup');
-      cy.wait(150);
-    }
+  const goToSurveyItem = (index: number) => {
+    cy.get('[data-testid="survey-list"]')
+      .get('.swiper-pagination-bullet')
+      .eq(index - 1)
+      .click();
   };
 
   beforeEach(() => {
@@ -64,13 +60,7 @@ describe('Home page', () => {
           'not.be.visible'
         );
 
-        // Fix random error on CI
-        // TODO: Investigate random failing issue and remove this.
-        cy.get('[data-testid="survey-list"]')
-          .trigger('pointerdown')
-          .trigger('pointermove', 'right');
-
-        scrollSurveyItem();
+        goToSurveyItem(2);
 
         // Survey item #1
         cy.findByText('Scarlett Bangkok').should('not.be.visible');
@@ -99,8 +89,7 @@ describe('Home page', () => {
 
         cy.wait(['@listSurveysPage1']);
 
-        // Scroll the survey list to the end of first page
-        scrollSurveyItem(4);
+        goToSurveyItem(5);
 
         // Last survey item of the first page
         cy.findByText('Health Land Spa').should('be.visible');
@@ -108,7 +97,7 @@ describe('Home page', () => {
         // Fetch the next page
         cy.wait(['@listSurveyPage2']);
 
-        scrollSurveyItem(1);
+        goToSurveyItem(6);
 
         // First survey item of the second page
         cy.findByText('Tree Tops Australia').should('be.visible');
