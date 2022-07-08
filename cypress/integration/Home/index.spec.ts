@@ -6,6 +6,17 @@ describe('Home page', () => {
       .click();
   };
 
+  const scrollSurveyItem = (times: number) => {
+    for (let time = 1; time <= times; time++) {
+      cy.get('[data-testid="survey-list"]')
+        .trigger('pointerdown')
+        .trigger('pointermove', 'right')
+        .trigger('pointermove', 'left')
+        .trigger('pointerup');
+      cy.wait(150);
+    }
+  };
+
   beforeEach(() => {
     cy.clock(new Date(2022, 0, 1).getTime(), ['Date']);
     cy.login();
@@ -97,7 +108,7 @@ describe('Home page', () => {
         // Fetch the next page
         cy.wait(['@listSurveyPage2']);
 
-        goToSurveyItem(6);
+        scrollSurveyItem(1);
 
         // First survey item of the second page
         cy.findByText('Tree Tops Australia').should('be.visible');
