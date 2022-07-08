@@ -96,6 +96,53 @@ describe('SurveyAnswer', () => {
     });
   });
 
+  describe('given nps display type', () => {
+    it('renders the answers', async () => {
+      const answers = [build('surveyAnswer'), build('surveyAnswer')];
+      const question = build('surveyQuestion', {
+        displayType: 'nps',
+        answers: answers,
+      }) as SurveyQuestionInterface;
+
+      const { getAllByTestId } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={null}
+          setResponse={jest.fn()}
+        />
+      );
+
+      expect(getAllByTestId('nps-answer-item').length).toEqual(2);
+    });
+
+    describe('click on answer', () => {
+      it('sets survey response', async () => {
+        const answer = build('surveyAnswer');
+        const otherAnswers = [build('surveyAnswer'), build('surveyAnswer')];
+        const question = build('surveyQuestion', {
+          displayType: 'nps',
+          answers: [answer, ...otherAnswers],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { getAllByTestId } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={null}
+            setResponse={setResponse}
+          />
+        );
+
+        fireEvent.click(getAllByTestId('nps-answer-item')[0]);
+
+        expect(setResponse).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer.id }],
+        });
+      });
+    });
+  });
+
   describe('given rating display type', () => {
     const ACTIVE_ANSWER_OPACITY = 'opacity-100';
     const INACTIVE_ANSWER_OPACITY = 'opacity-50';
