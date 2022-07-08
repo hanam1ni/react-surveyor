@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 
 import SurveyAnswer from '.';
 import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
@@ -7,6 +7,9 @@ import { build } from '@support/factory';
 
 describe('SurveyAnswer', () => {
   describe('given choice display type', () => {
+    const ACTIVE_ANSWER_TEXT_COLOR = 'text-white';
+    const INACTIVE_ANSWER_TEXT_COLOR = 'text-gray-400';
+
     it('renders the answers', async () => {
       const answers = [
         build('surveyAnswer', { text: 'First Question' }),
@@ -25,7 +28,12 @@ describe('SurveyAnswer', () => {
         />
       );
 
-      expect(getByText(/First Question/)).toBeInTheDocument();
+      expect(getByText(/First Question/)).toHaveClass(
+        INACTIVE_ANSWER_TEXT_COLOR
+      );
+      expect(getByText(/Second Question/)).toHaveClass(
+        INACTIVE_ANSWER_TEXT_COLOR
+      );
     });
 
     describe('click on answer', () => {
@@ -55,6 +63,17 @@ describe('SurveyAnswer', () => {
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
+        waitFor(() =>
+          expect(getByText(/First Question/)).toHaveClass(
+            ACTIVE_ANSWER_TEXT_COLOR
+          )
+        );
+        expect(getByText(/Second Question/)).toHaveClass(
+          INACTIVE_ANSWER_TEXT_COLOR
+        );
+        expect(getByText(/Third Question/)).toHaveClass(
+          INACTIVE_ANSWER_TEXT_COLOR
+        );
       });
     });
   });
