@@ -97,7 +97,10 @@ describe('SurveyAnswer', () => {
   });
 
   describe('given nps display type', () => {
-    it('renders the answers', async () => {
+    const ACTIVE_ANSWER_TEXT_COLOR = 'text-gray-700';
+    const INACTIVE_ANSWER_TEXT_COLOR = 'text-white';
+
+    it('renders the answers', () => {
       const answers = [build('surveyAnswer'), build('surveyAnswer')];
       const question = build('surveyQuestion', {
         displayType: 'nps',
@@ -116,7 +119,7 @@ describe('SurveyAnswer', () => {
     });
 
     describe('click on answer', () => {
-      it('sets survey response', async () => {
+      it('sets survey response', () => {
         const answer = build('surveyAnswer');
         const otherAnswers = [build('surveyAnswer'), build('surveyAnswer')];
         const question = build('surveyQuestion', {
@@ -139,6 +142,32 @@ describe('SurveyAnswer', () => {
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
+      });
+    });
+
+    describe('given valid response', () => {
+      it('sets active answer with the current response', () => {
+        const answer1 = build('surveyAnswer');
+        const answer2 = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'nps',
+          answers: [answer1, answer2],
+        }) as SurveyQuestionInterface;
+
+        const { getAllByTestId } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={{
+              questionId: question.id,
+              answers: [{ id: answer1.id }],
+            }}
+            setResponse={jest.fn()}
+          />
+        );
+
+        const answerItems = getAllByTestId('nps-answer-item');
+        expect(answerItems[0]).toHaveClass(ACTIVE_ANSWER_TEXT_COLOR);
+        expect(answerItems[1]).toHaveClass(INACTIVE_ANSWER_TEXT_COLOR);
       });
     });
   });
