@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { SurveyQuestionProps } from './';
+import { SurveyAnswerProps } from '.';
 import RatingItem from './RatingItem';
 
-const answerClass = (
+const answerStateClass = (
   answerIndex: number,
   selectedIndex: number,
   hoverIndex: number
@@ -17,11 +17,11 @@ const answerClass = (
   return 'opacity-50';
 };
 
-const RatingQuestion = ({
+const RatingAnswer = ({
   question,
   currentResponse,
   setResponse,
-}: SurveyQuestionProps) => {
+}: SurveyAnswerProps) => {
   const setDefaultSelectedIndex = () => {
     if (currentResponse === null) {
       return -1;
@@ -43,24 +43,19 @@ const RatingQuestion = ({
   };
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mb-11 text-4xl font-extrabold text-white">
-        {question.text}
-      </h1>
-      <div className="self-center">
-        {question.answers.map((answer, index) => (
-          <RatingItem
-            key={index}
-            ratingType={question.ratingType}
-            answerClass={answerClass(index, selectedIndex, hoverIndex)}
-            onClick={() => onAnswerSelect(answer.id, index)}
-            onMouseEnter={() => setHoverIndex(index)}
-            onMouseLeave={() => setHoverIndex(-1)}
-          />
-        ))}
-      </div>
+    <div className="self-center">
+      {question.answers.map((answer, index) => (
+        <RatingItem
+          key={index}
+          ratingType={question.ratingType}
+          answerStateClass={answerStateClass(index, selectedIndex, hoverIndex)}
+          onClick={() => onAnswerSelect(answer.id, index)}
+          onMouseEnter={() => setHoverIndex(index)}
+          onMouseLeave={() => setHoverIndex(-1)}
+        />
+      ))}
     </div>
   );
 };
 
-export default RatingQuestion;
+export default RatingAnswer;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 interface RatingItemProps {
   ratingType?: string;
-  answerClass: string;
+  answerStateClass: string;
   onClick: () => void;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -23,13 +23,13 @@ const answerIcon = (ratingType?: string) => {
 
 const RatingItem = ({
   ratingType = 'star',
-  answerClass,
+  answerStateClass,
   onClick,
   onMouseEnter,
   onMouseLeave,
 }: RatingItemProps) => (
   <div
-    className={`inline-block px-1 cursor-pointer ${answerClass}`}
+    className={`inline-block px-1 cursor-pointer ${answerStateClass}`}
     onClick={onClick}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
