@@ -13,7 +13,7 @@ const ChoiceAnswer = ({
     setResponse({ questionId: question.id, answers: [{ id: answerId }] });
   };
 
-  const answerClass = (answerId: string) => {
+  const answerStateClass = (answerId: string) => {
     const isActiveAnswer = currentResponse?.answers[0].id === answerId;
 
     if (isActiveAnswer) {
@@ -28,7 +28,7 @@ const ChoiceAnswer = ({
       {question.answers.map((answer, index) => (
         <div
           key={index}
-          className={`py-4 text-center cursor-pointer hover:text-white hover:font-semibold ${answerClass(
+          className={`py-4 text-center cursor-pointer hover:text-white hover:font-semibold ${answerStateClass(
             answer.id
           )}`}
           onClick={() => onAnswerSelect(answer.id)}
