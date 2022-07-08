@@ -96,6 +96,82 @@ describe('SurveyAnswer', () => {
     });
   });
 
+  describe('given nps display type', () => {
+    const ACTIVE_ANSWER_TEXT_COLOR = 'text-gray-700';
+    const INACTIVE_ANSWER_TEXT_COLOR = 'text-white';
+
+    it('renders the answers', () => {
+      const answers = [build('surveyAnswer'), build('surveyAnswer')];
+      const question = build('surveyQuestion', {
+        displayType: 'nps',
+        answers: answers,
+      }) as SurveyQuestionInterface;
+
+      const { getAllByTestId } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={null}
+          setResponse={jest.fn()}
+        />
+      );
+
+      expect(getAllByTestId('nps-answer-item').length).toEqual(2);
+    });
+
+    describe('click on answer', () => {
+      it('sets survey response', () => {
+        const answer = build('surveyAnswer');
+        const otherAnswers = [build('surveyAnswer'), build('surveyAnswer')];
+        const question = build('surveyQuestion', {
+          displayType: 'nps',
+          answers: [answer, ...otherAnswers],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { getAllByTestId } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={null}
+            setResponse={setResponse}
+          />
+        );
+
+        fireEvent.click(getAllByTestId('nps-answer-item')[0]);
+
+        expect(setResponse).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer.id }],
+        });
+      });
+    });
+
+    describe('given valid response', () => {
+      it('sets active answer with the current response', () => {
+        const answer1 = build('surveyAnswer');
+        const answer2 = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'nps',
+          answers: [answer1, answer2],
+        }) as SurveyQuestionInterface;
+
+        const { getAllByTestId } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={{
+              questionId: question.id,
+              answers: [{ id: answer1.id }],
+            }}
+            setResponse={jest.fn()}
+          />
+        );
+
+        const answerItems = getAllByTestId('nps-answer-item');
+        expect(answerItems[0]).toHaveClass(ACTIVE_ANSWER_TEXT_COLOR);
+        expect(answerItems[1]).toHaveClass(INACTIVE_ANSWER_TEXT_COLOR);
+      });
+    });
+  });
+
   describe('given rating display type', () => {
     const ACTIVE_ANSWER_OPACITY = 'opacity-100';
     const INACTIVE_ANSWER_OPACITY = 'opacity-50';
