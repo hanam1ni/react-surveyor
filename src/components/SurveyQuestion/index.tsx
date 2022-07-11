@@ -1,6 +1,6 @@
 import SurveyAnswer, { SurveyAnswerProps } from 'components/SurveyAnswer';
 import {
-  DisplayType as QuestionDisplayType,
+  QuestionType,
   SurveyQuestion as SurveyQuestionInterface,
 } from 'services/surveyInterfaces';
 
@@ -20,11 +20,11 @@ const UnsupportedTypeNotice = () => (
 );
 
 const SurveyQuestion = ({ question, ...answerProps }: SurveyQuestionProps) => {
-  const isValidDisplayType = Object.values(QuestionDisplayType).includes(
+  const isValidQuestionType = Object.values<string>(QuestionType).includes(
     question.displayType
   );
 
-  if (!isValidDisplayType) {
+  if (!isValidQuestionType) {
     return <UnsupportedTypeNotice />;
   }
 

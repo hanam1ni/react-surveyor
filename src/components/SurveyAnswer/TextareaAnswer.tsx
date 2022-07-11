@@ -14,11 +14,11 @@ const TextareaAnswer = ({
       return setResponse(null);
     }
 
-    const [answer] = question.answers;
+    const currentAnswer = question.answers[0];
 
     setResponse({
       questionId: question.id,
-      answers: [{ id: answer.id, answer: event.target.value }],
+      answers: [{ id: currentAnswer.id, answer: event.target.value }],
     });
   };
 

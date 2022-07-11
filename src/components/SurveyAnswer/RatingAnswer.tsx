@@ -27,7 +27,7 @@ const RatingAnswer = ({
       return -1;
     }
 
-    const [currentAnswer] = currentResponse.answers;
+    const currentAnswer = currentResponse.answers[0];
     const { displayOrder = -1 } =
       question.answers.find(({ id }) => id === currentAnswer.id) || {};
 
