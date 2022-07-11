@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import ChoiceAnswer from './ChoiceAnswer';
 import NpsAnswer from './NpsAnswer';
 import RatingAnswer from './RatingAnswer';
+import TextareaAnswer from './TextareaAnswer';
 import {
   SurveyQuestion as SurveyQuestionInterface,
   SurveyResponse,
@@ -22,6 +23,8 @@ const SurveyAnswer = (props: SurveyAnswerProps) => {
       return <NpsAnswer {...props} />;
     case 'rating':
       return <RatingAnswer {...props} />;
+    case 'textarea':
+      return <TextareaAnswer {...props} />;
     default:
       return (
         <h2 className="text-2xl mb-2 text-white">

@@ -29,6 +29,7 @@ enum DisplayType {
   CHOICE = 'choice',
   NPS = 'nps',
   RATING = 'rating',
+  TEXTAREA = 'textarea',
 }
 
 enum RatingType {
