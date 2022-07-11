@@ -1,7 +1,9 @@
+import { SurveyResponse } from 'services/surveyInterfaces';
 import { UserProfile } from 'services/user';
 import { defaultInitialStore, StoreType } from 'store';
 
 export enum ACTIONS {
+  ADD_SURVEY_RESPONSE,
   CLEAR_STORE,
   SET_CURRENT_SURVEY,
   SET_SURVEYS,
@@ -9,6 +11,10 @@ export enum ACTIONS {
 }
 
 export type ActionPayloadType =
+  | {
+      type: ACTIONS.ADD_SURVEY_RESPONSE;
+      value: SurveyResponse;
+    }
   | { type: ACTIONS.CLEAR_STORE }
   | {
       type: ACTIONS.SET_CURRENT_SURVEY;
@@ -25,6 +31,13 @@ export type ActionPayloadType =
 
 export default (store: StoreType, action: ActionPayloadType) => {
   switch (action.type) {
+    case ACTIONS.ADD_SURVEY_RESPONSE:
+      return {
+        ...store,
+        surveyResponses: store.surveyResponses
+          .filter(({ questionId }) => questionId !== action.value.questionId)
+          .concat(action.value),
+      };
     case ACTIONS.CLEAR_STORE:
       return defaultInitialStore;
     case ACTIONS.SET_CURRENT_SURVEY:

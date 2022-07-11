@@ -23,6 +23,7 @@ const SurveyList = ({ surveys, onSlideChange }: SurveyListProps) => {
         mousewheel={{ thresholdDelta: 30 }}
         modules={[Mousewheel, Pagination]}
         pagination={{
+          clickable: true,
           el: '.swiper-pagination',
           bulletClass: `swiper-pagination-bullet ${styles.swiperPaginationBullet}`,
         }}

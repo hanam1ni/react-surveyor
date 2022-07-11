@@ -1,0 +1,7 @@
+.npsAnswer {
+  @apply inline-block w-10 py-4 text-center border-y border-r border-gray-300
+        text-xl font-semibold 
+        cursor-pointer transition-all duration-200
+        hover:bg-white hover:text-gray-700
+        first:border-l first:rounded-l-xl last:rounded-r-xl;
+}

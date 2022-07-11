@@ -1,5 +1,12 @@
 describe('Home page', () => {
-  const scrollSurveyItem = (times = 1) => {
+  const goToSurveyItem = (index: number) => {
+    cy.get('[data-testid="survey-list"]')
+      .get('.swiper-pagination-bullet')
+      .eq(index - 1)
+      .click();
+  };
+
+  const scrollSurveyItem = (times: number) => {
     for (let time = 1; time <= times; time++) {
       cy.get('[data-testid="survey-list"]')
         .trigger('pointerdown')
@@ -64,7 +71,7 @@ describe('Home page', () => {
           'not.be.visible'
         );
 
-        scrollSurveyItem();
+        goToSurveyItem(2);
 
         // Survey item #1
         cy.findByText('Scarlett Bangkok').should('not.be.visible');
@@ -93,8 +100,7 @@ describe('Home page', () => {
 
         cy.wait(['@listSurveysPage1']);
 
-        // Scroll the survey list to the end of first page
-        scrollSurveyItem(4);
+        goToSurveyItem(5);
 
         // Last survey item of the first page
         cy.findByText('Health Land Spa').should('be.visible');

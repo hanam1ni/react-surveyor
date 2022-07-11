@@ -4,10 +4,12 @@ import { get } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
 import { getUserToken } from 'utils/userToken';
 import {
+  RatingType,
   Survey,
   SurveyDetail,
   SurveyQuestion,
   SurveyAnswer,
+  DisplayType,
 } from './surveyInterfaces';
 
 interface SurveyResponse {
@@ -86,11 +88,22 @@ const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
     id: questionResponse.id,
     displayOrder: questionResponse.displayOrder,
     coverImageUrl: `${questionResponse.coverImageUrl}l`,
-    displayType: questionResponse.displayType,
     text: questionResponse.text,
     pick: questionResponse.pick,
     answers: sortRecords(parsedAnswer),
+    ...parseDisplayType(questionResponse.displayType),
   };
+};
+
+const parseDisplayType = (rawDisplayType: string) => {
+  if (Object.values(RatingType).includes(rawDisplayType as any)) {
+    return {
+      displayType: 'rating' as DisplayType,
+      ratingType: rawDisplayType as RatingType,
+    };
+  }
+
+  return { displayType: rawDisplayType as DisplayType };
 };
 
 const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({

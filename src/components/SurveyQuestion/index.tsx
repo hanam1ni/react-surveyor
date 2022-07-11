@@ -1,11 +1,11 @@
-import { SetStateAction } from 'react';
+import SurveyAnswer, { SurveyAnswerProps } from 'components/SurveyAnswer';
+import {
+  DisplayType as QuestionDisplayType,
+  SurveyQuestion as SurveyQuestionInterface,
+} from 'services/surveyInterfaces';
 
-import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
-
-interface SurveyQuestionProps {
+interface SurveyQuestionProps extends SurveyAnswerProps {
   question: SurveyQuestionInterface;
-  currentAnswers?: any;
-  setAnswers?: SetStateAction<any>;
 }
 
 const UnsupportedTypeNotice = () => (
@@ -19,11 +19,23 @@ const UnsupportedTypeNotice = () => (
   </div>
 );
 
-const SurveyQuestion = ({ question }: SurveyQuestionProps) => {
-  switch (question.displayType) {
-    default:
-      return <UnsupportedTypeNotice />;
+const SurveyQuestion = ({ question, ...answerProps }: SurveyQuestionProps) => {
+  const isValidDisplayType = Object.values(QuestionDisplayType).includes(
+    question.displayType
+  );
+
+  if (!isValidDisplayType) {
+    return <UnsupportedTypeNotice />;
   }
+
+  return (
+    <div className="flex flex-col">
+      <h1 className="mb-11 text-4xl font-extrabold text-white">
+        {question.text}
+      </h1>
+      <SurveyAnswer question={question} {...answerProps} />
+    </div>
+  );
 };
 
 export default SurveyQuestion;

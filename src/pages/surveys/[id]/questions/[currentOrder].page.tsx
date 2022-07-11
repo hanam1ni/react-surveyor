@@ -1,14 +1,17 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import Button from 'components/Button';
 import PageLoader from 'components/PageLoader';
 import SurveyQuestion from 'components/SurveyQuestion';
 import useSession from 'hooks/useSession';
-import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterfaces';
-import { StoreContext } from 'store';
+import {
+  SurveyQuestion as SurveyQuestionInterface,
+  SurveyResponse,
+} from 'services/surveyInterfaces';
+import { ACTIONS, StoreContext } from 'store';
 
 import styles from './[currentOrder].module.css';
 
@@ -19,21 +22,29 @@ const Question: NextPage = () => {
   const surveyId = router.query.id as string;
 
   const {
-    store: { currentSurvey },
+    store: { currentSurvey, surveyResponses },
+    dispatchAction,
   } = useContext(StoreContext);
 
-  const [currentQuestion, setCurrentQuestion] =
-    useState<SurveyQuestionInterface>({} as SurveyQuestionInterface);
+  const currentQuestion = useMemo(
+    () =>
+      currentSurvey?.questions.find(
+        ({ displayOrder }) => displayOrder === currentQuestionOrder
+      ),
+    []
+  ) as SurveyQuestionInterface;
+
   const [isLoading, setIsLoading] = useState(true);
-  const [answers, setAnswers] = useState(null);
+  const [response, setResponse] = useState<SurveyResponse | null>(null);
 
   useEffect(() => {
-    const question = currentSurvey?.questions.find(
-      ({ displayOrder }) => displayOrder === currentQuestionOrder
-    );
+    if (currentQuestion !== undefined) {
+      const response = surveyResponses.find(
+        ({ questionId }) => questionId === currentQuestion.id
+      );
 
-    if (question !== undefined) {
-      setCurrentQuestion(question);
+      response && setResponse(response);
+
       setIsLoading(false);
     } else {
       router.push(`/surveys/${surveyId}`);
@@ -42,6 +53,17 @@ const Question: NextPage = () => {
 
   const lastQuestionOrder = currentSurvey?.questions.length || 0;
 
+  const onSubmitResponse = () => {
+    if (response !== null) {
+      dispatchAction({
+        type: ACTIONS.ADD_SURVEY_RESPONSE,
+        value: response,
+      });
+
+      router.push(`/surveys/${surveyId}/questions/${currentQuestionOrder + 1}`);
+    }
+  };
+
   return (
     <PageLoader isLoading={isLoading}>
       <>
@@ -49,15 +71,16 @@ const Question: NextPage = () => {
           <div className="mb-4 text-gray-400">{`${currentQuestionOrder}/${lastQuestionOrder}`}</div>
           <SurveyQuestion
             question={currentQuestion}
-            currentAnswers={answers}
-            setAnswers={setAnswers}
+            currentResponse={response}
+            setResponse={setResponse}
           />
         </div>
         <div className="absolute bottom-8 right-8">
           {currentQuestionOrder < lastQuestionOrder ? (
             <button
               className={styles.nextQuestionLink}
-              disabled={answers === null}
+              onClick={onSubmitResponse}
+              disabled={response === null}
               data-testid="next-question-button"
             >
               <Image
