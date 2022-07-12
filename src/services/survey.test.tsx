@@ -1,10 +1,11 @@
 import * as surveyService from 'services/survey';
 
-import { get } from 'utils/httpClient';
+import { get, post } from 'utils/httpClient';
 import { getUserToken } from 'utils/userToken';
 
 import { build } from '@support/factory';
 import surveyDetailResponse from '@support/fixtures/surveyDetail.json';
+import { SurveyDetail } from './surveyInterfaces';
 
 jest.mock('utils/httpClient');
 jest.mock('utils/userToken');
@@ -89,5 +90,82 @@ describe('getSurveyDetail', () => {
 
       expect(ratingQuestion?.ratingType).toEqual('star');
     });
+  });
+});
+
+describe('getInvalidResponseOrder', () => {
+  it('returns list of invalid response', () => {
+    const question1 = build('surveyQuestion', {
+      displayOrder: 1,
+      isMandatory: false,
+    });
+    const question2 = build('surveyQuestion', {
+      displayOrder: 2,
+      isMandatory: true,
+    });
+    const question3 = build('surveyQuestion', {
+      displayOrder: 3,
+      isMandatory: true,
+    });
+    const question4 = build('surveyQuestion', {
+      displayOrder: 4,
+      isMandatory: true,
+    });
+    const surveyDetail = build('surveyDetail', {
+      questions: [question1, question2, question3, question4],
+    }) as SurveyDetail;
+
+    const surveyResponses = [
+      {
+        questionId: question3.id,
+        answers: [{ id: question3.answers[0].id }],
+      },
+    ];
+
+    const invalidResponseOrder = surveyService.getInvalidResponseOrder(
+      surveyResponses,
+      surveyDetail
+    );
+
+    expect(invalidResponseOrder).toEqual([2, 4]);
+  });
+});
+
+describe('submitSurveyResponse', () => {
+  it('submits the given survey responses', async () => {
+    const userToken = build('userToken');
+    const mockedGetUserToken = getUserToken as jest.Mock;
+    mockedGetUserToken.mockReturnValue(userToken);
+
+    const question = build('surveyQuestion');
+    const surveyDetail = build('surveyDetail', { questions: [question] });
+    const mockedPost = post as jest.Mock;
+    mockedPost.mockResolvedValue({});
+
+    const surveyResponses = [
+      {
+        questionId: question.id,
+        answers: [{ id: question.answers[0].id }],
+      },
+    ];
+
+    await surveyService.submitSurveyResponse(surveyDetail.id, surveyResponses);
+
+    const expectedRequestBody = {
+      survey_id: surveyDetail.id,
+      questions: [
+        { id: question.id, answers: [{ id: question.answers[0].id }] },
+      ],
+    };
+
+    const expectedRequestHeader = {
+      headers: { Authorization: `Bearer ${userToken.accessToken}` },
+    };
+
+    expect(mockedPost).toHaveBeenCalledWith(
+      '/responses',
+      expectedRequestBody,
+      expectedRequestHeader
+    );
   });
 });
