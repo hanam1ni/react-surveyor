@@ -20,6 +20,7 @@ interface SurveyQuestion {
   ratingType?: RatingType;
   text: string;
   pick: string;
+  isMandatory: boolean;
   answers: SurveyAnswer[];
 }
 
@@ -46,6 +47,7 @@ interface SurveyAnswer {
   id: string;
   displayOrder: number;
   text: string;
+  isMandatory: boolean;
 }
 
 interface SurveyResponse {

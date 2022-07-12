@@ -1,22 +1,23 @@
 import { deserialize } from 'deserialize-json-api';
 
-import { get } from 'utils/httpClient';
+import { get, post } from 'utils/httpClient';
 import { BatchInfo, parseBatchInfo } from 'utils/pagination';
 import { getUserToken } from 'utils/userToken';
 import {
   RatingType,
   Survey,
+  SurveyAnswer,
   SurveyDetail,
   SurveyQuestion,
-  SurveyAnswer,
+  SurveyResponse,
 } from './surveyInterfaces';
 
-interface SurveyResponse {
+interface SurveyList {
   surveys: Survey[];
   batchInfo: BatchInfo;
 }
 
-export const listSurveys = async (options = {}): Promise<SurveyResponse> => {
+export const listSurveys = async (options = {}): Promise<SurveyList> => {
   const { accessToken } = getUserToken();
 
   const response = await get('/surveys', {
@@ -44,6 +45,39 @@ export const getSurveyDetail = async (surveyId: string) => {
   const deserializedResponse = await deserialize(response);
 
   return parseSurveyDetail(deserializedResponse.data);
+};
+
+export const getInvalidResponseOrder = (
+  surveyResponses: SurveyResponse[],
+  currentSurvey: SurveyDetail
+) => {
+  const responseQuestionIds = surveyResponses.map(
+    ({ questionId }) => questionId
+  );
+
+  return currentSurvey.questions
+    .filter(({ isMandatory }) => isMandatory)
+    .filter(({ id: questionId }) => !responseQuestionIds.includes(questionId))
+    .map(({ displayOrder }) => displayOrder);
+};
+
+export const submitSurveyResponse = (
+  surveyId: string,
+  surveyResponses: SurveyResponse[]
+) => {
+  const { accessToken } = getUserToken();
+
+  const requestBody = {
+    survey_id: surveyId,
+    questions: surveyResponses.map(({ questionId, ...response }) => ({
+      id: questionId,
+      ...response,
+    })),
+  };
+
+  return post('/responses', requestBody, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 };
 
 const parseSurvey = (surveyResponse: any): Survey => ({
@@ -89,6 +123,7 @@ const parseSurveyQuestion = (questionResponse: any): SurveyQuestion => {
     coverImageUrl: `${questionResponse.coverImageUrl}l`,
     text: questionResponse.text,
     pick: questionResponse.pick,
+    isMandatory: questionResponse.isMandatory,
     answers: sortRecords(parsedAnswer),
     ...parseDisplayType(questionResponse.displayType),
   };
@@ -109,6 +144,7 @@ const parseSurveyAnswer = (answerResponse: any): SurveyAnswer => ({
   id: answerResponse.id,
   displayOrder: answerResponse.displayOrder,
   text: answerResponse.text,
+  isMandatory: answerResponse.isMandatory,
 });
 
 const sortRecords = (records: any[]) =>
