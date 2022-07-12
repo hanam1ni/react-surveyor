@@ -4,9 +4,14 @@ import Image from 'next/image';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import Button from 'components/Button';
+import FlashNotice from 'components/FlashNotice';
 import PageLoader from 'components/PageLoader';
 import SurveyQuestion from 'components/SurveyQuestion';
 import useSession from 'hooks/useSession';
+import {
+  getInvalidResponseOrders,
+  submitSurveyResponse,
+} from 'services/survey';
 import {
   SurveyQuestion as SurveyQuestionInterface,
   SurveyResponse,
@@ -35,7 +40,14 @@ const Question: NextPage = () => {
   ) as SurveyQuestionInterface;
 
   const [isLoading, setIsLoading] = useState(true);
+  const [surveySubmitError, setSurveySubmitError] = useState<string[]>([]);
+  const [isSurveySubmit, setIsSurveySubmit] = useState(false);
   const [response, setResponse] = useState<SurveyResponse | null>(null);
+
+  const handleSurveySubmitError = (errorMessages: string[]) => {
+    setSurveySubmitError(errorMessages);
+    setIsSurveySubmit(false);
+  };
 
   useEffect(() => {
     if (currentQuestion !== undefined) {
@@ -51,7 +63,30 @@ const Question: NextPage = () => {
     }
   }, [currentQuestionOrder]);
 
-  const lastQuestionOrder = currentSurvey?.questions.length || 0;
+  useEffect(() => {
+    if (isSurveySubmit) {
+      const invalidResponseOrder = getInvalidResponseOrders(
+        surveyResponses,
+        currentSurvey!
+      );
+
+      if (invalidResponseOrder.length === 0) {
+        const formattedOrder = invalidResponseOrder.join(', ');
+        const errorMessage = `Answer for question(s) ${formattedOrder} cant't be blank`;
+        handleSurveySubmitError([errorMessage]);
+
+        return;
+      }
+
+      submitSurveyResponse(currentSurvey!.id, surveyResponses)
+        .then(() => router.push(`/surveys/${surveyId}/outro`))
+        .catch(() =>
+          handleSurveySubmitError([
+            'Something went wrong. Please try again later.',
+          ])
+        );
+    }
+  }, [isSurveySubmit]);
 
   const onSubmitResponse = () => {
     if (response !== null) {
@@ -63,6 +98,21 @@ const Question: NextPage = () => {
 
     router.push(`/surveys/${surveyId}/questions/${currentQuestionOrder + 1}`);
   };
+
+  const onSubmitSurvey = () => {
+    if (response !== null) {
+      dispatchAction({
+        type: ACTIONS.ADD_SURVEY_RESPONSE,
+        value: response,
+      });
+    }
+
+    setIsSurveySubmit(true);
+  };
+
+  const lastQuestionOrder = currentSurvey?.questions.length || 0;
+  const isEmptySurveyResponse =
+    surveyResponses.length === 0 && response === null;
 
   return (
     <PageLoader isLoading={isLoading}>
@@ -90,7 +140,21 @@ const Question: NextPage = () => {
               />
             </button>
           ) : (
-            <Button label="Submit" className="px-8" />
+            <Button
+              label="Submit"
+              className="px-8"
+              onClick={onSubmitSurvey}
+              disabled={isEmptySurveyResponse || isSurveySubmit}
+            />
+          )}
+        </div>
+        <div className="absolute bottom-0 left-8">
+          {surveySubmitError.length !== 0 && (
+            <FlashNotice
+              title="Error"
+              messages={surveySubmitError}
+              type="warning"
+            />
           )}
         </div>
       </>

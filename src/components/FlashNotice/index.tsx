@@ -17,7 +17,7 @@ const FlashNotice = ({ title, messages, type = 'success' }: ComponentProps) => {
   }
 
   return (
-    <div className="p-6 mb-8 flex flex-row bg-neutral-800 rounded-md">
+    <div className="max-w-md p-6 mb-8 flex flex-row bg-neutral-800 rounded-md">
       <div>
         <FlashNoticeIcon type={type} />
       </div>
@@ -25,7 +25,7 @@ const FlashNotice = ({ title, messages, type = 'success' }: ComponentProps) => {
         <h3 className="text-white font-semibold mb-2" role="alert">
           {title}
         </h3>
-        <ul>
+        <ul className="text-gray-400">
           {messages.map((message, index) => (
             <li key={index} className="flex items-center" role="alert">
               {messages.length > 1 && (
