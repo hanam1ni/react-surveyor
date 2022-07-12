@@ -46,7 +46,7 @@ const RatingAnswer = ({
     <div className="self-center">
       {question.answers.map((answer, index) => (
         <RatingItem
-          key={index}
+          key={answer.id}
           ratingType={question.ratingType}
           answerStateClass={answerStateClass(index, selectedIndex, hoverIndex)}
           onClick={() => onAnswerSelect(answer.id, index)}
