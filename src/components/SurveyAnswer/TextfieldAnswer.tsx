@@ -7,8 +7,13 @@ const TextfieldAnswer = ({
   currentResponse,
   setResponse,
 }: SurveyAnswerProps) => {
-  const setAnswerValue = (answerId: string) =>
-    currentResponse?.answers.find((answer) => answer.id === answerId)?.answer;
+  const setAnswerValue = (answerId: string) => {
+    const answerValue = currentResponse?.answers.find(
+      (answer) => answer.id === answerId
+    )?.answer;
+
+    return answerValue || '';
+  };
 
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLInputElement>,
