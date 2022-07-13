@@ -93,7 +93,7 @@ describe('getSurveyDetail', () => {
   });
 });
 
-describe('getInvalidResponseOrder', () => {
+describe('getInvalidResponseOrders', () => {
   it('returns list of invalid response', () => {
     const question1 = build('surveyQuestion', {
       displayOrder: 1,
@@ -122,7 +122,7 @@ describe('getInvalidResponseOrder', () => {
       },
     ];
 
-    const invalidResponseOrder = surveyService.getInvalidResponseOrder(
+    const invalidResponseOrder = surveyService.getInvalidResponseOrders(
       surveyResponses,
       surveyDetail
     );

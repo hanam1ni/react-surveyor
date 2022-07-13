@@ -47,7 +47,7 @@ export const getSurveyDetail = async (surveyId: string) => {
   return parseSurveyDetail(deserializedResponse.data);
 };
 
-export const getInvalidResponseOrder = (
+export const getInvalidResponseOrders = (
   surveyResponses: SurveyResponse[],
   currentSurvey: SurveyDetail
 ) => {
