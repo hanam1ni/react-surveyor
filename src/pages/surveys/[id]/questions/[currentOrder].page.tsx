@@ -65,14 +65,14 @@ const Question: NextPage = () => {
 
   useEffect(() => {
     if (isSurveySubmit) {
-      const invalidResponseOrder = getInvalidResponseOrders(
+      const invalidResponseOrders = getInvalidResponseOrders(
         surveyResponses,
         currentSurvey!
       );
 
-      if (invalidResponseOrder.length === 0) {
-        const formattedOrder = invalidResponseOrder.join(', ');
-        const errorMessage = `Answer for question(s) ${formattedOrder} cant't be blank`;
+      if (invalidResponseOrders.length !== 0) {
+        const formattedOrder = invalidResponseOrders.join(', ');
+        const errorMessage = `Answer for question(s) ${formattedOrder} can't be blank`;
         handleSurveySubmitError([errorMessage]);
 
         return;
@@ -148,15 +148,15 @@ const Question: NextPage = () => {
             />
           )}
         </div>
-        <div className="absolute bottom-0 left-8">
-          {surveySubmitError.length !== 0 && (
+        {surveySubmitError.length !== 0 && (
+          <div className="absolute bottom-0 left-8">
             <FlashNotice
               title="Error"
               messages={surveySubmitError}
               type="warning"
             />
-          )}
-        </div>
+          </div>
+        )}
       </>
     </PageLoader>
   );
