@@ -16,19 +16,23 @@ interface SurveyQuestion {
   id: string;
   displayOrder: number;
   coverImageUrl: string;
-  displayType: DisplayType;
+  displayType: NonQuestionType | QuestionType;
   ratingType?: RatingType;
   text: string;
   pick: string;
   answers: SurveyAnswer[];
 }
 
-enum DisplayType {
+enum NonQuestionType {
   INTRO = 'intro',
   OUTRO = 'outro',
+}
+
+enum QuestionType {
   CHOICE = 'choice',
   NPS = 'nps',
   RATING = 'rating',
+  TEXTAREA = 'textarea',
 }
 
 enum RatingType {
@@ -48,7 +52,7 @@ interface SurveyResponse {
   answers: { id: string; answer?: string }[];
 }
 
-export { DisplayType, RatingType };
+export { NonQuestionType, QuestionType, RatingType };
 
 export type {
   Survey,
