@@ -59,9 +59,9 @@ const Question: NextPage = () => {
         type: ACTIONS.ADD_SURVEY_RESPONSE,
         value: response,
       });
-
-      router.push(`/surveys/${surveyId}/questions/${currentQuestionOrder + 1}`);
     }
+
+    router.push(`/surveys/${surveyId}/questions/${currentQuestionOrder + 1}`);
   };
 
   return (
@@ -80,7 +80,6 @@ const Question: NextPage = () => {
             <button
               className={styles.nextQuestionLink}
               onClick={onSubmitResponse}
-              disabled={response === null}
               data-testid="next-question-button"
             >
               <Image

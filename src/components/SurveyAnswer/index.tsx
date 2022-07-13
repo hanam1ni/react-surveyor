@@ -4,6 +4,8 @@ import ChoiceAnswer from './ChoiceAnswer';
 import NpsAnswer from './NpsAnswer';
 import RatingAnswer from './RatingAnswer';
 import TextareaAnswer from './TextareaAnswer';
+import TextfieldAnswer from './TextfieldAnswer';
+
 import {
   QuestionType,
   SurveyQuestion as SurveyQuestionInterface,
@@ -30,6 +32,7 @@ const AnswerItems: Record<
   nps: NpsAnswer,
   rating: RatingAnswer,
   textarea: TextareaAnswer,
+  textfield: TextfieldAnswer,
 };
 
 const SurveyAnswer = (props: SurveyAnswerProps) => {
