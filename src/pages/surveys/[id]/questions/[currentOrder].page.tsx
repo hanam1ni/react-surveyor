@@ -40,12 +40,12 @@ const Question: NextPage = () => {
   ) as SurveyQuestionInterface;
 
   const [isLoading, setIsLoading] = useState(true);
-  const [surveySubmitError, setSurveySubmitError] = useState<string[]>([]);
+  const [submitErrorMessage, setSubmitErrorMessage] = useState<string>('');
   const [isSurveySubmit, setIsSurveySubmit] = useState(false);
   const [response, setResponse] = useState<SurveyResponse | null>(null);
 
-  const handleSurveySubmitError = (errorMessages: string[]) => {
-    setSurveySubmitError(errorMessages);
+  const handleSurveySubmitError = (errorMessage: string) => {
+    setSubmitErrorMessage(errorMessage);
     setIsSurveySubmit(false);
   };
 
@@ -73,7 +73,7 @@ const Question: NextPage = () => {
       if (invalidResponseOrders.length !== 0) {
         const formattedOrder = invalidResponseOrders.join(', ');
         const errorMessage = `Answer for question(s) ${formattedOrder} can't be blank`;
-        handleSurveySubmitError([errorMessage]);
+        handleSurveySubmitError(errorMessage);
 
         return;
       }
@@ -81,9 +81,9 @@ const Question: NextPage = () => {
       submitSurveyResponse(currentSurvey!.id, surveyResponses)
         .then(() => router.push(`/surveys/${surveyId}/outro`))
         .catch(() =>
-          handleSurveySubmitError([
-            'Something went wrong. Please try again later.',
-          ])
+          handleSurveySubmitError(
+            'Something went wrong. Please try again later.'
+          )
         );
     }
   }, [isSurveySubmit]);
@@ -148,11 +148,11 @@ const Question: NextPage = () => {
             />
           )}
         </div>
-        {surveySubmitError.length !== 0 && (
+        {submitErrorMessage && (
           <div className="absolute bottom-0 left-8">
             <FlashNotice
               title="Error"
-              messages={surveySubmitError}
+              messages={[submitErrorMessage]}
               type="warning"
             />
           </div>
