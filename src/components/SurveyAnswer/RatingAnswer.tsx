@@ -20,10 +20,10 @@ const answerStateClass = (
 const RatingAnswer = ({
   question,
   currentResponse,
-  setResponse,
+  onResponseChange,
 }: SurveyAnswerProps) => {
   const setDefaultSelectedIndex = () => {
-    if (currentResponse === null) {
+    if (currentResponse === undefined) {
       return -1;
     }
 
@@ -39,7 +39,7 @@ const RatingAnswer = ({
 
   const onAnswerSelect = (answerId: string, index: number) => {
     setSelectedIndex(index);
-    setResponse({ questionId: question.id, answers: [{ id: answerId }] });
+    onResponseChange({ questionId: question.id, answers: [{ id: answerId }] });
   };
 
   return (

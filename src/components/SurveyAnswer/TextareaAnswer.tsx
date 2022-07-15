@@ -5,18 +5,14 @@ import { SurveyAnswerProps } from '.';
 const TextareaAnswer = ({
   question,
   currentResponse,
-  setResponse,
+  onResponseChange,
 }: SurveyAnswerProps) => {
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    if (event.target.value === '') {
-      return setResponse(null);
-    }
-
     const currentAnswer = question.answers[0];
 
-    setResponse({
+    onResponseChange({
       questionId: question.id,
       answers: [{ id: currentAnswer.id, answer: event.target.value }],
     });
@@ -24,7 +20,7 @@ const TextareaAnswer = ({
 
   return (
     <textarea
-      className="min-h-[110px] p-4 rounded-lg bg-gray-300 bg-opacity-30 backdrop-blur-3xl text-white text-lg"
+      className="min-h-[110px] p-4 rounded-lg bg-gray-300 bg-opacity-30 backdrop-blur-3xl text-white text-lg resize-none"
       value={currentResponse?.answers[0].answer}
       onChange={handleAnswerChange}
     />

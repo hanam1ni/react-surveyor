@@ -1,6 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react';
 
-import SurveyQuestion from './[currentOrder].page';
+import SurveyQuestion from './questions.page';
 import * as SurveyService from 'services/survey';
 import { getUserProfile } from 'services/user';
 

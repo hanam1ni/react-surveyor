@@ -5,10 +5,10 @@ import styles from './SurveyAnswer.module.css';
 const NpsAnswer = ({
   question,
   currentResponse,
-  setResponse,
+  onResponseChange,
 }: SurveyAnswerProps) => {
   const onAnswerSelect = (answerId: string) => {
-    setResponse({ questionId: question.id, answers: [{ id: answerId }] });
+    onResponseChange({ questionId: question.id, answers: [{ id: answerId }] });
   };
 
   const answerStateClass = (answerId: string) => {

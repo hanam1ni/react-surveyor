@@ -24,7 +24,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
@@ -47,19 +47,19 @@ describe('SurveyAnswer', () => {
           displayType: 'choice',
           answers: [answer, ...otherAnswers],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { getByText } = render(
           <SurveyAnswer
             question={question}
             currentResponse={null}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         fireEvent.click(getByText(/First Question/));
 
-        expect(setResponse).toHaveBeenCalledWith({
+        expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
@@ -82,7 +82,7 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer1.id }],
             }}
-            setResponse={jest.fn()}
+            onResponseChange={jest.fn()}
           />
         );
 
@@ -111,7 +111,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
@@ -126,19 +126,19 @@ describe('SurveyAnswer', () => {
           displayType: 'nps',
           answers: [answer, ...otherAnswers],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { getAllByTestId } = render(
           <SurveyAnswer
             question={question}
             currentResponse={null}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         fireEvent.click(getAllByTestId('nps-answer-item')[0]);
 
-        expect(setResponse).toHaveBeenCalledWith({
+        expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
@@ -161,7 +161,7 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer1.id }],
             }}
-            setResponse={jest.fn()}
+            onResponseChange={jest.fn()}
           />
         );
 
@@ -188,7 +188,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
@@ -204,19 +204,19 @@ describe('SurveyAnswer', () => {
           ratingType: 'star',
           answers: [answer, ...otherAnswers],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { getAllByAltText } = render(
           <SurveyAnswer
             question={question}
             currentResponse={null}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         fireEvent.click(getAllByAltText('star icon')[0]);
 
-        expect(setResponse).toHaveBeenCalledWith({
+        expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id }],
         });
@@ -240,7 +240,7 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer1.id }],
             }}
-            setResponse={jest.fn()}
+            onResponseChange={jest.fn()}
           />
         );
 
@@ -266,7 +266,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
@@ -280,20 +280,20 @@ describe('SurveyAnswer', () => {
           displayType: 'textarea',
           answers: [answer],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { container } = render(
           <SurveyAnswer
             question={question}
             currentResponse={null}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         const textarea = container.querySelector('textarea') as HTMLElement;
         fireEvent.change(textarea, { target: { value: 'Awesome response' } });
 
-        expect(setResponse).toHaveBeenCalledWith({
+        expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id, answer: 'Awesome response' }],
         });
@@ -307,7 +307,7 @@ describe('SurveyAnswer', () => {
           displayType: 'textarea',
           answers: [answer],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { container } = render(
           <SurveyAnswer
@@ -316,14 +316,14 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer.id, answer: 'Awesome response' }],
             }}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         const textarea = container.querySelector('textarea') as HTMLElement;
         fireEvent.change(textarea, { target: { value: '' } });
 
-        expect(setResponse).toHaveBeenCalledWith(null);
+        expect(onResponseChange).toHaveBeenCalledWith(null);
       });
     });
 
@@ -334,7 +334,7 @@ describe('SurveyAnswer', () => {
           displayType: 'textarea',
           answers: [answer],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { container } = render(
           <SurveyAnswer
@@ -343,7 +343,7 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer.id, answer: 'Awesome response' }],
             }}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
@@ -368,7 +368,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
@@ -384,20 +384,20 @@ describe('SurveyAnswer', () => {
           displayType: 'textfield',
           answers: [answer],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { container } = render(
           <SurveyAnswer
             question={question}
             currentResponse={null}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
         const textInput = container.querySelector('input') as HTMLElement;
         fireEvent.change(textInput, { target: { value: 'Awesome response' } });
 
-        expect(setResponse).toHaveBeenCalledWith({
+        expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
           answers: [{ id: answer.id, answer: 'Awesome response' }],
         });
@@ -411,7 +411,7 @@ describe('SurveyAnswer', () => {
           displayType: 'textfield',
           answers: [answer, build('surveyAnswer')],
         }) as SurveyQuestionInterface;
-        const setResponse = jest.fn();
+        const onResponseChange = jest.fn();
 
         const { container } = render(
           <SurveyAnswer
@@ -420,7 +420,7 @@ describe('SurveyAnswer', () => {
               questionId: question.id,
               answers: [{ id: answer.id, answer: 'Awesome response' }],
             }}
-            setResponse={setResponse}
+            onResponseChange={onResponseChange}
           />
         );
 
@@ -442,7 +442,7 @@ describe('SurveyAnswer', () => {
         <SurveyAnswer
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 

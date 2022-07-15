@@ -7,10 +7,10 @@ import 'simplebar-react/dist/simplebar.min.css';
 const ChoiceAnswer = ({
   question,
   currentResponse,
-  setResponse,
+  onResponseChange,
 }: SurveyAnswerProps) => {
   const onAnswerSelect = (answerId: string) => {
-    setResponse({ questionId: question.id, answers: [{ id: answerId }] });
+    onResponseChange({ questionId: question.id, answers: [{ id: answerId }] });
   };
 
   const answerStateClass = (answerId: string) => {

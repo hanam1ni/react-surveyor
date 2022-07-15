@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
 import ChoiceAnswer from './ChoiceAnswer';
 import NpsAnswer from './NpsAnswer';
@@ -14,8 +14,8 @@ import {
 
 export interface SurveyAnswerProps {
   question: SurveyQuestionInterface;
-  currentResponse: SurveyResponse | null;
-  setResponse: Dispatch<SetStateAction<SurveyResponse | null>>;
+  currentResponse: SurveyResponse | undefined;
+  onResponseChange: (response: SurveyResponse) => void;
 }
 
 const UnsupportedNotice = () => (

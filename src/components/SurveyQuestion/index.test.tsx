@@ -16,7 +16,7 @@ describe('SurveyQuestion', () => {
       <SurveyQuestion
         question={question}
         currentResponse={null}
-        setResponse={jest.fn()}
+        onResponseChange={jest.fn()}
       />
     );
 
@@ -33,7 +33,7 @@ describe('SurveyQuestion', () => {
         <SurveyQuestion
           question={question}
           currentResponse={null}
-          setResponse={jest.fn()}
+          onResponseChange={jest.fn()}
         />
       );
 
