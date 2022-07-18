@@ -1,3 +1,4 @@
+import omit from 'lodash/omit';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -58,9 +59,9 @@ const Question: NextPage = () => {
 
   const [submitErrorMessage, setSubmitErrorMessage] = useState<string>('');
   const [isSurveySubmit, setIsSurveySubmit] = useState(false);
-  const [responses, onResponseChanges] = useState<
-    Record<number, SurveyResponse>
-  >({});
+  const [responses, setResponses] = useState<Record<number, SurveyResponse>>(
+    {}
+  );
 
   const handleSurveySubmitError = (errorMessage: string) => {
     setSubmitErrorMessage(errorMessage);
@@ -94,9 +95,13 @@ const Question: NextPage = () => {
 
   const handleResponseChange = (
     question: SurveyQuestionInterface,
-    response: SurveyResponse
+    response: SurveyResponse | null
   ) => {
-    onResponseChanges({
+    if (response === null) {
+      return setResponses(omit(responses, question.displayOrder));
+    }
+
+    setResponses({
       ...responses,
       [question.displayOrder]: response,
     });
@@ -107,41 +112,43 @@ const Question: NextPage = () => {
 
   return (
     currentSurvey && (
-      <Swiper slidesPerView={1} threshold={40}>
-        {currentSurvey.questions.map((question) => (
-          <SwiperSlide key={question.id}>
-            <SurveyQuestion
-              lastQuestionOrder={lastQuestionOrder}
-              question={question}
-              currentResponse={responses[question.displayOrder]}
-              onResponseChange={(response) =>
-                handleResponseChange(question, response)
-              }
-            />
-            <div className="absolute bottom-8 right-8">
-              {question.displayOrder < lastQuestionOrder ? (
-                <NextQuestionButton />
-              ) : (
-                <Button
-                  label="Submit"
-                  className="px-8"
-                  onClick={handleSurveySubmit}
-                  disabled={isEmptyResponse && isSurveySubmit}
-                />
-              )}
-            </div>
-            {submitErrorMessage && (
-              <div className="absolute bottom-0 left-8">
-                <FlashNotice
-                  title="Error"
-                  messages={[submitErrorMessage]}
-                  type="warning"
-                />
+      <>
+        <Swiper slidesPerView={1} threshold={40}>
+          {currentSurvey.questions.map((question) => (
+            <SwiperSlide key={question.id}>
+              <SurveyQuestion
+                lastQuestionOrder={lastQuestionOrder}
+                question={question}
+                currentResponse={responses[question.displayOrder]}
+                onResponseChange={(response) =>
+                  handleResponseChange(question, response)
+                }
+              />
+              <div className="absolute bottom-8 right-8">
+                {question.displayOrder < lastQuestionOrder ? (
+                  <NextQuestionButton />
+                ) : (
+                  <Button
+                    label="Submit"
+                    className="px-8"
+                    onClick={handleSurveySubmit}
+                    disabled={isEmptyResponse && isSurveySubmit}
+                  />
+                )}
               </div>
-            )}
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {submitErrorMessage && (
+          <div className="absolute bottom-0 left-8 z-20">
+            <FlashNotice
+              title="Error"
+              messages={[submitErrorMessage]}
+              type="warning"
+            />
+          </div>
+        )}
+      </>
     )
   );
 };

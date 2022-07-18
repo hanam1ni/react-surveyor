@@ -1,11 +1,7 @@
 import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 import reducer, { ACTIONS, ActionPayloadType } from './reducer';
-import {
-  Survey,
-  SurveyDetail,
-  SurveyResponse,
-} from 'services/surveyInterfaces';
+import { Survey, SurveyDetail } from 'services/surveyInterfaces';
 import { UserProfile } from 'services/user';
 import { BatchInfo } from 'utils/pagination';
 
@@ -15,7 +11,7 @@ export interface StoreType {
     data: Survey[];
     batchInfo: BatchInfo;
   };
-  surveyResponses: SurveyResponse[];
+
   userProfile: UserProfile | null;
 }
 
@@ -35,7 +31,6 @@ export const defaultInitialStore = {
     data: [],
     batchInfo: { batch: 1, totalBatches: 1, batchSize: 5, totalRecords: 0 },
   },
-  surveyResponses: [],
   userProfile: null,
 };
 

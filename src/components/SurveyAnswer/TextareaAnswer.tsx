@@ -10,6 +10,10 @@ const TextareaAnswer = ({
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
+    if (event.target.value === '') {
+      onResponseChange(null);
+    }
+
     const currentAnswer = question.answers[0];
 
     onResponseChange({

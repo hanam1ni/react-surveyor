@@ -23,7 +23,7 @@ describe('SurveyAnswer', () => {
       const { getByText } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
@@ -52,7 +52,7 @@ describe('SurveyAnswer', () => {
         const { getByText } = render(
           <SurveyAnswer
             question={question}
-            currentResponse={null}
+            currentResponse={undefined}
             onResponseChange={onResponseChange}
           />
         );
@@ -110,7 +110,7 @@ describe('SurveyAnswer', () => {
       const { getAllByTestId } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
@@ -131,7 +131,7 @@ describe('SurveyAnswer', () => {
         const { getAllByTestId } = render(
           <SurveyAnswer
             question={question}
-            currentResponse={null}
+            currentResponse={undefined}
             onResponseChange={onResponseChange}
           />
         );
@@ -187,7 +187,7 @@ describe('SurveyAnswer', () => {
       const { getAllByAltText } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
@@ -209,7 +209,7 @@ describe('SurveyAnswer', () => {
         const { getAllByAltText } = render(
           <SurveyAnswer
             question={question}
-            currentResponse={null}
+            currentResponse={undefined}
             onResponseChange={onResponseChange}
           />
         );
@@ -265,7 +265,7 @@ describe('SurveyAnswer', () => {
       const { container } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
@@ -285,7 +285,7 @@ describe('SurveyAnswer', () => {
         const { container } = render(
           <SurveyAnswer
             question={question}
-            currentResponse={null}
+            currentResponse={undefined}
             onResponseChange={onResponseChange}
           />
         );
@@ -367,7 +367,7 @@ describe('SurveyAnswer', () => {
       const { container, getByText } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
@@ -389,7 +389,7 @@ describe('SurveyAnswer', () => {
         const { container } = render(
           <SurveyAnswer
             question={question}
-            currentResponse={null}
+            currentResponse={undefined}
             onResponseChange={onResponseChange}
           />
         );
@@ -441,7 +441,7 @@ describe('SurveyAnswer', () => {
       const { getByText } = render(
         <SurveyAnswer
           question={question}
-          currentResponse={null}
+          currentResponse={undefined}
           onResponseChange={jest.fn()}
         />
       );
