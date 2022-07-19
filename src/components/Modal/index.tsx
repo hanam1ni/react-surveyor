@@ -15,12 +15,14 @@ const Modal = ({ children, show = false, onOverlayClick }: ModalProps) => {
         className={`${styles.overlay} ${
           show ? 'opacity-100 z-40' : 'opacity-0 -z-50'
         }`}
+        data-testid="modal-overlay"
         onClick={() => onOverlayClick && onOverlayClick()}
       />
       <div
         className={`${styles.modalContainer} ${
           show ? 'opacity-100 z-50' : 'opacity-0 -z-50'
         }`}
+        role="dialog"
       >
         {children}
       </div>

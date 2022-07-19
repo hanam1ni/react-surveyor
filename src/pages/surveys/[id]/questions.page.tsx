@@ -34,6 +34,7 @@ const LeaveButton = ({ ...props }) => (
     <Image
       width={11}
       height={11}
+      data-testid="leave-button"
       src="/icon/cross.svg"
       alt="leave survey icon"
     />
