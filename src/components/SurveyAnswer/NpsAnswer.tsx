@@ -24,9 +24,9 @@ const NpsAnswer = ({
   return (
     <div className="self-center">
       <div>
-        {question.answers.map((answer, index) => (
+        {question.answers.map((answer) => (
           <div
-            key={index}
+            key={answer.id}
             className={`${styles.npsAnswer} ${answerStateClass(answer.id)}`}
             onClick={() => onAnswerSelect(answer.id)}
             data-testid="nps-answer-item"

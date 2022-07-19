@@ -20,6 +20,7 @@ const MODELS: { [key: string]: () => object } = {
     displayType: 'textarea',
     text: faker.lorem.sentences(),
     pick: 'none',
+    isMandatory: false,
     answers: [build('surveyAnswer')],
   }),
   surveyAnswer: () => ({

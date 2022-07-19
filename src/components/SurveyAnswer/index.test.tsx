@@ -255,6 +255,183 @@ describe('SurveyAnswer', () => {
     });
   });
 
+  describe('given textarea display type', () => {
+    it('renders the textarea', () => {
+      const question = build('surveyQuestion', {
+        displayType: 'textarea',
+        answers: [build('surveyAnswer')],
+      }) as SurveyQuestionInterface;
+
+      const { container } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={null}
+          setResponse={jest.fn()}
+        />
+      );
+
+      expect(container.querySelector('textarea')).toBeInTheDocument();
+    });
+
+    describe('input a valid answer', () => {
+      it('sets survey response', () => {
+        const answer = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'textarea',
+          answers: [answer],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { container } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={null}
+            setResponse={setResponse}
+          />
+        );
+
+        const textarea = container.querySelector('textarea') as HTMLElement;
+        fireEvent.change(textarea, { target: { value: 'Awesome response' } });
+
+        expect(setResponse).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer.id, answer: 'Awesome response' }],
+        });
+      });
+    });
+
+    describe('input an empty answer', () => {
+      it('sets survey response as null', () => {
+        const answer = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'textarea',
+          answers: [answer],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { container } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={{
+              questionId: question.id,
+              answers: [{ id: answer.id, answer: 'Awesome response' }],
+            }}
+            setResponse={setResponse}
+          />
+        );
+
+        const textarea = container.querySelector('textarea') as HTMLElement;
+        fireEvent.change(textarea, { target: { value: '' } });
+
+        expect(setResponse).toHaveBeenCalledWith(null);
+      });
+    });
+
+    describe('given valid response', () => {
+      it('sets textarea value with the current response', () => {
+        const answer = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'textarea',
+          answers: [answer],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { container } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={{
+              questionId: question.id,
+              answers: [{ id: answer.id, answer: 'Awesome response' }],
+            }}
+            setResponse={setResponse}
+          />
+        );
+
+        expect(container.querySelector('textarea')?.value).toEqual(
+          'Awesome response'
+        );
+      });
+    });
+  });
+
+  describe('given textfield display type', () => {
+    it('renders the text inputs', () => {
+      const question = build('surveyQuestion', {
+        displayType: 'textfield',
+        answers: [
+          build('surveyAnswer', { text: 'First Question' }),
+          build('surveyAnswer', { text: 'Second Question' }),
+        ],
+      }) as SurveyQuestionInterface;
+
+      const { container, getByText } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={null}
+          setResponse={jest.fn()}
+        />
+      );
+
+      expect(container.querySelectorAll('input').length).toEqual(2);
+      expect(getByText('First Question')).toBeInTheDocument();
+      expect(getByText('Second Question')).toBeInTheDocument();
+    });
+
+    describe('input a valid answer', () => {
+      it('sets survey response', () => {
+        const answer = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'textfield',
+          answers: [answer],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { container } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={null}
+            setResponse={setResponse}
+          />
+        );
+
+        const textInput = container.querySelector('input') as HTMLElement;
+        fireEvent.change(textInput, { target: { value: 'Awesome response' } });
+
+        expect(setResponse).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer.id, answer: 'Awesome response' }],
+        });
+      });
+    });
+
+    describe('given valid response', () => {
+      it('sets text input value with the current response', () => {
+        const answer = build('surveyAnswer');
+        const question = build('surveyQuestion', {
+          displayType: 'textfield',
+          answers: [answer, build('surveyAnswer')],
+        }) as SurveyQuestionInterface;
+        const setResponse = jest.fn();
+
+        const { container } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={{
+              questionId: question.id,
+              answers: [{ id: answer.id, answer: 'Awesome response' }],
+            }}
+            setResponse={setResponse}
+          />
+        );
+
+        expect(container.querySelectorAll('input')[0].value).toEqual(
+          'Awesome response'
+        );
+        expect(container.querySelectorAll('input')[1].value).toEqual('');
+      });
+    });
+  });
+
   describe('given unsupported type', () => {
     it('renders unsupported notice', () => {
       const question = build('surveyQuestion', {

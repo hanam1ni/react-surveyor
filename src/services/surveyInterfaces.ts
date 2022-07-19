@@ -16,19 +16,25 @@ interface SurveyQuestion {
   id: string;
   displayOrder: number;
   coverImageUrl: string;
-  displayType: DisplayType;
+  displayType: NonQuestionType | QuestionType;
   ratingType?: RatingType;
   text: string;
   pick: string;
+  isMandatory: boolean;
   answers: SurveyAnswer[];
 }
 
-enum DisplayType {
+enum NonQuestionType {
   INTRO = 'intro',
   OUTRO = 'outro',
+}
+
+enum QuestionType {
   CHOICE = 'choice',
   NPS = 'nps',
   RATING = 'rating',
+  TEXTAREA = 'textarea',
+  TEXTFIELD = 'textfield',
 }
 
 enum RatingType {
@@ -41,6 +47,7 @@ interface SurveyAnswer {
   id: string;
   displayOrder: number;
   text: string;
+  isMandatory: boolean;
 }
 
 interface SurveyResponse {
@@ -48,7 +55,7 @@ interface SurveyResponse {
   answers: { id: string; answer?: string }[];
 }
 
-export { DisplayType, RatingType };
+export { NonQuestionType, QuestionType, RatingType };
 
 export type {
   Survey,

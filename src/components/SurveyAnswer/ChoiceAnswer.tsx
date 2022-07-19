@@ -25,9 +25,9 @@ const ChoiceAnswer = ({
 
   return (
     <SimpleBar className="max-h-60 pr-4" autoHide={false}>
-      {question.answers.map((answer, index) => (
+      {question.answers.map((answer) => (
         <div
-          key={index}
+          key={answer.id}
           className={`py-4 text-center cursor-pointer hover:text-white hover:font-semibold ${answerStateClass(
             answer.id
           )}`}
