@@ -127,7 +127,11 @@ const PasswordReset: NextPage = () => {
             name="email"
             onChange={handleChange}
           />
-          <Button label="Send Recovery Email" disabled={formLoading} />
+          <Button
+            label="Send Recovery Email"
+            disabled={formLoading}
+            className="w-full"
+          />
         </form>
       </div>
     </div>

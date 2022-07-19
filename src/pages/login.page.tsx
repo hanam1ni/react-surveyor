@@ -119,7 +119,7 @@ const Login: NextPage = () => {
               </a>
             </Link>
           </div>
-          <Button label="Sign in" disabled={formLoading} />
+          <Button label="Sign in" disabled={formLoading} className="w-full" />
         </form>
       </div>
     </div>

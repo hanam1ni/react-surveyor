@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 import Button from 'components/Button';
 import FlashNotice from 'components/FlashNotice';
+import Modal from 'components/Modal';
 import SurveyQuestion from 'components/SurveyQuestion';
 import useSession from 'hooks/useSession';
 import {
@@ -22,6 +23,43 @@ import { StoreContext } from 'store';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import styles from './questions.module.css';
+
+interface LeaveConfirmationModalProps {
+  onConfirmClick: () => void;
+  onCancelClick: () => void;
+}
+
+const LeaveButton = ({ ...props }) => (
+  <button className={styles.leaveSurveyButton} {...props}>
+    <Image
+      width={11}
+      height={11}
+      src="/icon/cross.svg"
+      alt="leave survey icon"
+    />
+  </button>
+);
+
+const LeaveConfirmationModal = ({
+  onConfirmClick,
+  onCancelClick,
+}: LeaveConfirmationModalProps) => (
+  <div className="w-96 md:w-[468px] p-6 z-50 bg-black rounded-xl">
+    <h3 className="mb-2 text-2xl text-white">Warning!</h3>
+    <p className="mb-8 text-md text-gray-400">
+      Are you sure you want to quit the survey?
+    </p>
+    <div className="text-right">
+      <Button
+        label="Yes"
+        variant="secondary"
+        onClick={onConfirmClick}
+        className="mr-2 w-[90px]"
+      />
+      <Button label="Cancel" onClick={onCancelClick} className="w-[90px]" />
+    </div>
+  </div>
+);
 
 const NextQuestionButton = () => {
   const swiper = useSwiper();
@@ -62,6 +100,7 @@ const Question: NextPage = () => {
   const [responses, setResponses] = useState<Record<number, SurveyResponse>>(
     {}
   );
+  const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
 
   const handleSurveySubmitError = (errorMessage: string) => {
     setSubmitErrorMessage(errorMessage);
@@ -113,6 +152,16 @@ const Question: NextPage = () => {
   return (
     currentSurvey && (
       <>
+        <LeaveButton onClick={() => setShowLeaveConfirmation(true)} />
+        <Modal
+          show={showLeaveConfirmation}
+          onOverlayClick={() => setShowLeaveConfirmation(false)}
+        >
+          <LeaveConfirmationModal
+            onConfirmClick={() => router.push(`/surveys/${surveyId}`)}
+            onCancelClick={() => setShowLeaveConfirmation(false)}
+          />
+        </Modal>
         <Swiper slidesPerView={1} threshold={40}>
           {currentSurvey.questions.map((question) => (
             <SwiperSlide key={question.id}>
