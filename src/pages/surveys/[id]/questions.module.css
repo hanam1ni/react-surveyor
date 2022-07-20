@@ -1,9 +1,9 @@
 .nextQuestionLink {
   @apply w-14 h-14 flex justify-center items-center bg-white rounded-full 
-  cursor-pointer hover:bg-gray-400 transition-all duration-200;
+    cursor-pointer hover:bg-gray-400 transition-all duration-200;
 }
 
 .leaveSurveyButton {
   @apply w-7 h-7 absolute top-8 right-8 z-10 flex justify-center items-center bg-gray-400 rounded-full
-  cursor-pointer hover:bg-gray-600 transition-all duration-200;
+    cursor-pointer hover:bg-gray-600 transition-all duration-200;
 }
