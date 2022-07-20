@@ -127,7 +127,7 @@ const Question: NextPage = () => {
     }
 
     submitSurveyResponse(currentSurvey!.id, surveyResponses)
-      .then(() => router.push(`/surveys/${surveyId}/outro`))
+      .then(() => router.push('/surveys/outro'))
       .catch(() =>
         handleSurveySubmitError('Something went wrong. Please try again later.')
       );
@@ -182,7 +182,7 @@ const Question: NextPage = () => {
                     label="Submit"
                     className="px-8"
                     onClick={handleSurveySubmit}
-                    disabled={isEmptyResponse && isSurveySubmit}
+                    disabled={isEmptyResponse || isSurveySubmit}
                   />
                 )}
               </div>

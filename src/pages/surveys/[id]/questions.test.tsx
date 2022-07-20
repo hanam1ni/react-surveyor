@@ -96,7 +96,7 @@ describe('Survey Question', () => {
         ];
 
         await waitFor(() =>
-          expect(push).toHaveBeenCalledWith(`/surveys/${surveyDetail.id}/outro`)
+          expect(push).toHaveBeenCalledWith('/surveys/outro')
         );
         expect(mockedSubmitSurveyResponse).toHaveBeenCalledWith(
           surveyDetail.id,
