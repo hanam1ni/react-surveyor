@@ -1,14 +1,12 @@
-import { waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 
 import SurveyOutro from './outro.page';
 import { getUserProfile } from 'services/user';
+import * as Reducer from 'store/reducer';
 
 import { build } from '@support/factory';
 import { renderPage } from '@support/pageRenderer';
 import { mockUseRouter } from '@support/useRouter';
-
-jest.useFakeTimers();
-jest.spyOn(global, 'setTimeout');
 
 jest.mock('services/user');
 
@@ -20,7 +18,8 @@ describe('Survey Outro', () => {
   });
 
   describe('when reaching redirect timeout', () => {
-    it('redirects user to home page', async () => {
+    it('clears currentSurvey in store and redirects user to home page', async () => {
+      const mockedReducer = jest.spyOn(Reducer, 'default');
       const { push } = mockUseRouter();
       const surveyDetail = build('surveyDetail');
 
@@ -28,9 +27,17 @@ describe('Survey Outro', () => {
         initialStore: { currentSurvey: surveyDetail },
       });
 
-      jest.runAllTimers();
+      act(() => {
+        jest.runAllTimers();
+      });
 
-      await waitFor(() => expect(push).toBeCalledWith('/'));
+      await waitFor(() =>
+        expect(mockedReducer).toHaveBeenCalledWith(expect.any(Object), {
+          type: Reducer.ACTIONS.SET_CURRENT_SURVEY,
+          value: null,
+        })
+      );
+      expect(push).toBeCalledWith('/');
     });
   });
 

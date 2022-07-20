@@ -5,7 +5,7 @@ import { useContext, useEffect } from 'react';
 
 import PageLoader from 'components/PageLoader';
 import useSession from 'hooks/useSession';
-import { StoreContext } from 'store';
+import { ACTIONS, StoreContext } from 'store';
 
 const REDIRECT_AFTER_MS = 3000;
 
@@ -15,6 +15,7 @@ const SurveyOutro: NextPage = () => {
 
   const {
     store: { currentSurvey },
+    dispatchAction,
   } = useContext(StoreContext);
 
   useEffect(() => {
@@ -25,6 +26,11 @@ const SurveyOutro: NextPage = () => {
     }
 
     setTimeout(() => {
+      dispatchAction({
+        type: ACTIONS.SET_CURRENT_SURVEY,
+        value: null,
+      });
+
       router.push('/');
     }, REDIRECT_AFTER_MS);
   }, []);
