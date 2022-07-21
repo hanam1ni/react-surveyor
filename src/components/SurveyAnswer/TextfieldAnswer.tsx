@@ -5,7 +5,7 @@ import { SurveyAnswerProps } from '.';
 const TextfieldAnswer = ({
   question,
   currentResponse,
-  setResponse,
+  onResponseChange,
 }: SurveyAnswerProps) => {
   const answerValue = (answerId: string) => {
     const currentValue = currentResponse?.answers.find(
@@ -24,7 +24,7 @@ const TextfieldAnswer = ({
       .filter((answer) => answer.id !== answerId)
       .concat({ id: answerId, answer: event.target.value });
 
-    setResponse({
+    onResponseChange({
       questionId: question.id,
       answers: updatedResponseAnswers,
     });

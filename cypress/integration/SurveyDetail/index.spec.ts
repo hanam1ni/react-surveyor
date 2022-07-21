@@ -42,9 +42,13 @@ describe('Survey detail page', () => {
 
       cy.findByRole('button', { name: /Start Survey/ }).click();
 
+      cy.findByText('Food â€“ Variety, Taste and Presentation', {
+        timeout: 7000,
+      }).should('be.visible');
+
       cy.url().should(
         'eq',
-        Cypress.config().baseUrl + `/surveys/${surveyId}/questions/1`
+        Cypress.config().baseUrl + `/surveys/${surveyId}/questions`
       );
     });
   });
