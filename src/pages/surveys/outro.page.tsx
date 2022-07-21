@@ -33,7 +33,7 @@ const SurveyOutro: NextPage = () => {
 
       router.push('/');
     }, REDIRECT_AFTER_MS);
-  }, []);
+  }, [currentSurvey, dispatchAction]);
 
   const outroMessage =
     currentSurvey?.outro?.text || 'Thanks for taking the survey.';
