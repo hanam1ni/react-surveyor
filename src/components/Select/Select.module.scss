@@ -1,0 +1,35 @@
+.select :global {
+  .select__control {
+    @apply p-2 border-none rounded-lg bg-gray-400 bg-opacity-30;
+
+    .select__single-value {
+      @apply text-white;
+    }
+
+    .select__indicator {
+      @apply text-white;
+    }
+
+    .select__indicator-separator {
+      @apply hidden;
+    }
+
+    &--is-focused {
+      .select__indicator {
+        @apply text-white rotate-180 transition-transform;
+      }
+    }
+  }
+
+  .select__menu {
+    @apply py-2 rounded-lg bg-gray-400 bg-opacity-30;
+  }
+
+  .select__option {
+    @apply text-white;
+
+    &--is-focused {
+      @apply bg-gray-400;
+    }
+  }
+}

@@ -163,7 +163,7 @@ const Question: NextPage = () => {
             onCancelClick={() => setShowLeaveConfirmation(false)}
           />
         </Modal>
-        <Swiper slidesPerView={1} threshold={40}>
+        <Swiper slidesPerView={1} threshold={40} initialSlide={8}>
           {currentSurvey.questions.map((question) => (
             <SwiperSlide key={question.id}>
               <SurveyQuestion
