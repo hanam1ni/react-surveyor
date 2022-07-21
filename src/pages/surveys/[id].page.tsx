@@ -58,7 +58,7 @@ const SurveyDetail: NextPage = () => {
           <div className="mb-8 text-gray-400">{currentSurvey?.intro.text}</div>
           <Link href={`/surveys/${surveyId}/questions`} passHref>
             <a>
-              <Button label="Start Survey" />
+              <Button label="Start Survey" className="w-full" />
             </a>
           </Link>
         </div>

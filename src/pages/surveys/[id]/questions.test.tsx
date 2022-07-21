@@ -105,4 +105,24 @@ describe('Survey Question', () => {
       });
     });
   });
+
+  describe('when leaving survey questions page', () => {
+    it('redirects user to survey detail page', async () => {
+      const surveyDetail = build('surveyDetail');
+      const { push } = mockUseRouter({ query: { id: surveyDetail.id } });
+
+      const { getByText, getByTestId } = renderPage(<SurveyQuestion />, {
+        initialStore: {
+          currentSurvey: surveyDetail,
+        },
+      });
+
+      fireEvent.click(getByTestId('leave-button'));
+      fireEvent.click(getByText('Yes'));
+
+      await waitFor(() =>
+        expect(push).toHaveBeenCalledWith(`/surveys/${surveyDetail.id}`)
+      );
+    });
+  });
 });

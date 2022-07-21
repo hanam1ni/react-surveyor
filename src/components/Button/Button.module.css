@@ -1,9 +1,14 @@
 .base {
-  @apply w-full pt-4 pb-3 font-semibold rounded-lg transition-all duration-150 
+  @apply pt-4 pb-3 font-semibold rounded-lg transition-all duration-150 
     disabled:opacity-20 disabled:pointer-events-none;
 }
 
 .primary {
-  @apply bg-white text-black hover:bg-indigo-800 hover:text-white 
+  @apply bg-white text-black hover:bg-indigo-800 hover:text-white
+    focus:bg-indigo-900 focus:text-white;
+}
+
+.secondary {
+  @apply bg-gray-700 text-white hover:bg-indigo-800 hover:text-white 
     focus:bg-indigo-900 focus:text-white;
 }
