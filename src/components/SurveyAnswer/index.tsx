@@ -14,8 +14,8 @@ import {
 
 export interface SurveyAnswerProps {
   question: SurveyQuestionInterface;
-  currentResponse: SurveyResponse | undefined;
   onResponseChange: (response: SurveyResponse | null) => void;
+  currentResponse?: SurveyResponse;
 }
 
 const UnsupportedNotice = () => (
