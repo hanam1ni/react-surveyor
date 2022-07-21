@@ -7,7 +7,7 @@ describe('Modal', () => {
     it('displays overlay and modal', () => {
       const Greeting = () => <div>Welcome John Doe</div>;
 
-      const { getByRole, getByTestId } = render(
+      const { getByRole, getByTestId, getByText } = render(
         <Modal show={true}>
           <Greeting />
         </Modal>
@@ -15,6 +15,7 @@ describe('Modal', () => {
 
       expect(getByTestId('modal-overlay')).toHaveClass('opacity-100 z-40');
       expect(getByRole('dialog')).toHaveClass('opacity-100 z-50');
+      expect(getByText('Welcome John Doe')).toBeInTheDocument();
     });
   });
 
@@ -22,7 +23,7 @@ describe('Modal', () => {
     it('hides overlay and modal', () => {
       const Greeting = () => <div>Welcome John Doe</div>;
 
-      const { getByRole, getByTestId } = render(
+      const { getByRole, getByTestId, getByText } = render(
         <Modal show={false}>
           <Greeting />
         </Modal>
@@ -30,6 +31,7 @@ describe('Modal', () => {
 
       expect(getByTestId('modal-overlay')).toHaveClass('opacity-0 -z-50');
       expect(getByRole('dialog')).toHaveClass('opacity-0 -z-50');
+      expect(getByText('Welcome John Doe')).toBeInTheDocument();
     });
   });
 
