@@ -6,21 +6,24 @@ import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterf
 import { build } from '@support/factory';
 
 describe('SurveyQuestion', () => {
-  it('renders the given question', async () => {
+  it('renders the given question with order', async () => {
     const question = build('surveyQuestion', {
       displayType: 'rating',
       ratingType: 'star',
+      displayOrder: '2',
     }) as SurveyQuestionInterface;
 
     const { getByText } = render(
       <SurveyQuestion
+        lastQuestionOrder={3}
         question={question}
-        currentResponse={null}
-        setResponse={jest.fn()}
+        currentResponse={undefined}
+        onResponseChange={jest.fn()}
       />
     );
 
     await waitFor(() => expect(getByText(question.text)).toBeInTheDocument());
+    expect(getByText('2/3')).toBeInTheDocument();
   });
 
   describe('given unsupported type', () => {
@@ -31,9 +34,10 @@ describe('SurveyQuestion', () => {
 
       const { getByText } = render(
         <SurveyQuestion
+          lastQuestionOrder={10}
           question={question}
-          currentResponse={null}
-          setResponse={jest.fn()}
+          currentResponse={undefined}
+          onResponseChange={jest.fn()}
         />
       );
 
