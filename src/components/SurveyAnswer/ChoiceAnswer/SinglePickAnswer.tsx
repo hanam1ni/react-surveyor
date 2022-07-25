@@ -1,10 +1,10 @@
 import SimpleBar from 'simplebar-react';
 
-import { SurveyAnswerProps } from '.';
+import { SurveyAnswerProps } from '..';
 
 import 'simplebar-react/dist/simplebar.min.css';
 
-const ChoiceAnswer = ({
+const SinglePickAnswer = ({
   question,
   currentResponse,
   onResponseChange,
@@ -40,4 +40,4 @@ const ChoiceAnswer = ({
   );
 };
 
-export default ChoiceAnswer;
+export default SinglePickAnswer;
