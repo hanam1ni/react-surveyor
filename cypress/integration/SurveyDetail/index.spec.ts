@@ -43,7 +43,7 @@ describe('Survey detail page', () => {
       cy.findByRole('button', { name: /Start Survey/ }).click();
 
       cy.findByText('Food â€“ Variety, Taste and Presentation', {
-        timeout: 7000,
+        timeout: 10000,
       }).should('be.visible');
 
       cy.url().should(
