@@ -127,7 +127,7 @@ const Question: NextPage = () => {
     }
 
     submitSurveyResponse(currentSurvey!.id, surveyResponses)
-      .then(() => router.push(`/surveys/${surveyId}/outro`))
+      .then(() => router.push('/surveys/outro'))
       .catch(() =>
         handleSurveySubmitError('Something went wrong. Please try again later.')
       );
@@ -163,7 +163,7 @@ const Question: NextPage = () => {
             onCancelClick={() => setShowLeaveConfirmation(false)}
           />
         </Modal>
-        <Swiper slidesPerView={1} threshold={40} initialSlide={8}>
+        <Swiper slidesPerView={1} threshold={40}>
           {currentSurvey.questions.map((question) => (
             <SwiperSlide key={question.id}>
               <SurveyQuestion
@@ -182,7 +182,7 @@ const Question: NextPage = () => {
                     label="Submit"
                     className="px-8"
                     onClick={handleSurveySubmit}
-                    disabled={isEmptyResponse && isSurveySubmit}
+                    disabled={isEmptyResponse || isSurveySubmit}
                   />
                 )}
               </div>
