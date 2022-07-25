@@ -29,8 +29,6 @@ const SurveyQuestion = ({
     question.displayType
   );
 
-  !isValidQuestionType && console.log(question);
-
   return (
     <div className="h-screen w-full max-w-3xl mx-auto flex flex-col justify-center">
       <div className="mb-4 text-gray-400">{`${question.displayOrder}/${lastQuestionOrder}`}</div>

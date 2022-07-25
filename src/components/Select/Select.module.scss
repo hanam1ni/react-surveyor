@@ -2,10 +2,8 @@
   .select__control {
     @apply p-2 border-none rounded-lg bg-gray-400 bg-opacity-30;
 
-    .select__single-value {
-      @apply text-white;
-    }
-
+    .select__single-value,
+    .select__input-container,
     .select__indicator {
       @apply text-white;
     }

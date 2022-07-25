@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { SurveyAnswerProps } from '.';
 import Select, { SelectOptionType } from 'components/Select';
 
-const DropdownAnswer = ({ question, onResponseChange }: SurveyAnswerProps) => {
+const SelectAnswer = ({ question, onResponseChange }: SurveyAnswerProps) => {
+  const [currentAnswer, setCurrentAnswer] = useState<SelectOptionType | null>(
+    null
+  );
+
   const options = question.answers.map((answer) => ({
     value: answer.id,
     label: answer.text,
@@ -24,10 +28,6 @@ const DropdownAnswer = ({ question, onResponseChange }: SurveyAnswerProps) => {
     });
   };
 
-  const [currentAnswer, setCurrentAnswer] = useState<SelectOptionType | null>(
-    null
-  );
-
   return (
     <Select
       options={options}
@@ -35,10 +35,10 @@ const DropdownAnswer = ({ question, onResponseChange }: SurveyAnswerProps) => {
       blurInputOnSelect={true}
       // 'swiper-no-swiping` class is required to disable swipe interaction
       // with Swiper of the question list and allow users to click on the select element.
-      className="dropdown-answer swiper-no-swiping"
+      className="select-answer swiper-no-swiping"
       onChange={onAnswerSelect}
     />
   );
 };
 
-export default DropdownAnswer;
+export default SelectAnswer;

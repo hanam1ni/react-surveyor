@@ -116,7 +116,7 @@ describe('SurveyAnswer', () => {
         />
       );
 
-      fireEvent.keyDown(container.querySelector('.dropdown-answer')!, {
+      fireEvent.keyDown(container.querySelector('.select-answer')!, {
         key: 'ArrowDown',
       });
 
@@ -143,7 +143,7 @@ describe('SurveyAnswer', () => {
           />
         );
 
-        fireEvent.keyDown(container.querySelector('.dropdown-answer')!, {
+        fireEvent.keyDown(container.querySelector('.select-answer')!, {
           key: 'ArrowDown',
         });
         fireEvent.click(getByText('First Option'));

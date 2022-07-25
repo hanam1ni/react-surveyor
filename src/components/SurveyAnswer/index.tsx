@@ -1,9 +1,9 @@
 import React from 'react';
 
 import ChoiceAnswer from './ChoiceAnswer';
-import DropdownAnswer from './DropdownAnswer';
 import NpsAnswer from './NpsAnswer';
 import RatingAnswer from './RatingAnswer';
+import SelectAnswer from './SelectAnswer';
 import TextareaAnswer from './TextareaAnswer';
 import TextfieldAnswer from './TextfieldAnswer';
 
@@ -30,7 +30,7 @@ const AnswerItems: Record<
   React.FunctionComponent<SurveyAnswerProps>
 > = {
   choice: ChoiceAnswer,
-  dropdown: DropdownAnswer,
+  dropdown: SelectAnswer,
   nps: NpsAnswer,
   rating: RatingAnswer,
   textarea: TextareaAnswer,
