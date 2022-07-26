@@ -1,10 +1,9 @@
-import Image from 'next/image';
 import SimpleBar from 'simplebar-react';
 
 import { SurveyAnswerProps } from '..';
+import MultiplePickAnswerItem from './MultiplePickAnswerItem';
 import { SurveyResponse } from 'services/surveyInterfaces';
 
-import styles from './ChoiceAnswer.module.scss';
 import 'simplebar-react/dist/simplebar.min.css';
 
 const MultiplePickAnswer = ({
@@ -23,7 +22,7 @@ const MultiplePickAnswer = ({
     });
   };
 
-  const onAnswerSelect = (answerId: string) => {
+  const onAnswerItemSelect = (answerId: string) => {
     const selectedAnswers = currentResponse?.answers || [];
     const isAnswerSelected = selectedAnswers.some(({ id }) => id === answerId);
 
@@ -38,38 +37,14 @@ const MultiplePickAnswer = ({
     }
   };
 
-  const answerStateClass = (answerId: string) => {
-    const isActiveAnswer = currentResponse?.answers.some(
-      ({ id }) => id === answerId
-    );
-
-    if (isActiveAnswer) {
-      return styles.activeAnswer;
-    }
-  };
-
   return (
     <SimpleBar className="max-h-60 pr-4" autoHide={false}>
       {question.answers.map((answer) => (
-        <div
+        <MultiplePickAnswerItem
           key={answer.id}
-          className={`${styles.multiplePickAnswer} ${answerStateClass(
-            answer.id
-          )}`}
-          onClick={() => onAnswerSelect(answer.id)}
-        >
-          {answer.text}
-          <div className={styles.checkbox}>
-            <div className={styles.checkboxIcon}>
-              <Image
-                width={13}
-                height={13}
-                src="/icon/check.svg"
-                alt="active answer icon"
-              />
-            </div>
-          </div>
-        </div>
+          answer={answer}
+          onAnswerItemSelect={onAnswerItemSelect}
+        />
       ))}
     </SimpleBar>
   );
