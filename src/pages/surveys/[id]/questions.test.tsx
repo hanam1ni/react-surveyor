@@ -120,9 +120,7 @@ describe('Survey Question', () => {
       fireEvent.click(getByTestId('leave-button'));
       fireEvent.click(getByText('Yes'));
 
-      await waitFor(() =>
-        expect(push).toHaveBeenCalledWith(`/surveys/${surveyDetail.id}`)
-      );
+      await waitFor(() => expect(push).toHaveBeenCalledWith('/'));
     });
   });
 });
