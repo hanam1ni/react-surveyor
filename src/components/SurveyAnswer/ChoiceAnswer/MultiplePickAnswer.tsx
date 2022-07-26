@@ -2,6 +2,7 @@ import Image from 'next/image';
 import SimpleBar from 'simplebar-react';
 
 import { SurveyAnswerProps } from '..';
+import { SurveyResponse } from 'services/surveyInterfaces';
 
 import styles from './ChoiceAnswer.module.scss';
 import 'simplebar-react/dist/simplebar.min.css';
@@ -11,26 +12,29 @@ const MultiplePickAnswer = ({
   currentResponse,
   onResponseChange,
 }: SurveyAnswerProps) => {
+  const setCurrentResponses = (updatedAnswers: SurveyResponse['answers']) => {
+    if (updatedAnswers.length === 0) {
+      return onResponseChange(null);
+    }
+
+    onResponseChange({
+      questionId: question.id,
+      answers: updatedAnswers,
+    });
+  };
+
   const onAnswerSelect = (answerId: string) => {
-    const currentAnswers = currentResponse?.answers || [];
-    const isAnswerSelected = currentAnswers.some(({ id }) => id === answerId);
+    const selectedAnswers = currentResponse?.answers || [];
+    const isAnswerSelected = selectedAnswers.some(({ id }) => id === answerId);
 
     if (isAnswerSelected) {
-      const updatedAnswers = currentAnswers.filter(({ id }) => id !== answerId);
+      const updatedAnswers = selectedAnswers.filter(
+        ({ id }) => id !== answerId
+      );
 
-      if (updatedAnswers.length === 0) {
-        return onResponseChange(null);
-      }
-
-      onResponseChange({
-        questionId: question.id,
-        answers: updatedAnswers,
-      });
+      setCurrentResponses(updatedAnswers);
     } else {
-      onResponseChange({
-        questionId: question.id,
-        answers: currentAnswers.concat({ id: answerId }),
-      });
+      setCurrentResponses(selectedAnswers.concat({ id: answerId }));
     }
   };
 
