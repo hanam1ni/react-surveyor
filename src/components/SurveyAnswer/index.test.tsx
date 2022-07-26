@@ -96,6 +96,66 @@ describe('SurveyAnswer', () => {
     });
   });
 
+  describe('given dropdown display type', () => {
+    it('renders the answers', () => {
+      const question = build('surveyQuestion', {
+        displayType: 'dropdown',
+        answers: [
+          build('surveyAnswer', { text: 'First Option' }),
+          build('surveyAnswer', { text: 'Second Option' }),
+        ],
+      }) as SurveyQuestionInterface;
+
+      const onResponseChange = jest.fn();
+
+      const { container, getByText } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={undefined}
+          onResponseChange={onResponseChange}
+        />
+      );
+
+      fireEvent.keyDown(container.querySelector('.select-answer')!, {
+        key: 'ArrowDown',
+      });
+
+      expect(getByText('First Option')).toBeInTheDocument();
+      expect(getByText('Second Option')).toBeInTheDocument();
+    });
+
+    describe('click on answer', () => {
+      it('sets survey response', () => {
+        const answer1 = build('surveyAnswer', { text: 'First Option' });
+        const answer2 = build('surveyAnswer', { text: 'Second Option' });
+        const question = build('surveyQuestion', {
+          displayType: 'dropdown',
+          answers: [answer1, answer2],
+        }) as SurveyQuestionInterface;
+
+        const onResponseChange = jest.fn();
+
+        const { container, getByText } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={undefined}
+            onResponseChange={onResponseChange}
+          />
+        );
+
+        fireEvent.keyDown(container.querySelector('.select-answer')!, {
+          key: 'ArrowDown',
+        });
+        fireEvent.click(getByText('First Option'));
+
+        expect(onResponseChange).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer1.id }],
+        });
+      });
+    });
+  });
+
   describe('given nps display type', () => {
     const ACTIVE_ANSWER_TEXT_COLOR = 'text-gray-700';
     const INACTIVE_ANSWER_TEXT_COLOR = 'text-white';
