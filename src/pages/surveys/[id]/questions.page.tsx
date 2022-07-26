@@ -159,7 +159,7 @@ const Question: NextPage = () => {
           onOverlayClick={() => setShowLeaveConfirmation(false)}
         >
           <LeaveConfirmationModal
-            onConfirmClick={() => router.push(`/surveys/${surveyId}`)}
+            onConfirmClick={() => router.push('/')}
             onCancelClick={() => setShowLeaveConfirmation(false)}
           />
         </Modal>
