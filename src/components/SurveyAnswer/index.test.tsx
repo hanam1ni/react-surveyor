@@ -315,6 +315,77 @@ describe('SurveyAnswer', () => {
     });
   });
 
+  describe('given slider display type', () => {
+    const ARROW_RIGHT_KEYCODE = 39;
+
+    it('renders the slider and labels for each step', () => {
+      const answers = [
+        build('surveyAnswer', { text: 'First Answer' }),
+        build('surveyAnswer', { text: 'Second Answer' }),
+        build('surveyAnswer', { text: 'Third Answer' }),
+      ];
+      const question = build('surveyQuestion', {
+        displayType: 'slider',
+        answers: answers,
+      }) as SurveyQuestionInterface;
+
+      const { getByRole, getByText } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={undefined}
+          onResponseChange={jest.fn()}
+        />
+      );
+
+      const slider = getByRole('slider');
+
+      fireEvent.keyDown(slider, {
+        keyCode: ARROW_RIGHT_KEYCODE,
+      });
+
+      expect(getByText('Second Answer')).toBeInTheDocument();
+
+      fireEvent.keyDown(slider, {
+        keyCode: ARROW_RIGHT_KEYCODE,
+      });
+
+      expect(getByText('Third Answer')).toBeInTheDocument();
+    });
+
+    describe('when sliding the slider', () => {
+      it('sets survey response', () => {
+        const answer1 = build('surveyAnswer');
+        const answer2 = build('surveyAnswer');
+
+        const question = build('surveyQuestion', {
+          displayType: 'slider',
+          answers: [answer1, answer2],
+        }) as SurveyQuestionInterface;
+
+        const onResponseChange = jest.fn();
+
+        const { getByRole } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={undefined}
+            onResponseChange={onResponseChange}
+          />
+        );
+
+        const slider = getByRole('slider');
+
+        fireEvent.keyDown(slider, {
+          keyCode: ARROW_RIGHT_KEYCODE,
+        });
+
+        expect(onResponseChange).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer2.id }],
+        });
+      });
+    });
+  });
+
   describe('given textarea display type', () => {
     it('renders the textarea', () => {
       const question = build('surveyQuestion', {
