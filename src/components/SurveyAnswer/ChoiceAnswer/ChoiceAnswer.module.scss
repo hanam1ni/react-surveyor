@@ -1,0 +1,22 @@
+.multiplePickAnswer {
+  @apply py-4 flex justify-between cursor-pointer text-white opacity-60 
+    hover:border-y hover:border-gray-300 hover:font-semibold hover:opacity-100;
+
+  .checkbox {
+    @apply w-6 h-6 border border-white rounded-full;
+  }
+
+  .checkboxIcon {
+    @apply hidden;
+  }
+
+  &.activeAnswer {
+    .checkbox {
+      @apply bg-white;
+    }
+
+    .checkboxIcon {
+      @apply w-full h-full flex justify-center items-center;
+    }
+  }
+}

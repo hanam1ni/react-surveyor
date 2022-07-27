@@ -19,7 +19,7 @@ interface SurveyQuestion {
   displayType: NonQuestionType | QuestionType;
   ratingType?: RatingType;
   text: string;
-  pick: string;
+  pick: PickType;
   isMandatory: boolean;
   answers: SurveyAnswer[];
 }
@@ -45,6 +45,11 @@ enum RatingType {
   SMILEY = 'smiley',
 }
 
+enum PickType {
+  one = 'one',
+  any = 'any',
+}
+
 interface SurveyAnswer {
   id: string;
   displayOrder: number;
@@ -57,7 +62,7 @@ interface SurveyResponse {
   answers: { id: string; answer?: string }[];
 }
 
-export { NonQuestionType, QuestionType, RatingType };
+export { NonQuestionType, PickType, QuestionType, RatingType };
 
 export type {
   Survey,
