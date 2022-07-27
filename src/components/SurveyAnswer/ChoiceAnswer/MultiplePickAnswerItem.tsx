@@ -29,7 +29,6 @@ const MultiplePickAnswerItem = ({
 
   return (
     <div
-      key={answer.id}
       className={`${styles.multiplePickAnswer} ${answerStateClass()}`}
       onClick={onAnswerItemClick}
     >
