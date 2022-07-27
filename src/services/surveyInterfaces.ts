@@ -42,6 +42,7 @@ enum RatingType {
   STAR = 'star',
   HEART = 'heart',
   SMILEY = 'smiley',
+  MONEY = 'money',
 }
 
 enum PickType {

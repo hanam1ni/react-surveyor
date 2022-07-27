@@ -16,6 +16,8 @@ const answerIcon = (ratingType?: string) => {
       return '/icon/star.svg';
     case 'heart':
       return '/icon/heart.svg';
+    case 'money':
+      return '/icon/coin.svg';
     default:
       return '/icon/star.svg';
   }
