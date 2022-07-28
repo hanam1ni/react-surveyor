@@ -39,10 +39,10 @@ enum QuestionType {
 }
 
 enum RatingType {
-  STAR = 'star',
   HEART = 'heart',
-  SMILEY = 'smiley',
   MONEY = 'money',
+  SMILEY = 'smiley',
+  STAR = 'star',
 }
 
 enum PickType {
