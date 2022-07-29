@@ -34,6 +34,7 @@ enum QuestionType {
   DROPDOWN = 'dropdown',
   NPS = 'nps',
   RATING = 'rating',
+  SLIDER = 'slider',
   TEXTAREA = 'textarea',
   TEXTFIELD = 'textfield',
 }

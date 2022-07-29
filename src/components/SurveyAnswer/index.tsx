@@ -4,6 +4,7 @@ import ChoiceAnswer from './ChoiceAnswer';
 import NpsAnswer from './NpsAnswer';
 import RatingAnswer from './RatingAnswer';
 import SelectAnswer from './SelectAnswer';
+import SliderAnswer from './SliderAnswer';
 import TextareaAnswer from './TextareaAnswer';
 import TextfieldAnswer from './TextfieldAnswer';
 
@@ -33,6 +34,7 @@ const AnswerItems: Record<
   dropdown: SelectAnswer,
   nps: NpsAnswer,
   rating: RatingAnswer,
+  slider: SliderAnswer,
   textarea: TextareaAnswer,
   textfield: TextfieldAnswer,
 };
