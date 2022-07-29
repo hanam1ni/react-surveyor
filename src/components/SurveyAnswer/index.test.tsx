@@ -6,50 +6,46 @@ import { SurveyQuestion as SurveyQuestionInterface } from 'services/surveyInterf
 import { build } from '@support/factory';
 
 describe('SurveyAnswer', () => {
-  describe('given choice display type', () => {
-    const ACTIVE_ANSWER_TEXT_COLOR = 'text-white';
-    const INACTIVE_ANSWER_TEXT_COLOR = 'text-gray-400';
-
+  describe('given dropdown display type', () => {
     it('renders the answers', () => {
-      const answers = [
-        build('surveyAnswer', { text: 'First Question' }),
-        build('surveyAnswer', { text: 'Second Question' }),
-      ];
       const question = build('surveyQuestion', {
-        displayType: 'choice',
-        answers: answers,
+        displayType: 'dropdown',
+        answers: [
+          build('surveyAnswer', { text: 'First Option' }),
+          build('surveyAnswer', { text: 'Second Option' }),
+        ],
       }) as SurveyQuestionInterface;
 
-      const { getByText } = render(
+      const onResponseChange = jest.fn();
+
+      const { container, getByText } = render(
         <SurveyAnswer
           question={question}
           currentResponse={undefined}
-          onResponseChange={jest.fn()}
+          onResponseChange={onResponseChange}
         />
       );
 
-      expect(getByText(/First Question/)).toHaveClass(
-        INACTIVE_ANSWER_TEXT_COLOR
-      );
-      expect(getByText(/Second Question/)).toHaveClass(
-        INACTIVE_ANSWER_TEXT_COLOR
-      );
+      fireEvent.keyDown(container.querySelector('.select-answer')!, {
+        key: 'ArrowDown',
+      });
+
+      expect(getByText('First Option')).toBeInTheDocument();
+      expect(getByText('Second Option')).toBeInTheDocument();
     });
 
     describe('click on answer', () => {
       it('sets survey response', () => {
-        const answer = build('surveyAnswer', { text: 'First Question' });
-        const otherAnswers = [
-          build('surveyAnswer', { text: 'Second Question' }),
-          build('surveyAnswer', { text: 'Third Question' }),
-        ];
+        const answer1 = build('surveyAnswer', { text: 'First Option' });
+        const answer2 = build('surveyAnswer', { text: 'Second Option' });
         const question = build('surveyQuestion', {
-          displayType: 'choice',
-          answers: [answer, ...otherAnswers],
+          displayType: 'dropdown',
+          answers: [answer1, answer2],
         }) as SurveyQuestionInterface;
+
         const onResponseChange = jest.fn();
 
-        const { getByText } = render(
+        const { container, getByText } = render(
           <SurveyAnswer
             question={question}
             currentResponse={undefined}
@@ -57,41 +53,15 @@ describe('SurveyAnswer', () => {
           />
         );
 
-        fireEvent.click(getByText(/First Question/));
+        fireEvent.keyDown(container.querySelector('.select-answer')!, {
+          key: 'ArrowDown',
+        });
+        fireEvent.click(getByText('First Option'));
 
         expect(onResponseChange).toHaveBeenCalledWith({
           questionId: question.id,
-          answers: [{ id: answer.id }],
+          answers: [{ id: answer1.id }],
         });
-      });
-    });
-
-    describe('given valid response', () => {
-      it('sets active answer with the current response', () => {
-        const answer1 = build('surveyAnswer', { text: 'First Question' });
-        const answer2 = build('surveyAnswer', { text: 'Second Question' });
-        const question = build('surveyQuestion', {
-          displayType: 'choice',
-          answers: [answer1, answer2],
-        }) as SurveyQuestionInterface;
-
-        const { getByText } = render(
-          <SurveyAnswer
-            question={question}
-            currentResponse={{
-              questionId: question.id,
-              answers: [{ id: answer1.id }],
-            }}
-            onResponseChange={jest.fn()}
-          />
-        );
-
-        expect(getByText(/First Question/)).toHaveClass(
-          ACTIVE_ANSWER_TEXT_COLOR
-        );
-        expect(getByText(/Second Question/)).toHaveClass(
-          INACTIVE_ANSWER_TEXT_COLOR
-        );
       });
     });
   });
@@ -251,6 +221,77 @@ describe('SurveyAnswer', () => {
         expect(answerItems[1].closest('div')).toHaveClass(
           INACTIVE_ANSWER_OPACITY
         );
+      });
+    });
+  });
+
+  describe('given slider display type', () => {
+    const ARROW_RIGHT_KEYCODE = 39;
+
+    it('renders the slider and labels for each step', () => {
+      const answers = [
+        build('surveyAnswer', { text: 'First Answer' }),
+        build('surveyAnswer', { text: 'Second Answer' }),
+        build('surveyAnswer', { text: 'Third Answer' }),
+      ];
+      const question = build('surveyQuestion', {
+        displayType: 'slider',
+        answers: answers,
+      }) as SurveyQuestionInterface;
+
+      const { getByRole, getByText } = render(
+        <SurveyAnswer
+          question={question}
+          currentResponse={undefined}
+          onResponseChange={jest.fn()}
+        />
+      );
+
+      const slider = getByRole('slider');
+
+      fireEvent.keyDown(slider, {
+        keyCode: ARROW_RIGHT_KEYCODE,
+      });
+
+      expect(getByText('Second Answer')).toBeInTheDocument();
+
+      fireEvent.keyDown(slider, {
+        keyCode: ARROW_RIGHT_KEYCODE,
+      });
+
+      expect(getByText('Third Answer')).toBeInTheDocument();
+    });
+
+    describe('when sliding the slider', () => {
+      it('sets survey response', () => {
+        const answer1 = build('surveyAnswer');
+        const answer2 = build('surveyAnswer');
+
+        const question = build('surveyQuestion', {
+          displayType: 'slider',
+          answers: [answer1, answer2],
+        }) as SurveyQuestionInterface;
+
+        const onResponseChange = jest.fn();
+
+        const { getByRole } = render(
+          <SurveyAnswer
+            question={question}
+            currentResponse={undefined}
+            onResponseChange={onResponseChange}
+          />
+        );
+
+        const slider = getByRole('slider');
+
+        fireEvent.keyDown(slider, {
+          keyCode: ARROW_RIGHT_KEYCODE,
+        });
+
+        expect(onResponseChange).toHaveBeenCalledWith({
+          questionId: question.id,
+          answers: [{ id: answer2.id }],
+        });
       });
     });
   });

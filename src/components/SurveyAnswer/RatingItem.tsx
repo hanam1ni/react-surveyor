@@ -10,12 +10,14 @@ interface RatingItemProps {
 
 const answerIcon = (ratingType?: string) => {
   switch (ratingType) {
+    case 'heart':
+      return '/icon/heart.svg';
+    case 'money':
+      return '/icon/coin.svg';
     case 'smiley':
       return '/icon/smiley.svg';
     case 'star':
       return '/icon/star.svg';
-    case 'heart':
-      return '/icon/heart.svg';
     default:
       return '/icon/star.svg';
   }

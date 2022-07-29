@@ -1,0 +1,13 @@
+.slider :global {
+  .rc-slider-rail {
+    @apply bg-gray-400 opacity-60;
+  }
+
+  .rc-slider-track {
+    @apply bg-white;
+  }
+
+  .rc-slider-handle {
+    @apply w-6 h-6 -mt-2.5 opacity-100 border-none;
+  }
+}

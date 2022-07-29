@@ -19,7 +19,7 @@ interface SurveyQuestion {
   displayType: NonQuestionType | QuestionType;
   ratingType?: RatingType;
   text: string;
-  pick: string;
+  pick: PickType;
   isMandatory: boolean;
   answers: SurveyAnswer[];
 }
@@ -31,16 +31,24 @@ enum NonQuestionType {
 
 enum QuestionType {
   CHOICE = 'choice',
+  DROPDOWN = 'dropdown',
   NPS = 'nps',
   RATING = 'rating',
+  SLIDER = 'slider',
   TEXTAREA = 'textarea',
   TEXTFIELD = 'textfield',
 }
 
 enum RatingType {
-  STAR = 'star',
   HEART = 'heart',
+  MONEY = 'money',
   SMILEY = 'smiley',
+  STAR = 'star',
+}
+
+enum PickType {
+  one = 'one',
+  any = 'any',
 }
 
 interface SurveyAnswer {
@@ -55,7 +63,7 @@ interface SurveyResponse {
   answers: { id: string; answer?: string }[];
 }
 
-export { NonQuestionType, QuestionType, RatingType };
+export { NonQuestionType, PickType, QuestionType, RatingType };
 
 export type {
   Survey,
