@@ -7,7 +7,7 @@ const ARROW_RIGHT_KEYCODE = 39;
 
 describe('Slider', () => {
   describe('given labels', () => {
-    test('renders slider with label for each step', () => {
+    it('renders the slider with labels for each step', () => {
       const { getByRole, getByText, queryByText } = render(
         <Slider max={2} labels={['First label', 'Second label']} />
       );
@@ -28,7 +28,7 @@ describe('Slider', () => {
   });
 
   describe('when changing slider value', () => {
-    test('calls given onChange callback with index', () => {
+    it('calls given onChange callback with index', () => {
       const onChange = jest.fn();
 
       const { getByRole } = render(<Slider max={3} onChange={onChange} />);
